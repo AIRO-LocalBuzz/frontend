@@ -1,0 +1,49 @@
+.region {
+    /* width: 358px; */
+    height: 31px;
+    border-radius: 100px;
+    margin-right: 77px;
+    box-sizing: border-box;
+    padding: 4px;
+
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background-color: #EAEAEA;
+}
+
+.region button {
+    width: 68px !important;
+    height: 23px;
+    background-color: #EAEAEA;
+    border-radius: 100px;
+    border: none;
+    padding: 4px;
+    flex-shrink: 0;
+    min-width: 64px;
+    cursor: pointer;
+}
+
+.region button:first-child {
+    width: 64px !important;
+}
+
+.region button p {
+    height: 15px;
+
+    font-family: 'Pretendard';
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 15px;
+    letter-spacing: 0;
+    color: #999999;
+}
+
+.region button.active {
+    background-color: #FFC300;
+}
+
+.region button.active p {
+    font-weight: 700;
+    color: #FFFFFF;
+}

@@ -1,0 +1,28 @@
+.main {
+    width: 390px;
+    height: 812px;
+    background-color: #FFFFFF;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.main::-webkit-scrollbar {
+    display: none;
+}
+
+.main .container {
+    width: 435px;
+    height: 703px;
+    padding-left: 16px;
+
+    position: absolute;
+    top: 618px;
+}
+
+.main .container .content {
+    /* width: 435px; */
+    height: 613px;
+
+    position: absolute;
+    top: 90px;
+}
