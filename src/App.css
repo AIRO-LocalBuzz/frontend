@@ -1,0 +1,13 @@
+* {
+  margin: 0;
+}
+
+.app {
+  width: 390px;
+  height: 812px;
+  border: 1px solid #000000;
+  border-radius: 40px;
+  overflow: hidden;
+  margin: 0 auto;
+  background-color: beige;
+}
