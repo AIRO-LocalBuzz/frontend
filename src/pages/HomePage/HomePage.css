@@ -10,6 +10,14 @@
     display: none;
 }
 
+.main .region_container {
+    position: absolute;
+    top: 618px;
+    left: 16px;
+    /* box-sizing: border-box; */
+    /* transition: left 0.1s ease; */
+}
+
 .main .category_container {
     width: 435px;
     height: 652px;

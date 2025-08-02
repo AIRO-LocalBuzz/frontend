@@ -1,13 +1,13 @@
-.main .region_container {
+/* .main .region_container {
     position: absolute;
     top: 618px;
     left: 16px;
     box-sizing: border-box;
     transition: left 0.1s ease;
-}
+} */
 
-.region {
-    /* width: 358px; */
+/* .region {
+    width: 358px;
     width: 100%;
     max-width: 374px;
     height: 31px;
@@ -26,7 +26,7 @@
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
     white-space: nowrap;
-    /* user-select: none; */
+    user-select: none;
 
     scrollbar-width: none;
 }
@@ -92,25 +92,37 @@
 .region button.active p {
     font-weight: 700;
     color: #FFFFFF;
-}
+} */
 
 
 
 
-/* .region {
-    width: 358px;
+.region {
+    /* width: 358px; */
+    width: 100%;
+    max-width: 390px;
     height: 31px;
     border-radius: 100px;
-    margin-right: 77px;
+    /* margin-right: 77px; */
     box-sizing: border-box;
     padding: 4px;
-    margin-left: 16px;
+    /* margin-left: 16px; */
 
     display: flex;
     align-items: center;
-    gap: 4px;
+    /* gap: 4px; */
     background-color: #EAEAEA;
-    overflow: visible;
+    /* overflow: visible; */
+    overflow-x: auto;
+    white-space: nowrap;
+    /* display: flex; */
+    /* gap: 8px; */
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+
+.region::-webkit-scrollbar {
+    display: none;
 }
 
 .region button {
@@ -147,4 +159,4 @@
 .region button.active p {
     font-weight: 700;
     color: #FFFFFF;
-} */
+}

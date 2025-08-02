@@ -181,10 +181,12 @@ const MainPage = () => {
                 <Statusbar />
                 <Nav />
                 <Banner />
-                <RegionSelect
-                    activeRegion={activeRegion}
-                    onRegionClick={handleRegionClick}
-                />
+                <div className='region_container'>
+                    <RegionSelect
+                        activeRegion={activeRegion}
+                        onRegionClick={handleRegionClick}
+                    />
+                </div>
                 <div className='category_container'>
                     <CategorySelect
                         activeCategory={activeCategory}
