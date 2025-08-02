@@ -53,7 +53,10 @@ const HomePage = () => {
             desc: item.indeScleName,
             title: item.name,
             town: item.roadAddr || item.lotAddr || '',
-            tag: ['NEW'],
+            tag: [
+                ...(item.name.includes('식당') ? ['인기'] : []),
+                'NEW'
+            ],
             isPlaceholder: false,
             image: `/src/assets/images/eating/img-food${imageNumbers[idx]}.jpg`,
         }));
@@ -65,7 +68,10 @@ const HomePage = () => {
             desc: item.indeScleName,
             title: item.name,
             town: item.roadAddr || item.lotAddr || '',
-            tag: ['NEW'],
+            tag: [
+                ...(item.name.includes('찻집') ? ['인기'] : []),
+                'NEW'
+            ],
             isPlaceholder: false,
             image: `/src/assets/images/drinking/img-cafe${imageNumbers[idx]}.jpg`,
         }));
@@ -77,7 +83,10 @@ const HomePage = () => {
             desc: item.indeScleName,
             title: item.name,
             town: item.roadAddr || item.lotAddr || '',
-            tag: ['NEW'],
+            tag: [
+                ...(item.name.includes('호텔') ? ['인기'] : []),
+                'NEW'
+            ],
             isPlaceholder: false,
             image: `/src/assets/images/lodging/img-stay${imageNumbers[idx]}.jpg`,
         }));

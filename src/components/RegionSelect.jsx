@@ -29,6 +29,3 @@ export default function RegionSelect({ activeRegion, onRegionClick }) {
     );
 }
 
-
-// swiper > 양쪽 값 주는거 찾아보기
-// before, after css 조절 

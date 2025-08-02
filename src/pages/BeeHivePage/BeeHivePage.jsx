@@ -91,7 +91,7 @@ function BeeHivePage() {
           </div>
           <h3>3가지 활동 중에 고민이에요</h3>
           <div className="review-comment-preview">
-            <p>댓글 부분?</p>
+            <p>댓글</p>
           </div>
         </section>
       </div>

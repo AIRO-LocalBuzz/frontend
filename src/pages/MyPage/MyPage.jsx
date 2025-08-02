@@ -31,19 +31,25 @@ const MyPage = () => {
       {/* 프로필 섹션 */}
       <div className="profile-section">
         <div className="profile-info">
-          <div className="profile-avatar"></div>
+          <div className="profile-avatar">
+            <img
+              className='bee_img'
+              src={`/src/assets/images/img-bee.png`}
+              alt='localbuzz_character'
+            />
+          </div>
           <div className="profile-details">
             <div className="profile-nickname-row">
-              <h2 className="profile-nickname">닉네임</h2>
+              <h2 className="profile-nickname">아이로</h2>
               <div className="profile-points-tag">
-                <p className="profile-points">00포인트</p>
+                <p className="profile-points">1.2만 포인트</p>
               </div>
             </div>
-            <p className="profile-activity">주 활동지</p>
+            <p className="profile-activity">주 활동지: 서울시 강남구</p>
           </div>
         </div>
         <p className="profile-bio">
-          자기소개를 적어주세요. 자기소개를 적어주세요. 자기소개를 적어주세요. 자기소개를 적어주세요.
+          #여행은 #나의삶
         </p>
         <div className="stats-container">
           <div className="stat-item">
