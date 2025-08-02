@@ -72,16 +72,7 @@ function BeeHivePage() {
           </div>
         </section>
 
-        <section className="another-review-preview">
-          <div className="review-header-preview">
-            <span>체험 / 건강</span>
-            <span className="review-date-preview">lily kim254</span>
-          </div>
-          <h3>3가지 활동 중에 고민이에요</h3>
-          <div className="review-comment-preview">
-            <p>댓글 부분?</p>
-          </div>
-        </section>
+        
       </div>
     </div>
   );

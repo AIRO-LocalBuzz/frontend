@@ -15,31 +15,46 @@ export default function DetailPage({ isKakaoMapLoaded }) {
   // 카카오맵 마커 SVG 아이콘
   const markerSvgIcon = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23FFC400' stroke='%23FFC400' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z'%3E%3C/path%3E%3Ccircle cx='12' cy='9' r='3' fill='%23fff' stroke='%23FFC400' stroke-width='1.5'/%3E%3C/svg%3E`;
 
-  // useEffect를 수정하여 로컬 스토리지에서 게시물 데이터를 로드합니다.
-  useEffect(() => {
-    // 로컬 스토리지에서 모든 게시물 데이터를 가져옵니다.
-    const savedPosts = JSON.parse(localStorage.getItem('posts')) || [];
-    // URL 파라미터 id와 일치하는 게시물을 찾습니다.
-    const post = savedPosts.find(p => p.id === Number(id));
-    
-    // 찾은 게시물이 있으면 상태를 업데이트합니다.
-    if (post) {
+
+useEffect(() => {
+  const fetchPost = async () => {
+    try {
+      const headers = {
+        'Authorization': `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzIiwiaWF0IjoxNzU0MTY1NzI3LCJleHAiOjM2MTc1NDE2NTcyN30.1E2JEdWvdSbChE0L9Jnp5ZP_X08Dy7XjYLIFv3GLcyI`,
+        'Content-Type': 'application/json',
+      };
+
+      const response = await fetch(`https://airo-buzz.shop/api/v1/posts/${id}`, {
+        method: 'GET',
+        headers,
+      });
+      console.log(response.body)
+      if (!response.ok) {
+        throw new Error('게시물 데이터를 불러오지 못했습니다.');
+      }
+
+      const post = await response.json();
       setPostData(post);
-    } else {
-      // 게시물을 찾을 수 없는 경우, postData를 null로 설정하여 "게시물을 찾을 수 없습니다" 메시지를 표시합니다.
+    } catch (error) {
+      console.error('게시물 조회 오류:', error);
       setPostData(null);
     }
-  }, [id]); // id가 변경될 때마다 다시 실행됩니다.
+  };
+
+  if (id) {
+    fetchPost();
+  }
+}, [id]);
 
   // 지도 초기화
   useEffect(() => {
     // 카카오맵 스크립트가 로드되었고, postData가 있으며, 장소 정보가 있고,
     // 지도 컨테이너가 준비되었으며, 지도가 초기화되지 않았을 때만 실행합니다.
-    if (isKakaoMapLoaded && postData && postData.placeVisited && mapContainer.current && !mapInitialized) {
+    if (isKakaoMapLoaded && postData && postData.adress && mapContainer.current && !mapInitialized) {
         console.log("DetailPage에서 지도 초기화 시작");
         
         const ps = new window.kakao.maps.services.Places();
-        ps.keywordSearch(postData.placeVisited, (data, status) => {
+        ps.keywordSearch(postData.adress, (data, status) => {
             if (status === window.kakao.maps.services.Status.OK) {
                 const place = data[0];
                 const placePosition = new window.kakao.maps.LatLng(place.y, place.x);
@@ -74,7 +89,7 @@ export default function DetailPage({ isKakaoMapLoaded }) {
                 setMapInitialized(true);
             }
         });
-    } else if (isKakaoMapLoaded && postData && !postData.placeVisited && !mapInitialized) {
+    } else if (isKakaoMapLoaded && postData && !postData.adress && !mapInitialized) {
       // 장소 정보가 없는 경우, 기본 지도를 표시하고 초기화 상태를 true로 설정합니다.
       const options = {
           center: new window.kakao.maps.LatLng(33.450701, 126.570667),
@@ -96,14 +111,14 @@ export default function DetailPage({ isKakaoMapLoaded }) {
   const {
     content,
     date,
-    placeVisited,
-    companions = '',
-    emotions = '',
+    adress,
+    withWhoTag = '',
+    emotionTags = '',
     selectedPhotos
   } = postData;
   
-  const companionsArray = companions ? [companions] : [];
-  const purposesArray = emotions ? [emotions] : [];
+  const withWhoTagArray = withWhoTag ? [withWhoTag] : [];
+  const purposesArray = emotionTags ? [emotionTags] : [];
 
   const formatFullDate = (dateString) => {
     if (!dateString) return '';
@@ -129,7 +144,7 @@ export default function DetailPage({ isKakaoMapLoaded }) {
       <div className="content-area">
         {/* 해시태그 */}
         <div className="hashtags">
-          {companionsArray.map((tag, index) => <span key={`comp-${index}`} className="tag">#{tag}</span>)}
+          {withWhoTagArray.map((tag, index) => <span key={`comp-${index}`} className="tag">#{tag}</span>)}
           {purposesArray.map((tag, index) => <span key={`purp-${index}`} className="tag">#{tag}</span>)}
         </div>
 
@@ -137,7 +152,7 @@ export default function DetailPage({ isKakaoMapLoaded }) {
         <div className="user-info">
             <h2 className="user-nickname">신사동 카리나</h2>
             <p className="post-meta">
-              <span>{placeVisited || '위치 정보 없음'}</span> · 
+              <span>{adress || '위치 정보 없음'}</span> · 
               <span> {formatFullDate(date)}</span>
             </p>
         </div>
@@ -145,7 +160,7 @@ export default function DetailPage({ isKakaoMapLoaded }) {
         {/* 지도 영역 */}
         <div id="map" ref={mapContainer} className="map-container">
             {!isKakaoMapLoaded && <p className="loading-map">지도 로딩 중...</p>}
-            {isKakaoMapLoaded && !postData.placeVisited && <p className="loading-map">장소 정보가 없습니다.</p>}
+            {isKakaoMapLoaded && !postData.adress && <p className="loading-map">장소 정보가 없습니다.</p>}
         </div>
 
         {/* 사진 갤러리 (좌우 스크롤) */}

@@ -1,7 +1,7 @@
 import ReactCalendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import { useNavigate, useLocation, useSearchParams } from 'react-router-dom';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { usePhoto } from '../../contexts/PhotoContext';
 import iconPrev from '../../assets/icons/common/icon-prev.svg';
 import iconCamera from '../../assets/icons/common/icon-camera.svg';
@@ -11,8 +11,6 @@ import './WritePage.css';
 export default function WritePage() {
   const navigate = useNavigate();
   const location = useLocation();
-
-  const prevPreviewUrlsRef = useRef([]);
   const [searchParams] = useSearchParams();
   const postId = searchParams.get('id');
   const isNewWrite = searchParams.get('new') === 'true';
@@ -24,157 +22,92 @@ export default function WritePage() {
   const [category, setCategory] = useState('');
   const [adress, setadress] = useState('');
   const [withWhoTag, setwithWhoTag] = useState('');
-  const [forWhatTag, setforWhatTag] = useState('');
-  const [emotionTags, setemotionTags] = useState([]);
+  const [emotionTags, setemotionTags] = useState('');
   
   const [loading, setLoading] = useState(false);
   const { selectedPhotos, setSelectedPhotos, resetPhotos } = usePhoto();
   const [previewUrls, setPreviewUrls] = useState([]);
 
-  const [placeInitDone, setPlaceInitDone] = useState(false);
-
-  const withWhoTagMap = {
-    '혼자': 'ALLONE',
-    '친구': 'FRIEND',
-    '가족': 'FAMILY',
-    '연인': 'PARTNER',
-  };
-
-  // 💡 PostForWhatTag 열거형에 맞춰 forWhatTagMap 수정
-  const forWhatTagMap = {
-    '업무': 'WORK',
-    '세미나': 'SEMINAR',
-    '학교': 'SCHOOL',
-    '힐링': 'HEALING',
-    '공부': 'STUDY',
-    '식도락': 'CULINARY',
-  };
-
-  const emotionMap = {
-    '행복': 'HAPPY',
-    '설렘': 'EXCITED',
-    '만족감': 'SATISFIED',
-    '충만함': 'FULFILLED',
-    '평온함': 'PEACEFUL',
-    '여유로움': 'RELAXED',
-    '감동': 'TOUCHED',
-    '벅차오름': 'OVERWHELMED',
-    '친근함': 'FRIENDLY',
-    '따듯함': 'WARM',
-  };
-
-  const categoryOptions = [
-    { key: 'food', label: '음식점', value: 'RESTORANT' },
-    { key: 'cafe', label: '카페', value: 'CAFE' },
-    { key: 'living', label: '숙소', value: 'ACCOMMODATION' },
-    { key: 'event', label: '행사', value: 'EVENT' },
-    { key: 'experience', label: '체험', value: 'EXPERIENCE' },
-    { key: 'challenge', label: '챌린지', value: 'CHALLENGE' },
-    { key: 'leisure', label: '여가', value: 'LEISURE' },
-  ];
-
-useEffect(() => {
-  if (selectedPhotos.length === 0) {
-    if (prevPreviewUrlsRef.current.length !== 0) {
-      setPreviewUrls([]);
-      prevPreviewUrlsRef.current = [];
-    }
-    return;
-  }
-
-  const isFileArray = selectedPhotos[0] instanceof File;
-
-  if (!isFileArray) {
-    const isSame = prevPreviewUrlsRef.current.length === selectedPhotos.length &&
-      prevPreviewUrlsRef.current.every((url, i) => url === selectedPhotos[i]);
-    if (!isSame) {
+  // 사진 미리보기 URL 생성 및 해제
+  useEffect(() => {
+    if (selectedPhotos.length === 0 || typeof selectedPhotos[0] === 'string') {
       setPreviewUrls(selectedPhotos);
-      prevPreviewUrlsRef.current = selectedPhotos;
+      return;
     }
-    return;
-  }
 
-  const newUrls = selectedPhotos.map(file => URL.createObjectURL(file));
-  const isSameFiles = prevPreviewUrlsRef.current.length === newUrls.length &&
-    prevPreviewUrlsRef.current.every((url, i) => url === newUrls[i]);
+    const urls = selectedPhotos.map(file => URL.createObjectURL(file));
+    setPreviewUrls(urls);
 
-  if (!isSameFiles) {
-    setPreviewUrls(newUrls);
-    prevPreviewUrlsRef.current = newUrls;
-  }
+    return () => {
+      urls.forEach(url => URL.revokeObjectURL(url));
+    };
+  }, [selectedPhotos]);
 
-  return () => {
-    newUrls.forEach(url => URL.revokeObjectURL(url));
-  };
-}, [selectedPhotos]);
-
-const images = previewUrls.map(url => ({
-  imageUrl: url.replace(/^blob:/, ''),  // 'blob:' 접두사 제거
-  mimeType: 'image/jpeg',               // 필요시 확장자 기반으로 변경 가능
-}));
-
+  // 이펙트 훅 통합 및 API 로직 추가
   useEffect(() => {
-    if (location.state?.selectedPlace && !placeInitDone) {
+    // 1. 검색 페이지에서 돌아온 경우, location.state의 위치 정보를 우선 반영
+    if (location.state && location.state.selectedPlace) {
+      // SearchPage에서 문자열을 보냈기 때문에, `.place_name` 없이 바로 사용합니다.
       setadress(location.state.selectedPlace);
-      setPlaceInitDone(true);
       window.history.replaceState({}, document.title, location.pathname);
+      return;
     }
-  }, [location.state?.selectedPlace, placeInitDone]);
 
-  useEffect(() => {
-    if (!postId) return;
-
+    // 2. 수정 모드일 경우 (postId가 있을 때), API에서 게시물 로드
     const fetchPost = async () => {
       try {
-        const accessToken = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzIiwiaWF0IjoxNzU0MTY1NzI3LCJleHAiOjM2MTc1NDE2NTcyN30.1E2JEdWvdSbChE0L9Jnp5ZP_X08Dy7XjYLIFv3GLcyI';
-        if (!accessToken) throw new Error('로그인이 필요합니다.');
+        const accessToken = localStorage.getItem('accessToken');
+        if (!accessToken) {
+          throw new Error('로그인이 필요합니다.');
+        }
 
-        const response = await fetch(`https://airo-buzz.shop/api/v1/posts/${postId}`, {
+        const response = await fetch(`https://airo-buzz.shop/api/posts/${postId}`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
+            'Authorization': `Bearer ${accessToken}`
+          }
         });
-
-        if (!response.ok) throw new Error('Failed to fetch post');
-
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch post');
+        }
         const postToEdit = await response.json();
 
+        // API 응답 데이터에 맞게 상태를 업데이트합니다.
         setTitle(postToEdit.title || '');
         setContent(postToEdit.content || '');
         setCategory(postToEdit.category || '');
         setDate(postToEdit.date || '');
         setadress(postToEdit.adress || '');
         setwithWhoTag(postToEdit.withWhoTag || '');
-        setforWhatTag(postToEdit.forWhatTag || '');
-        setemotionTags(postToEdit.emotionTags || []);
-        setSelectedPhotos(postToEdit.images || []);
+        setemotionTags(postToEdit.emotionTags || '');
+        setSelectedPhotos(postToEdit.images || []); 
+
       } catch (error) {
-        console.error('Error fetching post:', error);
-        alert(error.message || '게시물을 불러오는 데 실패했습니다. 새 글쓰기 페이지로 이동합니다.');
+        console.error("Error fetching post:", error);
+        alert(error.message || "게시물을 불러오는 데 실패했습니다. 새 글쓰기 페이지로 이동합니다.");
         navigate('/write?new=true');
       }
     };
 
-    fetchPost();
-  }, [postId, navigate, setSelectedPhotos]);
-
-  useEffect(() => {
-    if (isNewWrite) {
+    if (postId) {
+      fetchPost();
+    }
+    
+    // 3. 새 글쓰기 모드일 경우
+    else if (isNewWrite) {
       setTitle('');
       setContent('');
       setCategory('');
       setDate('');
       setadress('');
       setwithWhoTag('');
-      setforWhatTag('');
-      setemotionTags([]);
+      setemotionTags('');
       settravelDate(null);
-      setSelectedPhotos([]);
-      setPreviewUrls([]);
       resetPhotos();
     }
-  }, [isNewWrite, resetPhotos, setSelectedPhotos]);
+  }, [postId, isNewWrite, navigate, location.state, resetPhotos, setSelectedPhotos]);
 
+  // date 값 변경 시 travelDate 동기화
   useEffect(() => {
     if (date) {
       const parsed = new Date(date);
@@ -188,12 +121,14 @@ const images = previewUrls.map(url => ({
     }
   }, [date]);
   
+  // 날짜 포맷 함수
   const formatFullDate = (dateObj) => {
     if (!dateObj || isNaN(dateObj.getTime())) return '';
     const year = dateObj.getFullYear();
-    const month = String(dateObj.getMonth() + 1).padStart(2, '0');
-    const date = String(dateObj.getDate()).padStart(2, '0');
-    return `${year}-${month}-${date}`;
+    const month = dateObj.getMonth() + 1;
+    const date = dateObj.getDate();
+    const weekday = ['일', '월', '화', '수', '목', '금', '토'][dateObj.getDay()];
+    return `${year-2000}년 ${month}월 ${date}일 ${weekday}요일`;
   };
 
   function formatDateToLocalISO(date) {
@@ -204,143 +139,88 @@ const images = previewUrls.map(url => ({
   }
 
   const [modalOpen, setModalOpen] = useState(null);
-  const [selectedCategoryKey, setSelectedCategoryKey] = useState(category);
+  const [customCategory, setCustomCategory] = useState('');
 
-  const handleEmotionTagClick = (tag) => {
-    setemotionTags(prevTags => {
-      if (prevTags.includes(tag)) {
-        return prevTags.filter(t => t !== tag);
-      } else {
-        return [...prevTags, tag];
-      }
-    });
-  };
-  
-  const isActive = title && content && category && date && adress && emotionTags.length > 0 && withWhoTag && forWhatTag;
+  // isActive 로직에 title 필드 추가
+  const isActive = title && content && category && date && adress;
 
   const closeModal = () => {
-    setModalOpen(null);
-  };
-  
-  const handleCategoryModalClose = () => {
-    setCategory(selectedCategoryKey);
+    if (modalOpen === 'category' && customCategory) {
+      setCategory('custom:' + customCategory);
+    }
     setModalOpen(null);
   };
 
+  // 게시 버튼 핸들러 (API 연동 로직으로 변경)
   const handleSubmit = async () => {
     if (!isActive || loading) {
-      alert('필수 정보를 모두 입력해주세요.');
+      alert('필수 정보를 모두 입력해주세요.'); // 필수 정보 누락 시 알림
       return;
     }
     
     setLoading(true);
 
-    const accessToken = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzIiwiaWF0IjoxNzU0MTY1NzI3LCJleHAiOjM2MTc1NDE2NTcyN30.1E2JEdWvdSbChE0L9Jnp5ZP_X08Dy7XjYLIFv3GLcyI';
+    const postData = {
+      title,
+      content,
+      category,
+      adress,
+      withWhoTag,
+      emotionTags,
+      images: previewUrls,
+    };
 
+    // 로컬 스토리지에서 액세스 토큰 가져오기
+    const accessToken = localStorage.getItem('accessToken');
     if (!accessToken) {
       alert('로그인이 필요합니다.');
       setLoading(false);
       navigate('/login');
       return;
     }
-
-    // const postData = {
-    //   title,
-    //   content,
-    //   status: "PUBLISHED",
-    //   withWhoTag: withWhoTagMap[withWhoTag] || '',
-    //   forWhatTag: forWhatTagMap[forWhatTag] || '',
-    //   emotionTags: emotionTags.map(tag => emotionMap[tag]),
-    //   category: categoryOptions.find(opt => opt.key === category)?.value || '',
-    //   travelDate: date,
-    //   adress,
-    //   images: imagesData, // 💡 images 필드 추가
-    //   isFeatured: false, 
-    // };
     
-    // const postData = {
-    //   "title": "강릉 분위기 좋은 카페",
-    //   "content": "정말 좋은 여행이었습니다...",
-    //   "status": "PUBLISHED",
-    //   "withWhoTag": "FRIEND",
-    //   "forWhatTag": "HEALING",
-    //   "emotionTags": [
-    //     "EXCITED",
-    //     "JOYFUL"
-    //   ],
-    //   "category": "CAFE",
-    //   "travelDate": "2025-08-02",
-    //   "adress": "강릉",
-    //   "images": [
-    //     {
-    //       "imageUrl": "https://example.com/image1.jpg",
-    //       "mimeType": "image/jpeg"
-    //     },
-    //     {
-    //       "imageUrl": "https://example.com/image2.png",
-    //       "mimeType": "image/png"
-    //     }
-    //   ],
-    //   "isFeatured": false
-    // };'
+    try {
+      let response;
+      const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`,
+      };
 
-    // const imagesData = selectedPhotos.map(file => ({
-    //   imageUrl: file instanceof File ? `temp-url/${file.name}` : file,
-    //   mimeType: file instanceof File ? file.type : 'image/jpeg',
-    // }));
+      if (postId) {
+        response = await fetch(`https://airo-buzz.shop/api/posts/${postId}`, {
+          method: 'PUT',
+          headers,
+          body: JSON.stringify(postData),
+        });
+      } else {
+        response = await fetch('https://airo-buzz.shop/api/posts', {
+          method: 'POST',
+          headers,
+          body: JSON.stringify(postData),
+        });
+      }
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || '게시물 저장 실패');
+      }
 
-    const postData = {
-  title,
-  content,
-  status: "PUBLISHED", // 또는 조건에 따라 변경 가능
-  withWhoTag: withWhoTagMap[withWhoTag] || '',
-  forWhatTag: forWhatTagMap[forWhatTag] || '',
-  emotionTags: emotionTags.map(tag => emotionMap[tag]).filter(Boolean),
-  category: categoryOptions.find(opt => opt.key === category)?.value || '',
-  travelDate: date,
-  adress,
-  images: images, // images는 URL 문자열 배열 등 JSON에 포함될 데이터 형태여야 함
-  isFeatured: false
-};
+      const savedPost = await response.json();
+      
+      navigate(`/detail/${savedPost.id}`);
 
-console.log("전송될 JSON 데이터:", JSON.stringify(postData, null, 2));
-
-try {
-  const headers = {
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${accessToken}`,
-  };
-  
-  const response = await fetch(
-    postId
-      ? `https://airo-buzz.shop/api/v1/posts/${postId}`
-      : 'https://airo-buzz.shop/api/v1/posts',
-    {
-      method: postId ? 'PUT' : 'POST',  // 수정이면 PUT, 신규면 POST (필요 시 변경)
-      headers,
-      body: JSON.stringify(postData),
+    } catch (e) {
+      console.error('게시물 제출 실패:', e);
+      alert(e.message || '게시물 저장에 실패했습니다. 다시 시도해 주세요.');
+    } finally {
+      setLoading(false);
     }
-  );
-
-  
-  if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.message || '게시물 저장 실패');
-  }
-
-  const savedPost = await response.json();
-  console.log("response :: ",savedPost.id);
-  navigate(`/detail/${savedPost.id}`);
-} catch (e) {
-  console.error('게시물 제출 실패:', e);
-  alert(e.message || '게시물 저장에 실패했습니다.');
-} finally {
-  setLoading(false);
-}
   };
+
 
   return (
     <div className="write-page">
+      {/* 상단 헤더 */}
       <header className="write-header">
         <div className="write-header-left">
           <button className="icon-button" onClick={() => navigate('/review')}>
@@ -357,7 +237,9 @@ try {
         </button>
       </header>
 
+      {/* 입력 폼 */}
       <div className="write-form">
+        {/* 날짜와 위치 한 줄 */}
         <div className="row date-adress-row">
           <button
             type="button"
@@ -384,25 +266,34 @@ try {
           </div>
         </div>
 
+        {/* 카테고리 한 줄 */}
         <div className="row category-row">
           <button
             type="button"
             className={`input-button ${category ? '' : 'placeholder'}`}
-            onClick={() => {
-              setModalOpen('category');
-              setSelectedCategoryKey(category);
-            }}
+            onClick={() => setModalOpen('category')}
           >
             <div className="label-group">
               <span className="label">카테고리</span>
               <img src={iconPrev} alt="아래 화살표" className="icon-arrow-down" />
             </div>
             <span className="category-select">
-              {categoryOptions.find(opt => opt.key === category)?.label || ''}
+              {category.startsWith('custom:')
+                ? category.replace('custom:', '')
+                : category === 'food'
+                ? '음식'
+                : category === 'travel'
+                ? '여행'
+                : category === 'daily'
+                ? '일상'
+                : category === 'experience'
+                ? '체험'
+                : ''}
             </span>
           </button>
         </div>
 
+        {/* 누구와 갔나요? */}
         <div className="row label-tag-row">
           <p className="label">누구와 갔나요?</p>
           <div className="tag-group">
@@ -418,29 +309,15 @@ try {
           </div>
         </div>
 
+        {/* 왜 갔나요? */}
         <div className="row label-tag-row">
           <p className="label">왜 갔나요?</p>
-          <div className="tag-group">
-            {['업무', '세미나', '학교', '힐링', '공부', '식도락'].map((tag, i) => (
-              <button
-                key={i}
-                className={`tag-button ${forWhatTag === tag ? 'selected' : ''}`}
-                onClick={() => setforWhatTag(tag)}
-              >
-                {tag}
-              </button>
-            ))}
-          </div>
-        </div>
-        
-        <div className="row label-tag-row">
-          <p className="label">어떤 감정이었나요?</p>
           <div className="tag-group">
             {['행복', '설렘', '만족감', '충만함', '평온함', '여유로움', '감동', '벅차오름', '친근함', '따듯함'].map((tag, i) => (
               <button
                 key={i}
-                className={`tag-button ${emotionTags.includes(tag) ? 'selected' : ''}`}
-                onClick={() => handleEmotionTagClick(tag)}
+                className={`tag-button ${emotionTags === tag ? 'selected' : ''}`}
+                onClick={() => setemotionTags(tag)}
               >
                 {tag}
               </button>
@@ -448,6 +325,7 @@ try {
           </div>
         </div>
 
+        {/* 사진 미리보기 */}
         <div
           className="photo-placeholder"
           style={{
@@ -478,6 +356,7 @@ try {
           )}
         </div>
 
+        {/* 제목 입력 필드 추가 */}
         <input
           type="text"
           value={title}
@@ -486,6 +365,7 @@ try {
           className="input-title"
         />
 
+        {/* 내용 텍스트 */}
         <textarea
           value={content}
           onChange={e => setContent(e.target.value)}
@@ -496,6 +376,7 @@ try {
         />
       </div>
 
+      {/* 하단 버튼 */}
       <div className="bottom-action-buttons">
         <button className="btn-ai">AI 도구</button>
         <button className="btn-camera" onClick={() => navigate('/upload-photo')}>
@@ -503,19 +384,24 @@ try {
         </button>
       </div>
 
+      {/* 모달 */}
       {modalOpen && (
         <div className="modal-backdrop" onClick={closeModal}>
           <div className="modal-content" onClick={e => e.stopPropagation()}>
             <div className="modal-inner">
 
+              {/* 모달 상단 헤더 (닫기 버튼 포함) */}
               <div className="modal-header">
                 <button className="modal-close-x" onClick={closeModal}>
                   <img src={iconExit} alt="닫기" />
                 </button>
               </div>
 
+              {/* 모달 컨텐츠 영역 */}
+              {/* 날짜 선택 */}
               {modalOpen === 'date' && (
                 <>
+                  {/* 상단에 표시되는 선택된 날짜 */}
                   <div className="modal-custom-date-header">
                     <span className="date-title">날짜 : </span>
                     {travelDate ? (
@@ -529,6 +415,7 @@ try {
                     )}
                   </div>
 
+                  {/* 실제 달력 라이브러리 */}
                   <ReactCalendar
                     onChange={(value) => {
                       settravelDate(value)
@@ -538,29 +425,62 @@ try {
                     showNeighboringMonth={false}
                     prev2Label={null}
                     next2Label={null}
+                    // locale="ko-KR"
                   />
                 </>
               )}
 
+              {/* 카테고리 선택 */}
               {modalOpen === 'category' && (
                 <div className="modal-category-list custom-grid">
-                  {categoryOptions.map(({ key, label }) => (
-                    <button
-                      key={key}
-                      className={`modal-category-item ${selectedCategoryKey === key ? 'selected' : ''}`}
-                      onClick={() => {
-                        setSelectedCategoryKey(key);
-                      }}
-                    >
-                      {label}
-                    </button>
-                  ))}
+                  {/* 2x2 grid 버튼 */}
+                {[
+                  { value: 'food', label: '음식' },
+                  { value: 'travel', label: '여행' },
+                  { value: 'daily', label: '일상' },
+                  { value: 'experience', label: '체험' },
+                ].map(opt => (
+                  <button
+                    key={opt.value}
+                    className={`modal-category-item ${
+                      category === opt.value ? 'selected' : ''
+                    }`}
+                    onClick={() => {
+                      setCategory(opt.value);
+                      setCustomCategory('');
+                    }}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+
+                  {/* 기타 입력 - 버튼 자체가 입력으로 변하는 방식 */}
+                  <div className="custom-category-full">
+                    {category.startsWith('custom:') ? (
+                      <input
+                        type="text"
+                        placeholder="카테고리 입력"
+                        className="modal-input-adress full-width"
+                        value={customCategory || category.replace('custom:', '')}
+                        onChange={(e) => setCustomCategory(e.target.value)}
+                      />
+                    ) : (
+                      <button
+                        className="modal-category-item full-width"
+                        onClick={() => {
+                          setCategory('custom:');
+                          setCustomCategory('');
+                        }}
+                      >
+                        기타 : 직접 입력하기
+                      </button>
+                    )}
+
+                  </div>
                 </div>
               )}
-              <button 
-                className="modal-close-btn"
-                onClick={modalOpen === 'category' ? handleCategoryModalClose : closeModal}
-              >
+
+              <button className="modal-close-btn" onClick={closeModal}>
                 설정
               </button>
             </div>
