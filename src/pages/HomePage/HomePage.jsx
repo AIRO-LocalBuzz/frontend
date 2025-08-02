@@ -1,127 +1,215 @@
-import { useNavigate } from 'react-router-dom';
-import { useEffect, useRef, useState } from 'react';
-import imgMap from '../../assets/images/img-map.svg'
-import imgBeehive from '../../assets/images/img-beehive-sample.png'
+import React, { useState, useEffect } from 'react';
+import Statusbar from '../../components/statusBar';
+import Nav from '../../components/Nav';
+import Banner from '../../components/Banner';
+import RegionSelect from '../../components/RegionSelect';
+import CategorySelect from '../../components/CategorySelect';
+import Review from '../../components/Review';
+import Lists from '../../components/Lists';
+import Modal from '../../components/Modal';
 import './HomePage.css';
 
-export default function HomePage() {
-  const navigate = useNavigate();
-  const [zoomLevel, setZoomLevel] = useState(12);
-  const containerRef = useRef(null);
-
-  // 터치 기반 줌인/아웃 감지
-  useEffect(() => {
-    let initialDistance = null;
-
-    const getDistance = (touches) => {
-      const [a, b] = touches;
-      return Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
-    };
-
-    const onTouchStart = (e) => {
-      if (e.touches.length === 2) initialDistance = getDistance(e.touches);
-    };
-
-    const onTouchMove = (e) => {
-      if (e.touches.length === 2 && initialDistance !== null) {
-        const distance = getDistance(e.touches);
-        const diff = distance - initialDistance;
-        if (Math.abs(diff) > 10) {
-          setZoomLevel((prev) =>
-            diff > 0 ? Math.min(prev + 1, 20) : Math.max(prev - 1, 1)
-          );
-          initialDistance = distance;
+const HomePage = () => {
+    const [activeRegion, setActiveRegion] = useState('서울');
+    const [isModalOpen, setModalOpen] = useState(false);
+    const [megaCode, setMegaCode] = useState(null);
+    const [cityCode, setCityCode] = useState(null);
+    const [listItems, setListItems] = useState([]);
+    const [activeCategory, setActiveCategory] = useState('음식점');
+    const getUniqueRandomImageNumbers = (max, count) => {
+        const set = new Set();
+        while (set.size < count) {
+            set.add(Math.floor(Math.random() * max) + 1);
         }
-      }
+        return [...set];
     };
 
-    const onTouchEnd = () => {
-      initialDistance = null;
+    useEffect(() => {
+        // 기본 지역: 서울특별시 종로구
+        const defaultRegion = '서울';
+        const defaultMegaCode = 11;
+        const defaultCityCode = 11110;
+
+        setActiveRegion(defaultRegion);
+        setMegaCode(defaultMegaCode);
+        setCityCode(defaultCityCode);
+        handleFetchList(defaultMegaCode, defaultCityCode, '음식점');
+    }, []);
+
+    const handleRegionClick = (regionName) => {
+        setActiveRegion(regionName);
+        setModalOpen(true);
     };
 
-    const onWheel = (e) => {
-      if (e.ctrlKey) {
-        e.preventDefault();
-        setZoomLevel((prev) =>
-          e.deltaY < 0 ? Math.min(prev + 1, 20) : Math.max(prev - 1, 1)
-        );
-      }
+    const handleSelectRegion = (megaCode, cityCode) => {
+        setMegaCode(megaCode);
+        setCityCode(cityCode);
+        handleFetchList(megaCode, cityCode, activeCategory);
     };
 
-    const container = containerRef.current;
-
-    container.addEventListener('touchstart', onTouchStart);
-    container.addEventListener('touchmove', onTouchMove);
-    container.addEventListener('touchend', onTouchEnd);
-
-    // 가장 확실한 대응: window에 wheel 이벤트 등록
-    window.addEventListener('wheel', onWheel, { passive: false });
-
-    return () => {
-      container.removeEventListener('touchstart', onTouchStart);
-      container.removeEventListener('touchmove', onTouchMove);
-      container.removeEventListener('touchend', onTouchEnd);
-      window.removeEventListener('wheel', onWheel);
+    const mapFoodData = (rawItems) => {
+        const imageNumbers = getUniqueRandomImageNumbers(10, 5);
+        return rawItems.slice(0, 5).map((item, idx) => ({
+            desc: item.indeScleName,
+            title: item.name,
+            town: item.roadAddr || item.lotAddr || '',
+            tag: ['NEW'],
+            isPlaceholder: false,
+            image: `/src/assets/images/eating/img-food${imageNumbers[idx]}.jpg`,
+        }));
     };
-  }, []);
 
-  return (
-    <div style={{ padding: '20px', textAlign: 'center' }}>
-      <h2>꽃밭 페이지</h2>
-      <p>손가락으로 핀치하면 줌 레벨이 조절됩니다.</p>
-      <button onClick={() => navigate('/review')}>콘텐츠 리스트 보기</button>
+    const mapCafeData = (rawItems) => {
+        const imageNumbers = getUniqueRandomImageNumbers(10, 5);
+        return rawItems.slice(0, 5).map((item, idx) => ({
+            desc: item.indeScleName,
+            title: item.name,
+            town: item.roadAddr || item.lotAddr || '',
+            tag: ['NEW'],
+            isPlaceholder: false,
+            image: `/src/assets/images/drinking/img-cafe${imageNumbers[idx]}.jpg`,
+        }));
+    };
 
-      <div className="map-area" ref={containerRef}>
-        <div
-          className="zoom-content"
-          style={{
-            transform: `scale(${Math.max(zoomLevel / 15, 1)})`, // ✅ 어느 구간이든 확대 가능하게 함
-            transition: 'transform 0.5s ease',
-            transformOrigin: 'center center',
-            width: '100%',
-            height: '100%',
-            position: 'relative',
-          }}
-        >
-          
-          {/* 디테일 지도: zoomLevel >= 13 */}
-          <img
-            src={imgMap}
-            className="map-image"
-            style={{
-              opacity: zoomLevel >= 13 ? 1 : 0,  // 확대하면 보임
-              transition: 'opacity 0.3s ease',
-              position: 'absolute',
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              top: 0,
-              left: 0,
-              zIndex: 2,
-            }}
-          />
+    const mapStayData = (rawItems) => {
+        const imageNumbers = getUniqueRandomImageNumbers(10, 5);
+        return rawItems.slice(0, 5).map((item, idx) => ({
+            desc: item.indeScleName,
+            title: item.name,
+            town: item.roadAddr || item.lotAddr || '',
+            tag: ['NEW'],
+            isPlaceholder: false,
+            image: `/src/assets/images/lodging/img-stay${imageNumbers[idx]}.jpg`,
+        }));
+    };
 
-          {/* 기본 지도 + 일러스트 모드: zoomLevel < 13 */}
-          <img
-            src={imgBeehive}
-            className="map-image"
-            style={{
-              opacity: zoomLevel < 13 ? 1 : 0, // 기본 상태와 축소 시 유지
-              transition: 'opacity 0.3s ease',
-              position: 'absolute',
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              top: 0,
-              left: 0,
-              zIndex: 1,
-            }}
-          />
+    const mapExperienceData = (rawItems) => {
+        const imageNumbers = getUniqueRandomImageNumbers(10, 5);
+        return rawItems.slice(0, 5).map((item, idx) => ({
+            desc: item.experienceType,
+            title: item.vilageName,
+            town: item.region,
+            tag: [
+                ...(item.experienceType.includes('전통문화') ? ['인기'] : []),
+                'NEW'
+            ],
+            isPlaceholder: false,
+            image: `/src/assets/images/doing/img-ex${imageNumbers[idx]}.jpg`,
+        }));
+    };
 
-        </div>
-      </div>
+    const mapEtcData = (rawItems) => {
+        const imageNumbers = getUniqueRandomImageNumbers(10, 5);
+        return rawItems.slice(0, 5).map((item, idx) => ({
+            desc: item.endDate,
+            title: item.name,
+            town: item.place,
+            tag: [
+                ...(item.name.includes('축제') ? ['인기'] : []),
+                'NEW'
+            ],
+            isPlaceholder: false,
+            image: `/src/assets/images/etc/img-cul${imageNumbers[idx]}.jpg`,
+        }));
+    };
+
+    const handleFetchList = async (megaCode, cityCode, category = '음식점') => {
+        let url = '';
+        let converter = null;
+
+        if (category === '음식점') {
+            url = `/api/v1/shop?megaCode=${megaCode}&cityCode=${cityCode}&largeCategoryCode=I2&page=0&size=5`;
+            converter = mapFoodData;
+        } else if (category === '카페') {
+            url = `/api/v1/shop?megaCode=${megaCode}&cityCode=${cityCode}&largeCategoryCode=I2&smallCategoryCode=I21201&page=0&size=5`;
+            converter = mapCafeData;
+        } else if (category === '숙소') {
+            url = `/api/v1/shop?megaCode=${megaCode}&cityCode=${cityCode}&largeCategoryCode=I1&page=0&size=5`;
+            converter = mapStayData;
+        } else if (category === '체험') {
+            url = `/api/v1/rural/ex?megaCode=${megaCode}&cityCode=${cityCode}&page=0&size=5`;
+            converter = mapExperienceData;
+        } else if (category === '기타') {
+            url = `/api/v1/clutr/fatvl?megaCode=${megaCode}&cityCode=${cityCode}&page=0&size=5`;
+            converter = mapEtcData;
+        }
+
+        try {
+            const res = await fetch(url, {
+                headers: { 'accept': '*/*' }
+            });
+
+            if (!res.ok) throw new Error('API 호출 실패');
+
+            const data = await res.json();
+            // console.log('[DEBUG] 응답 데이터:', data);
+            const rawItems = data.result?.content || [];
+            // console.log('[DEBUG] 추출된 content:', rawItems[0]);
+            // console.log(res);
 
 
-    </div>
-  );
-}
+            let converted = converter(rawItems);
+
+            if (converted.length < 5) {
+                const fillerCount = 5 - converted.length;
+                const placeholders = Array.from({ length: fillerCount }, () => ({
+                    desc: '',
+                    title: '콘텐츠 준비 중입니다.',
+                    town: '',
+                    tag: [],
+                    isPlaceholder: true,
+                }));
+                converted = [...converted, ...placeholders];
+            }
+
+            setListItems(converted);
+        } catch (err) {
+            console.error('API 호출 실패:', err);
+            setListItems([{
+                desc: '',
+                title: '콘텐츠 준비 중입니다.',
+                town: '',
+                tag: [],
+                isPlaceholder: true,
+            }]);
+        }
+    };
+
+    return (
+        <>
+            <section className='main'>
+                <Statusbar />
+                <Nav />
+                <Banner />
+                <div className='region_container'>
+                    <RegionSelect
+                        activeRegion={activeRegion}
+                        onRegionClick={handleRegionClick}
+                    />
+                </div>
+                <div className='category_container'>
+                    <CategorySelect
+                        activeCategory={activeCategory}
+                        onCategoryClick={(category) => {
+                            setActiveCategory(category);
+                            handleFetchList(megaCode, cityCode, category);
+                        }}
+                    />
+                    <div className='content'>
+                        <Review />
+                        <Lists listItems={listItems} category={activeCategory} />
+                    </div>
+                </div>
+                {isModalOpen && (
+                    <Modal
+                        region={activeRegion}
+                        onSelectRegion={handleSelectRegion}
+                        onClose={() => setModalOpen(false)}
+                    />
+                )}
+            </section>
+        </>
+    );
+};
+
+export default HomePage;

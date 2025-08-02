@@ -1,0 +1,46 @@
+.status_bar {
+    width: 390px;
+    height: 50px;
+    background-color: #FFFFFF;
+    border-radius: 40px 40px 0 0;
+    box-sizing: border-box;
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 50px;
+    padding-right: 30px;
+    z-index: 10;
+}
+
+.status_bar .time {
+    width: 34px;
+    height: 22px;
+
+    font-family: 'Pretendard';
+    font-weight: 600;
+    font-size: 17px;
+    line-height: 22px;
+    letter-spacing: 0;
+    color: #000000;
+}
+
+.status_bar .levels {
+    display: flex;
+    gap: 5px;
+}
+
+.status_bar .levels .network {
+    width: 19.2px;
+    height: 12.23px;
+}
+
+.status_bar .levels .wifi {
+    width: 17.14px;
+    height: 12.33px;
+}
+
+.status_bar .levels .battery {
+    width: 27.33px;
+    height: 13px;
+}

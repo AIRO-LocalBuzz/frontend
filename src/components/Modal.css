@@ -1,0 +1,122 @@
+.modal_back {
+    width: 390px;
+    height: 812px;
+    background-color: #1B1F26B8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    border-radius: 40px;
+    z-index: 999;
+}
+
+.modal {
+    width: 390px;
+    height: 693px;
+    position: fixed;
+    top: 119px;
+    background: white;
+    border-radius: 20px 20px 40px 40px;
+    overflow: hidden;
+    z-index: 1000;
+}
+
+.modal_title {
+    width: 390px;
+    height: 86px;
+    border-bottom: 1px solid #EFEFEF;
+    /* box-shadow: 0 0 10 0 #0000001A; */
+}
+
+.modal_title p {
+    width: 217px;
+    height: 20px;
+    position: absolute;
+    top: 43px;
+    left: 16px;
+
+    font-family: 'Pretendard';
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 100%;
+    letter-spacing: -0.25px;
+    color: #666666;
+}
+
+.modal_title .close {
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    top: 17px;
+    right: 24px;
+    border: none;
+    padding: 0;
+    background: none;
+    cursor: pointer;
+}
+
+.modal_container {
+    display: flex;
+    height: 100%;
+}
+
+.modal_region {
+    width: 90px;
+    background-color: #FFFFFF;
+    border-right: 1px solid #EFEFEF;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal_region button {
+    height: 48px;
+    padding: 0;
+    text-align: center;
+    background: none;
+    border: none;
+
+    font-family: 'Pretendard';
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0;
+    vertical-align: middle;
+    color: #666666;
+    cursor: pointer;
+}
+
+.modal_region .selected {
+    background-color: #EFEFEF;
+    color: #000000;
+}
+
+.modal_detail {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow-y: auto;
+}
+
+.modal_detail::-webkit-scrollbar {
+    display: none;
+}
+
+.modal_detail .item {
+    padding: 16px 32px 16px 32px;
+    border-bottom: 1px solid #EFEFEF;
+
+    font-family: 'Pretendard';
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: -0.25px;
+    color: #666666;
+    cursor: pointer;
+}
+
+.modal_detail .item.selected {
+    background-color: #EFEFEF;
+    border-radius: 4px;
+}

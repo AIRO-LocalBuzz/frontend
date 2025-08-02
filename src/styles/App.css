@@ -1,0 +1,57 @@
+* {
+  margin: 0;
+}
+
+.app {
+  width: 390px;
+  height: 812px;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+
+  border-radius: 40px;
+  overflow: hidden;
+  margin: 0 auto;
+  background-color: white;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  font-family: 'Pretendard', sans-serif;
+  background: #f0f0f0;
+  overflow-x: hidden;
+}
+
+#root {
+  width: 390px;
+  height: 812px;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+
+  border-radius: 40px;
+  overflow: hidden;
+  margin: 0 auto;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.app-content {
+  flex: 1;
+  overflow-y: auto;
+  /* 하단바가 있는 경우 기본 패딩 적용 */
+  padding-bottom: 80px;
+}
+
+/* 하단바가 없는 페이지에 적용될 클래스 */
+.app-content.no-bottom-nav {
+  /* 하단바가 없을 경우 패딩을 제거하고 높이를 100%로 설정하여 812px을 채움 */
+  height: 100%;
+  padding-bottom: 0;
+}
