@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ChevronLeft } from 'lucide-react';
 import './DetailPage.css';
+import Statusbar from '../../components/statusBar';
 
 // DetailPage 컴포넌트는 isKakaoMapLoaded를 prop으로 받습니다.
 export default function DetailPage({ isKakaoMapLoaded }) {
@@ -21,7 +22,7 @@ export default function DetailPage({ isKakaoMapLoaded }) {
     const savedPosts = JSON.parse(localStorage.getItem('posts')) || [];
     // URL 파라미터 id와 일치하는 게시물을 찾습니다.
     const post = savedPosts.find(p => p.id === Number(id));
-    
+
     // 찾은 게시물이 있으면 상태를 업데이트합니다.
     if (post) {
       setPostData(post);
@@ -36,49 +37,49 @@ export default function DetailPage({ isKakaoMapLoaded }) {
     // 카카오맵 스크립트가 로드되었고, postData가 있으며, 장소 정보가 있고,
     // 지도 컨테이너가 준비되었으며, 지도가 초기화되지 않았을 때만 실행합니다.
     if (isKakaoMapLoaded && postData && postData.placeVisited && mapContainer.current && !mapInitialized) {
-        console.log("DetailPage에서 지도 초기화 시작");
-        
-        const ps = new window.kakao.maps.services.Places();
-        ps.keywordSearch(postData.placeVisited, (data, status) => {
-            if (status === window.kakao.maps.services.Status.OK) {
-                const place = data[0];
-                const placePosition = new window.kakao.maps.LatLng(place.y, place.x);
+      console.log("DetailPage에서 지도 초기화 시작");
 
-                const options = {
-                    center: placePosition,
-                    level: 3,
-                };
-                const newMap = new window.kakao.maps.Map(mapContainer.current, options);
-                mapRef.current = newMap;
+      const ps = new window.kakao.maps.services.Places();
+      ps.keywordSearch(postData.placeVisited, (data, status) => {
+        if (status === window.kakao.maps.services.Status.OK) {
+          const place = data[0];
+          const placePosition = new window.kakao.maps.LatLng(place.y, place.x);
 
-                const imageSize = new window.kakao.maps.Size(40, 40);
-                const imageOption = {offset: new window.kakao.maps.Point(20, 40)};
-                const markerImage = new window.kakao.maps.MarkerImage(markerSvgIcon, imageSize, imageOption);
-                
-                new window.kakao.maps.Marker({
-                    position: placePosition,
-                    map: newMap,
-                    image: markerImage,
-                });
-                
-                setMapInitialized(true);
-                console.log("DetailPage에서 지도 초기화 및 마커 표시 완료");
-            } else {
-                console.error("장소 검색에 실패했습니다.");
-                // 검색 실패 시 기본 지도 표시
-                const options = {
-                    center: new window.kakao.maps.LatLng(33.450701, 126.570667),
-                    level: 3,
-                };
-                new window.kakao.maps.Map(mapContainer.current, options);
-                setMapInitialized(true);
-            }
-        });
+          const options = {
+            center: placePosition,
+            level: 3,
+          };
+          const newMap = new window.kakao.maps.Map(mapContainer.current, options);
+          mapRef.current = newMap;
+
+          const imageSize = new window.kakao.maps.Size(40, 40);
+          const imageOption = { offset: new window.kakao.maps.Point(20, 40) };
+          const markerImage = new window.kakao.maps.MarkerImage(markerSvgIcon, imageSize, imageOption);
+
+          new window.kakao.maps.Marker({
+            position: placePosition,
+            map: newMap,
+            image: markerImage,
+          });
+
+          setMapInitialized(true);
+          console.log("DetailPage에서 지도 초기화 및 마커 표시 완료");
+        } else {
+          console.error("장소 검색에 실패했습니다.");
+          // 검색 실패 시 기본 지도 표시
+          const options = {
+            center: new window.kakao.maps.LatLng(33.450701, 126.570667),
+            level: 3,
+          };
+          new window.kakao.maps.Map(mapContainer.current, options);
+          setMapInitialized(true);
+        }
+      });
     } else if (isKakaoMapLoaded && postData && !postData.placeVisited && !mapInitialized) {
       // 장소 정보가 없는 경우, 기본 지도를 표시하고 초기화 상태를 true로 설정합니다.
       const options = {
-          center: new window.kakao.maps.LatLng(33.450701, 126.570667),
-          level: 3,
+        center: new window.kakao.maps.LatLng(33.450701, 126.570667),
+        level: 3,
       };
       new window.kakao.maps.Map(mapContainer.current, options);
       setMapInitialized(true);
@@ -87,12 +88,12 @@ export default function DetailPage({ isKakaoMapLoaded }) {
 
   if (!postData) {
     return (
-        <div className="flex items-center justify-center min-h-screen text-xl font-bold">
-          <p>게시물을 찾을 수 없습니다.</p>
-        </div>
-      );
+      <div className="flex items-center justify-center min-h-screen text-xl font-bold">
+        <p>게시물을 찾을 수 없습니다.</p>
+      </div>
+    );
   }
-  
+
   const {
     content,
     date,
@@ -101,7 +102,7 @@ export default function DetailPage({ isKakaoMapLoaded }) {
     emotions = '',
     selectedPhotos
   } = postData;
-  
+
   const companionsArray = companions ? [companions] : [];
   const purposesArray = emotions ? [emotions] : [];
 
@@ -115,9 +116,10 @@ export default function DetailPage({ isKakaoMapLoaded }) {
     const weekday = ['일', '월', '화', '수', '목', '금', '토'][dateObj.getDay()];
     return `${year - 2000}년 ${month}월 ${day}일 ${weekday}요일`;
   };
-  
+
   return (
     <div className="detail-page-container">
+      <Statusbar />
       {/* 상단 헤더 */}
       <header className="detail-header">
         <button onClick={() => navigate('/my-review')} className="back-button">
@@ -135,17 +137,17 @@ export default function DetailPage({ isKakaoMapLoaded }) {
 
         {/* 유저 정보 및 위치 날짜 */}
         <div className="user-info">
-            <h2 className="user-nickname">신사동 카리나</h2>
-            <p className="post-meta">
-              <span>{placeVisited || '위치 정보 없음'}</span> · 
-              <span> {formatFullDate(date)}</span>
-            </p>
+          <h2 className="user-nickname">신사동 카리나</h2>
+          <p className="post-meta">
+            <span>{placeVisited || '위치 정보 없음'}</span> ·
+            <span> {formatFullDate(date)}</span>
+          </p>
         </div>
 
         {/* 지도 영역 */}
         <div id="map" ref={mapContainer} className="map-container">
-            {!isKakaoMapLoaded && <p className="loading-map">지도 로딩 중...</p>}
-            {isKakaoMapLoaded && !postData.placeVisited && <p className="loading-map">장소 정보가 없습니다.</p>}
+          {!isKakaoMapLoaded && <p className="loading-map">지도 로딩 중...</p>}
+          {isKakaoMapLoaded && !postData.placeVisited && <p className="loading-map">장소 정보가 없습니다.</p>}
         </div>
 
         {/* 사진 갤러리 (좌우 스크롤) */}
@@ -161,7 +163,7 @@ export default function DetailPage({ isKakaoMapLoaded }) {
             ))}
           </div>
         )}
-        
+
         {/* 게시글 내용 */}
         <p className="post-content-text">{content || '내용이 없습니다.'}</p>
       </div>

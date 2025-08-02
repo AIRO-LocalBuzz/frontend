@@ -1,6 +1,6 @@
 /* 전체 페이지 컨테이너 */
 .beehive-page {
-  font-family: 'Noto Sans KR', sans-serif;
+  font-family: 'Pretendard';
   background-color: #f8f8f8;
   padding: 0;
   height: 100vh;
@@ -80,7 +80,8 @@
 }
 
 .rank-more-button img {
-  width: 20px; /* 아이콘 크기 조정 */
+  width: 20px;
+  /* 아이콘 크기 조정 */
   height: 20px;
 }
 
@@ -103,15 +104,18 @@
   padding: 6px 0;
   font-size: 14px;
   color: #555;
-  display: flex; /* <-- 이 부분을 추가해야 gap 동작 */
-  align-items: flex-start; 
-  gap: 6px; /* [이벤트]와 텍스트 사이의 간격 */
+  display: flex;
+  /* <-- 이 부분을 추가해야 gap 동작 */
+  align-items: flex-start;
+  gap: 6px;
+  /* [이벤트]와 텍스트 사이의 간격 */
 }
 
 .announcement-item-category {
   color: #ff9800;
   font-weight: bold;
-  flex-shrink: 0; /* 글자가 길어져도 이 요소는 줄어들지 않도록 함 */
+  flex-shrink: 0;
+  /* 글자가 길어져도 이 요소는 줄어들지 않도록 함 */
 }
 
 /* 후기 미리보기 섹션 (가족여행) */
@@ -180,9 +184,14 @@
   cursor: pointer;
 }
 
+.review-buttons-preview button .heart-icon {
+  width: 20px;
+  height: 20px;
+}
+
 .review-buttons-preview button img {
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
 }
 
 /* 다른 후기 미리보기 섹션 (3가지 활동) */
@@ -210,7 +219,8 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  margin-top: 8px; /* 위쪽 여백 추가 */
+  margin-top: 8px;
+  /* 위쪽 여백 추가 */
   color: #999;
   font-size: 14px;
 }

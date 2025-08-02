@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import './ReviewPage.css'; // ReviewPage 전용 CSS 파일
+import Statusbar from '../../components/statusBar';
 
 export default function ReviewPage() {
   const navigate = useNavigate();
@@ -32,11 +33,12 @@ export default function ReviewPage() {
 
   return (
     <div className="review-page">
+      <Statusbar />
       <header className="review-header">
         <h2>리뷰 모아보기</h2>
         <button onClick={() => navigate('/write?new=true')}>새 글 쓰기</button>
       </header>
-      
+
       <div className="post-list-container">
         <div className="post-list">
           {posts.length > 0 ? (

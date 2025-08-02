@@ -1,122 +1,16 @@
-/* .main .region_container {
-    position: absolute;
-    top: 618px;
-    left: 16px;
-    box-sizing: border-box;
-    transition: left 0.1s ease;
-} */
-
-/* .region {
-    width: 358px;
-    width: 100%;
-    max-width: 374px;
-    height: 31px;
-    margin-right: 77px;
-    padding: 4px;
-    box-sizing: border-box;
-    overflow: visible;
-
-    display: flex;
-    align-items: center;
-
-    background-color: #EAEAEA;
-    overflow-x: auto;
-    overflow-y: hidden;
-    cursor: grab;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    white-space: nowrap;
-    user-select: none;
-
-    scrollbar-width: none;
-}
-
-.region::-webkit-scrollbar {
-    display: none;
-}
-
-.region.dragging {
-    cursor: grabbing;
-}
-
-.region.round-left {
-    border-top-left-radius: 100px;
-    border-bottom-left-radius: 100px;
-}
-
-.region.round-right {
-    border-top-right-radius: 100px;
-    border-bottom-right-radius: 100px;
-}
-
-.region.round-middle {
-    border-radius: 0;
-}
-
-.region button {
-    width: 68px !important;
-    height: 23px;
-    background-color: #EAEAEA;
-    border-radius: 100px;
-    border: none;
-    padding: 4px;
-    flex-shrink: 0;
-    min-width: 64px;
-    cursor: pointer;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-sizing: border-box;
-}
-
-.region button:first-child {
-    width: 64px !important;
-}
-
-.region button p {
-    height: 15px;
-
-    font-family: 'Pretendard';
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 15px;
-    letter-spacing: 0;
-    color: #999999;
-}
-
-.region button.active {
-    background-color: #FFC300;
-}
-
-.region button.active p {
-    font-weight: 700;
-    color: #FFFFFF;
-} */
-
-
-
-
 .region {
     /* width: 358px; */
-    width: 100%;
-    max-width: 390px;
+    max-width: 358px;
     height: 31px;
     border-radius: 100px;
-    /* margin-right: 77px; */
     box-sizing: border-box;
     padding: 4px;
-    /* margin-left: 16px; */
 
     display: flex;
     align-items: center;
-    /* gap: 4px; */
     background-color: #EAEAEA;
-    /* overflow: visible; */
     overflow-x: auto;
     white-space: nowrap;
-    /* display: flex; */
-    /* gap: 8px; */
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
 }

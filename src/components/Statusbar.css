@@ -5,6 +5,9 @@
     border-radius: 40px 40px 0 0;
     box-sizing: border-box;
     position: fixed;
+    position: sticky;
+    top: 0;
+    left: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;

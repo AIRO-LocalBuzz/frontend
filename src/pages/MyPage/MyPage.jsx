@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronRight, Bell } from 'lucide-react';
 import './MyPage.css';
+import Statusbar from '../../components/statusBar';
 
 const MyPage = () => {
   const navigate = useNavigate();
@@ -12,6 +13,7 @@ const MyPage = () => {
 
   return (
     <div className="mypage-container">
+      <Statusbar />
       {/* 상단 헤더 */}
       <header className="header">
         <h1 className="header-title">나의 꿀통</h1>

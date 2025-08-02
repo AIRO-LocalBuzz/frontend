@@ -45,7 +45,7 @@ function App() {
       console.error("카카오맵 스크립트 로드 실패");
       // 사용자에게 에러 메시지를 보여주는 UI 로직 추가 가능
     };
-    
+
     // 컴포넌트 언마운트 시 스크립트 제거
     return () => {
       document.head.removeChild(script);
@@ -54,7 +54,7 @@ function App() {
   }, []);
 
   // BottomNav를 숨길 경로들 목록
-  const isBottomNavHidden = 
+  const isBottomNavHidden =
     location.pathname === '/' ||
     location.pathname === '/splash' ||
     location.pathname.startsWith('/login') ||
@@ -72,18 +72,18 @@ function App() {
             <Route path="/" element={<SplashPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/home" element={<HomePage />} />
-            <Route path="/review" element={<ReviewPage />} />          
+            <Route path="/review" element={<ReviewPage />} />
             <Route path="/my-review" element={<MyReviewPage />} />
             <Route path="/detail/:id" element={<DetailPage isKakaoMapLoaded={isKakaoMapLoaded} />} />
             <Route path="/beehive" element={<BeeHivePage />} />
             <Route path="/write" element={<WritePage />} />
             <Route path="/upload-photo" element={<PhotoUploadPage />} />
-            <Route path="/search" element={<SearchPage isKakaoMapLoaded={isKakaoMapLoaded} />} />  
+            <Route path="/search" element={<SearchPage isKakaoMapLoaded={isKakaoMapLoaded} />} />
             <Route path="/mypage" element={<MyPage />} />
           </Routes>
         </div>
       </div>
-      
+
       {/* isBottomNavHidden이 true일 때 BottomNav 숨기기 */}
       {!isBottomNavHidden && <BottomNav />}
     </>

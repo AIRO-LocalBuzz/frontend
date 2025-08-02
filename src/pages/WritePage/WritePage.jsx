@@ -7,6 +7,7 @@ import iconPrev from '../../assets/icons/common/icon-prev.svg';
 import iconCamera from '../../assets/icons/common/icon-camera.svg';
 import iconExit from '../../assets/icons/common/icon-exit.svg';
 import './WritePage.css';
+import Statusbar from '../../components/statusBar';
 
 export default function WritePage() {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ export default function WritePage() {
   const [placeVisited, setPlaceVisited] = useState('');
   const [companions, setCompanions] = useState('');
   const [emotions, setEmotions] = useState('');
-  
+
   const [loading, setLoading] = useState(false);
   const { selectedPhotos, setSelectedPhotos, resetPhotos } = usePhoto();
   const [previewUrls, setPreviewUrls] = useState([]);
@@ -42,18 +43,13 @@ export default function WritePage() {
     };
   }, [selectedPhotos]);
 
-  // 이 useEffect를 통합하고 로딩 순서를 변경했습니다.
-  // 1. 새 위치 정보가 있으면 최우선으로 반영
-  // 2. 아니면 기존 게시물 로드
-  // 3. 아니면 새 글쓰기 모드 초기화
-  // 4. 아니면 초안(draft) 로드
+  // 이펙트 훅 통합 및 API 로직 추가
   useEffect(() => {
     // 1. 검색 페이지에서 돌아온 경우, location.state의 위치 정보를 우선 반영
-    //    그리고 history state를 정리하여 뒤로가기 시 중복 업데이트를 막습니다.
     if (location.state && location.state.selectedPlace) {
-      setPlaceVisited(location.state.selectedPlace);
+      setPlaceVisited(location.state.selectedPlace.place_name);
       window.history.replaceState({}, document.title, location.pathname);
-      return; // 여기서 함수를 종료하여 아래의 localStorage 로직을 실행하지 않음
+      return;
     }
 
     // 2. 수정 모드일 경우 (postId가 있을 때)
@@ -118,7 +114,7 @@ export default function WritePage() {
     const draft = { content, category, date, placeVisited, companions, emotions }
     localStorage.setItem('writeDraft', JSON.stringify(draft))
   }, [content, category, date, placeVisited, companions, emotions])
-  
+
   // 날짜 포맷 함수 추가
   const formatFullDate = (dateObj) => {
     if (!dateObj || isNaN(dateObj.getTime())) return ''
@@ -126,7 +122,7 @@ export default function WritePage() {
     const month = dateObj.getMonth() + 1
     const date = dateObj.getDate()
     const weekday = ['일', '월', '화', '수', '목', '금', '토'][dateObj.getDay()]
-    return `${year-2000}년 ${month}월 ${date}일 ${weekday}요일`
+    return `${year - 2000}년 ${month}월 ${date}일 ${weekday}요일`
   }
 
   function formatDateToLocalISO(date) {
@@ -221,7 +217,7 @@ export default function WritePage() {
         }
         localStorage.setItem('posts', JSON.stringify(savedPosts));
         localStorage.removeItem('writeDraft');
-        
+
         navigate(`/detail/${newPostId}`);
       } catch (e) {
         console.error('Failed to submit post:', e);
@@ -235,6 +231,7 @@ export default function WritePage() {
 
   return (
     <div className="write-page">
+      <Statusbar />
       {/* 상단 헤더 */}
       <header className="write-header">
         <div className="write-header-left">
@@ -261,11 +258,11 @@ export default function WritePage() {
             className="input-button date-button"
             onClick={() => setModalOpen('date')}
           >
-          <div className="label-group">
-            <span className="label">날짜</span>
-            <img src={iconPrev} alt="아래 화살표" className="icon-arrow-down" />
-          </div>
-            
+            <div className="label-group">
+              <span className="label">날짜</span>
+              <img src={iconPrev} alt="아래 화살표" className="icon-arrow-down" />
+            </div>
+
             <span className="date-select">{formatFullDate(selectedDate)}</span>
           </button>
 
@@ -296,14 +293,14 @@ export default function WritePage() {
               {category.startsWith('custom:')
                 ? category.replace('custom:', '')
                 : category === 'food'
-                ? '음식'
-                : category === 'travel'
-                ? '여행'
-                : category === 'daily'
-                ? '일상'
-                : category === 'experience'
-                ? '체험'
-                : ''}
+                  ? '음식'
+                  : category === 'travel'
+                    ? '여행'
+                    : category === 'daily'
+                      ? '일상'
+                      : category === 'experience'
+                        ? '체험'
+                        : ''}
             </span>
           </button>
         </div>
@@ -431,7 +428,7 @@ export default function WritePage() {
                     showNeighboringMonth={false}
                     prev2Label={null}
                     next2Label={null}
-                    // locale="ko-KR"
+                  // locale="ko-KR"
                   />
                 </>
               )}
@@ -440,25 +437,24 @@ export default function WritePage() {
               {modalOpen === 'category' && (
                 <div className="modal-category-list custom-grid">
                   {/* 2x2 grid 버튼 */}
-                {[
-                  { value: 'food', label: '음식' },
-                  { value: 'travel', label: '여행' },
-                  { value: 'daily', label: '일상' },
-                  { value: 'experience', label: '체험' },
-                ].map(opt => (
-                  <button
-                    key={opt.value}
-                    className={`modal-category-item ${
-                      category === opt.value ? 'selected' : ''
-                    }`}
-                    onClick={() => {
-                      setCategory(opt.value);
-                      setCustomCategory('');
-                    }}
-                  >
-                    {opt.label}
-                  </button>
-                ))}
+                  {[
+                    { value: 'food', label: '음식' },
+                    { value: 'travel', label: '여행' },
+                    { value: 'daily', label: '일상' },
+                    { value: 'experience', label: '체험' },
+                  ].map(opt => (
+                    <button
+                      key={opt.value}
+                      className={`modal-category-item ${category === opt.value ? 'selected' : ''
+                        }`}
+                      onClick={() => {
+                        setCategory(opt.value);
+                        setCustomCategory('');
+                      }}
+                    >
+                      {opt.label}
+                    </button>
+                  ))}
 
                   {/* 기타 입력 - 버튼 자체가 입력으로 변하는 방식 */}
                   <div className="custom-category-full">

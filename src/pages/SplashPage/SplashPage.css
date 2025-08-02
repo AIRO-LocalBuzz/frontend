@@ -6,7 +6,6 @@
 
 .splash .splash_container {
     position: relative;
-    height: 100%;
     display: flex;
     justify-content: center;
 }
@@ -15,7 +14,7 @@
     width: 307px;
     height: 45px;
     position: absolute;
-    top: 150px;
+    top: 100px;
 }
 
 .splash_container .img_container {
@@ -23,7 +22,7 @@
     height: 295px;
     background-color: #D9D9D9;
     position: absolute;
-    top: 237px;
+    top: 187px;
 }
 
 .splash_container .img_container img {
@@ -36,7 +35,7 @@
     width: 210px;
     height: 14px;
     position: absolute;
-    top: 572px;
+    top: 522px;
     text-align: center;
 }
 
@@ -53,7 +52,7 @@
     width: 290px;
     height: 26px;
     position: absolute;
-    top: 612px;
+    top: 562px;
     text-align: center;
 }
 
@@ -71,7 +70,7 @@
     height: 53px;
     background-color: #FFCC00;
     position: absolute;
-    top: 667px;
+    top: 617px;
     border-radius: 50px;
     border: none;
     display: flex;
