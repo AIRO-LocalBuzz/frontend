@@ -74,7 +74,6 @@
     width: 358px;
     height: 492px;
     overflow: hidden;
-    /* border-radius: 16px; */
     border: 2px solid #ccc;
     position: relative;
     touch-action: none;
@@ -252,7 +251,6 @@
     position: absolute;
     top: 211px;
     background: linear-gradient(#D9D9D900, #000000);
-    /*색상이 너무 어둡다*/
 }
 
 .main .banner .banner_container .review_container .review_txt {

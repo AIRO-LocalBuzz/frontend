@@ -2,7 +2,7 @@ import React from 'react';
 import './CategorySelect.css';
 
 const CategorySelect = ({ activeCategory, onCategoryClick }) => {
-    const categories = ['체험', '음식점', '카페', '숙소', '기타'];
+    const categories = ['음식점', '카페', '숙소', '체험', '기타'];
 
     return (
         <div className="choice">

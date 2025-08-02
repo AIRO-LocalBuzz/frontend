@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Modal.css';
 
-// const API_HOST = import.meta.env.VITE_API_HOST; // CORS 허용 요청
-
 export default function Modal({ region, onClose, onSelectRegion }) {
     const [megaList, setMegaList] = useState([]);
     const [cityList, setCityList] = useState([]);
@@ -31,8 +29,8 @@ export default function Modal({ region, onClose, onSelectRegion }) {
         };
 
         Promise.all([
-            fetch('/api/api/v1/area/mega/code', { headers }),
-            fetch('/api/api/v1/area/city/code', { headers }),
+            fetch('/api/v1/area/mega/code', { headers }),
+            fetch('/api/v1/area/city/code', { headers }),
         ])
             .then(async ([res1, res2]) => {
                 if (!res1.ok || !res2.ok) throw new Error('응답 오류 발생');
@@ -72,7 +70,7 @@ export default function Modal({ region, onClose, onSelectRegion }) {
         .filter(m => selectedMegaNames.includes(m.megaName))
         .map(m => ({ id: m.id, name: m.megaName }));
 
-    // 필터링된 도시 목록 (서울특별시 종로구, 경기도 수원시 장안구 등)
+    // 필터링된 도시 목록 (서울특별시 종로구)
     const filteredCityFullNames = cityList
         .filter(city => selectedMegaCodes.some(m => m.id === city.megaCodeId))
         .map(city => {

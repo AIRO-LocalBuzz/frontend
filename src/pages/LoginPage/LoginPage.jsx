@@ -7,7 +7,7 @@ const LoginPage = () => {
     const navigate = useNavigate();
 
     const handleStart = () => {
-        navigate('/main');
+        navigate('/home');
     };
 
     return (
@@ -19,19 +19,19 @@ const LoginPage = () => {
                         <img
                             className='bee_img'
                             src={`/src/assets/images/img-bee.png`}
-                            alt='BUZZBEE_character'
+                            alt='localbuzz_character'
                         />
                         <div className='txt'>
                             <div className='hello_txt'>
                                 <p>안녕하세요.</p>
                             </div>
-                            <div className='buzzbee_txt'>
+                            <div className='localbuzz_txt'>
                                 <img
-                                    className='BUZZBEE_logo'
-                                    src={`/src/assets/images/img-BUZZBEE_logo.png`}
-                                    alt='BUZZBEE_logo'
+                                    className='localbuzz_logo'
+                                    src={`/src/assets/images/img-localbuzz.png`}
+                                    alt='localbuzz_logo'
                                 />
-                                <p>버즈비입니다 !</p>
+                                <p>로컬버즈입니다 !</p>
                             </div>
                             <div className='sub_txt'>
                                 <p>카카오, 구글 계정으로<br />

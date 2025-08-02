@@ -13,9 +13,9 @@
     z-index: 10;
 }
 
-.main_nav .BUZZBEE_logo {
-    width: 130px;
-    height: 26px;
+.main_nav .localbuzz_logo {
+    width: 191px;
+    height: 28px;
 }
 
 .main_nav .nav_container {
@@ -29,6 +29,9 @@
 .main_nav .nav_container .search {
     width: 32px;
     height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
 }
 

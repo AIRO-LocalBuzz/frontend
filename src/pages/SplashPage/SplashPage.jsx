@@ -16,9 +16,9 @@ const SplashPage = () => {
                 <Statusbar />
                 <div className='splash_container'>
                     <img
-                        className='BUZZBEE_logo'
-                        src={`/src/assets/images/img-BUZZBEE_logo.png`}
-                        alt='BUZZBEE_logo'
+                        className='localbuzz_logo'
+                        src={`/src/assets/images/img-localbuzz.png`}
+                        alt='localbuzz_logo'
                     />
                     <div className='img_container'>
                         <img
@@ -30,7 +30,7 @@ const SplashPage = () => {
                         <p>나의 꿀통을 채우는 여정</p>
                     </div>
                     <div className='main_txt'>
-                        <p>버즈비로 시작해봐요 !</p>
+                        <p>로컬버즈로 시작해봐요 !</p>
                     </div>
                     <button className='start_btn' onClick={handleStart}>
                         <p>시작하기</p>

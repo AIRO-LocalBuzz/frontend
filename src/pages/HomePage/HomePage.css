@@ -10,13 +10,16 @@
     display: none;
 }
 
-.main .container {
+.main .category_container {
     width: 435px;
-    height: 703px;
+    height: 652px;
     padding-left: 16px;
 
     position: absolute;
-    top: 618px;
+    top: 669px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .main .container .content {
@@ -24,5 +27,5 @@
     height: 613px;
 
     position: absolute;
-    top: 90px;
+    top: 39px;
 }

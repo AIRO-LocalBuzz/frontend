@@ -4,9 +4,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-
-    position: absolute;
-    top: 51px;
 }
 
 .choice button {

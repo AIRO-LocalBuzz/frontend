@@ -60,7 +60,7 @@ export default function Banner() {
         container.addEventListener('touchmove', onTouchMove);
         container.addEventListener('touchend', onTouchEnd);
 
-        // 가장 확실한 대응: window에 wheel 이벤트 등록
+        // window에 wheel 이벤트 등록
         window.addEventListener('wheel', onWheel, { passive: false });
 
         return () => {
@@ -120,7 +120,7 @@ export default function Banner() {
                                 <div
                                     className="zoom-content"
                                     style={{
-                                        transform: `scale(${Math.max(zoomLevel / 15, 1)})`, // 어느 구간이든 확대 가능하게 함
+                                        transform: `scale(${Math.max(zoomLevel / 15, 1)})`,
                                     }}
                                 >
 
@@ -218,7 +218,7 @@ export default function Banner() {
                             </SwiperSlide>
                         </Swiper>
                         <div className='page'>
-                            <div className="swiper-progressbar"></div> {/* ← 진행바 들어갈 곳 */}
+                            <div className="swiper-progressbar"></div>
                             <div className="swiper-fraction">{current} / {total}</div>
                         </div>
                     </>
@@ -296,7 +296,7 @@ export default function Banner() {
 
                         </Swiper>
                         <div className='page'>
-                            <div className="swiper-progressbar"></div> {/* ← 진행바 들어갈 곳 */}
+                            <div className="swiper-progressbar"></div>
                             <div className="swiper-fraction">{current} / {total}</div>
                         </div>
                     </>

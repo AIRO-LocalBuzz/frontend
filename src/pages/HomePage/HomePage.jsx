@@ -7,7 +7,7 @@ import CategorySelect from '../../components/CategorySelect';
 import Review from '../../components/Review';
 import Lists from '../../components/Lists';
 import Modal from '../../components/Modal';
-import './MainPage.css';
+import './HomePage.css';
 
 const MainPage = () => {
     const [activeRegion, setActiveRegion] = useState('서울');
@@ -15,7 +15,7 @@ const MainPage = () => {
     const [megaCode, setMegaCode] = useState(null);
     const [cityCode, setCityCode] = useState(null);
     const [listItems, setListItems] = useState([]);
-    const [activeCategory, setActiveCategory] = useState('체험');
+    const [activeCategory, setActiveCategory] = useState('음식점');
     const getUniqueRandomImageNumbers = (max, count) => {
         const set = new Set();
         while (set.size < count) {
@@ -23,7 +23,6 @@ const MainPage = () => {
         }
         return [...set];
     };
-
 
     useEffect(() => {
         // 기본 지역: 서울특별시 종로구
@@ -34,7 +33,7 @@ const MainPage = () => {
         setActiveRegion(defaultRegion);
         setMegaCode(defaultMegaCode);
         setCityCode(defaultCityCode);
-        handleFetchList(defaultMegaCode, defaultCityCode, '체험');
+        handleFetchList(defaultMegaCode, defaultCityCode, '음식점');
     }, []);
 
     const handleRegionClick = (regionName) => {
@@ -46,6 +45,42 @@ const MainPage = () => {
         setMegaCode(megaCode);
         setCityCode(cityCode);
         handleFetchList(megaCode, cityCode, activeCategory);
+    };
+
+    const mapFoodData = (rawItems) => {
+        const imageNumbers = getUniqueRandomImageNumbers(10, 5);
+        return rawItems.slice(0, 5).map((item, idx) => ({
+            desc: item.indeScleName,
+            title: item.name,
+            town: item.roadAddr || item.lotAddr || '',
+            tag: ['NEW'],
+            isPlaceholder: false,
+            image: `/src/assets/images/eating/img-food${imageNumbers[idx]}.jpg`,
+        }));
+    };
+
+    const mapCafeData = (rawItems) => {
+        const imageNumbers = getUniqueRandomImageNumbers(10, 5);
+        return rawItems.slice(0, 5).map((item, idx) => ({
+            desc: item.indeScleName,
+            title: item.name,
+            town: item.roadAddr || item.lotAddr || '',
+            tag: ['NEW'],
+            isPlaceholder: false,
+            image: `/src/assets/images/drinking/img-cafe${imageNumbers[idx]}.jpg`,
+        }));
+    };
+
+    const mapStayData = (rawItems) => {
+        const imageNumbers = getUniqueRandomImageNumbers(10, 5);
+        return rawItems.slice(0, 5).map((item, idx) => ({
+            desc: item.indeScleName,
+            title: item.name,
+            town: item.roadAddr || item.lotAddr || '',
+            tag: ['NEW'],
+            isPlaceholder: false,
+            image: `/src/assets/images/lodging/img-stay${imageNumbers[idx]}.jpg`,
+        }));
     };
 
     const mapExperienceData = (rawItems) => {
@@ -63,21 +98,6 @@ const MainPage = () => {
         }));
     };
 
-    const mapShopData = (rawItems, filterType) => {
-        const imageNumbers = getUniqueRandomImageNumbers(10, 5);
-        const filteredItems = rawItems.filter(item => item.indeScleName === filterType);
-
-        return filteredItems.slice(0, 5).map((item, idx) => ({
-            desc: item.indeScleName,
-            title: item.name,
-            town: item.lotAddr,
-            tag: ['NEW'],
-            isPlaceholder: false,
-            image: `/src/assets/images/eating/img-shop${imageNumbers[idx]}.jpg`,
-        }));
-    };
-
-
     const mapEtcData = (rawItems) => {
         const imageNumbers = getUniqueRandomImageNumbers(10, 5);
         return rawItems.slice(0, 5).map((item, idx) => ({
@@ -93,21 +113,25 @@ const MainPage = () => {
         }));
     };
 
-    const handleFetchList = async (megaCode, cityCode, category = '체험') => {
+    const handleFetchList = async (megaCode, cityCode, category = '음식점') => {
         let url = '';
         let converter = null;
-        let filterType = '';
 
-        if (category === '체험') {
-            url = `/api/api/v1/rural/ex?megaCode=${megaCode}&cityCode=${cityCode}&page=0&size=5`;
+        if (category === '음식점') {
+            url = `/api/v1/shop?megaCode=${megaCode}&cityCode=${cityCode}&largeCategoryCode=I2&page=0&size=5`;
+            converter = mapFoodData;
+        } else if (category === '카페') {
+            url = `/api/v1/shop?megaCode=${megaCode}&cityCode=${cityCode}&largeCategoryCode=I2&smallCategoryCode=I21201&page=0&size=5`;
+            converter = mapCafeData;
+        } else if (category === '숙소') {
+            url = `/api/v1/shop?megaCode=${megaCode}&cityCode=${cityCode}&largeCategoryCode=I1&page=0&size=5`;
+            converter = mapStayData;
+        } else if (category === '체험') {
+            url = `/api/v1/rural/ex?megaCode=${megaCode}&cityCode=${cityCode}&page=0&size=5`;
             converter = mapExperienceData;
         } else if (category === '기타') {
-            url = `/api/api/v1/clutr/fatvl?megaCode=${megaCode}&cityCode=${cityCode}&page=0&size=5`;
+            url = `/api/v1/clutr/fatvl?megaCode=${megaCode}&cityCode=${cityCode}&page=0&size=5`;
             converter = mapEtcData;
-        } else {
-            url = `/api/api/v1/shop?megaCode=${megaCode}&cityCode=${cityCode}&page=0&size=5`;
-            filterType = category; // '음식', '카페', '숙박'
-            converter = (rawItems) => mapShopData(rawItems, filterType);
         }
 
         try {
@@ -118,7 +142,11 @@ const MainPage = () => {
             if (!res.ok) throw new Error('API 호출 실패');
 
             const data = await res.json();
+            // console.log('[DEBUG] 응답 데이터:', data);
             const rawItems = data.result?.content || [];
+            // console.log('[DEBUG] 추출된 content:', rawItems[0]);
+            // console.log(res);
+
 
             let converted = converter(rawItems);
 
@@ -153,11 +181,11 @@ const MainPage = () => {
                 <Statusbar />
                 <Nav />
                 <Banner />
-                <div className='container'>
-                    <RegionSelect
-                        activeRegion={activeRegion}
-                        onRegionClick={handleRegionClick}
-                    />
+                <RegionSelect
+                    activeRegion={activeRegion}
+                    onRegionClick={handleRegionClick}
+                />
+                <div className='category_container'>
                     <CategorySelect
                         activeCategory={activeCategory}
                         onCategoryClick={(category) => {
