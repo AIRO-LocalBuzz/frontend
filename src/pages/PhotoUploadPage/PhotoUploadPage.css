@@ -1,0 +1,214 @@
+.upload-page {
+  width: 100%;
+  max-width: 600px;  /* 적당한 최대 너비 */
+  margin: 0 auto;    /* 좌우 중앙 정렬 */
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+
+  /* 스크롤바 숨기기 (Chrome, Safari, Edge, IE, Firefox) */
+  overflow-y: auto;
+  -ms-overflow-style: none;     /* IE, Edge */
+  scrollbar-width: none;        /* Firefox */
+  height: 740px;
+}
+
+.upload-page::-webkit-scrollbar {
+  display: none;                /* Chrome, Safari */
+}
+
+.upload-header {
+  height: 72px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  border-bottom: 1px solid #eee;
+}
+
+.header-title {
+  flex: 1;               /* 남은 공간 차지 */
+  text-align: center;    /* 중앙 정렬 */
+  font-weight: bold;
+  font-size: 16px;
+  user-select: none;
+  padding-left: 27px;
+}
+
+.header-btn {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: #333;
+}
+
+.header-btn.complete {
+  position: relative;
+  font-weight: bold;
+  cursor: pointer;
+  user-select: none;
+  font-size: 16px;
+  color: #ffc400; /* 기본 완료 버튼 텍스트 노란색 */
+  background: none;
+  border: none;
+  padding: 4px 12px;
+  border-radius: 20px; /* 둥근 타원형 */
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 활성화 되었을 때 - 노란 원과 흰색 텍스트 나타남 */
+.header-btn.complete.active {
+  color: #fff;
+  background-color: #ffc400;
+  min-width: 45px;      /* 고정 대신 최소 너비로 변경 */
+  height: 35px;
+  border-radius: 20px;
+  padding: 0 12px;      /* 좌우 패딩 주기 */
+  box-shadow: 0 0 8px #ffc400aa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  white-space: nowrap;  /* 텍스트 줄바꿈 방지 */
+}
+
+/* 활성화 상태일 때만 hover */
+.header-btn.complete.active:hover {
+  background-color: #e6b800;
+}
+
+/* 비활성화 상태 */
+.header-btn.complete:disabled {
+  color: #ccc;
+  cursor: not-allowed;
+  background: none;
+  box-shadow: none;
+  border-radius: 0;
+  padding: 4px 12px;
+  width: auto;
+  height: auto;
+}
+
+/* 텍스트 밀림 방지를 위해 */
+.header-btn.complete > span {
+  pointer-events: none;
+}
+
+.photo-warning-text {
+  color: #888;
+  font-size: 13px;
+  text-align: center;
+  margin-top: 6px;
+  margin-bottom: -6px;
+}
+
+.file-upload-container {
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.custom-upload-button {
+  background-color: #ffc400;
+  color: white;
+  border-radius: 12px;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 10px rgba(255, 204, 0, 0.3);
+  transition: background-color 0.3s ease;
+}
+
+.custom-upload-button:hover {
+  background-color: #e6b800;
+}
+
+.plus-icon {
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.custom-cancel-button {
+  background-color: #eee;
+  color: #333;
+  border-radius: 12px;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  transition: background-color 0.3s ease;
+  margin-left: 12px;
+}
+
+.custom-cancel-button:hover {
+  background-color: #ddd;
+}
+
+.preview-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 16px;
+  justify-content: flex-start; /* 중앙정렬 대신 시작 정렬 */
+
+  /* 스크롤바 숨기기 (Chrome, Safari, Edge, IE, Firefox) */
+  overflow-y: auto;
+  -ms-overflow-style: none;     /* IE, Edge */
+  scrollbar-width: none;        /* Firefox */
+}
+
+
+.preview-item {
+  position: relative;
+
+  width: calc((100% - 10px) / 2); /* 2열 정확 계산 */
+  aspect-ratio: 3 / 4; /* 3:4 비율 */
+  border-radius: 6px;
+  overflow: hidden;
+  cursor: pointer;
+  background-color: #f0f0f0;
+
+  flex-shrink: 0; /* 축소 방지 */
+}
+
+.preview-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 이미지 꽉 채우기 */
+  display: block;
+}
+
+
+.preview-item.selected {
+  outline: 3px solid #ffc400;
+}
+
+.selected-overlay {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background-color: white;
+  border: 3px solid #ffc400;
+  color: #ffc400;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

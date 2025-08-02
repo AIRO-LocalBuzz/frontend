@@ -1,0 +1,251 @@
+/* SearchPage.css */
+@import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700&display=swap');
+
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #f7f7f7;
+  color: #333;
+  overflow: hidden; 
+  font-family: 'Pretendard', sans-serif;
+}
+
+.search-page-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* 전체 화면 높이 */
+  position: relative;
+  overflow: hidden;
+}
+
+.search-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background-color: #fff;
+  border-bottom: 1px solid #e0e0e0;
+  z-index: 100;
+  position: relative;
+}
+
+.search-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.cancel-button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  z-index: 10;
+  color: #333;
+}
+
+/* 검색 바 */
+.search-bar {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  background-color: #fff;
+  border-bottom: 1px solid #e0e0e0;
+  position: relative;
+  z-index: 99;
+}
+
+.search-input {
+  flex-grow: 1;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  padding: 8px 15px 8px 40px;
+  font-size: 16px;
+  outline: none;
+  background-color: #f7f7f7;
+  width: 100%; /* 너비 100%로 설정 */
+  box-sizing: border-box; /* 패딩이 너비에 포함되도록 설정 */
+}
+
+.search-input:focus {
+  border-color: #ffc400;
+}
+
+.search-icon {
+  position: absolute;
+  left: 25px;
+  color: #888;
+}
+
+/* 완료 버튼 스타일 */
+.complete-button {
+  padding: 8px 16px;
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 20px;
+  height: 35px;
+  min-width: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.complete-button.inactive {
+  color: #999;
+  background-color: #f0f0f0;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.complete-button.active {
+  color: #000;
+  background-color: #ffc400;
+  cursor: pointer;
+  box-shadow: 0 0 8px #ffc400aa;
+}
+
+
+/* 지도 컨테이너 */
+.map-container {
+  flex-grow: 1;
+  width: 100%;
+  position: relative;
+}
+
+/* 검색 결과 오버레이 */
+.search-results-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
+  z-index: 90;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  max-height: 50vh; 
+  overflow-y: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.search-results-list {
+  list-style: none;
+  margin: 0;
+  padding: 0 15px;
+  overflow-y: auto;
+}
+
+.search-result-item {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  border-radius: 10px;
+}
+
+.search-result-item:hover, .search-result-item.selected {
+  background-color: #f0f0f0;
+}
+
+.list-item-icon {
+  color: #ffc400; /* 아이콘 색상 통일 */
+  margin-right: 15px;
+  min-width: 20px;
+}
+
+.list-item-info {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow: hidden; /* 내부 텍스트 넘침 방지 */
+}
+
+.place-name {
+  font-size: 16px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* 넘치는 텍스트 ... 처리 */
+}
+
+.address-name {
+  font-size: 14px;
+  color: #888;
+  margin-top: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* 넘치는 텍스트 ... 처리 */
+}
+
+/* 선택된 장소 정보 안내메시지 오버레이 */
+.selected-place-info-overlay {
+  position: fixed; /* 고정 위치 */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* 정확히 중앙 정렬 */
+  width: 80%; /* 가로 너비 */
+  max-width: 350px;
+  padding: 25px;
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-sizing: border-box; /* 패딩이 너비에 포함되도록 설정 */
+}
+
+.message-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #888;
+  margin: 0 0 10px 0;
+}
+
+.selected-place-name {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 5px 0;
+  word-break: break-word; /* 텍스트가 길 경우 자동으로 줄바꿈 */
+  white-space: normal;
+}
+
+.selected-place-address {
+  font-size: 14px;
+  color: #888;
+  margin: 0 0 20px 0;
+  word-break: break-word; /* 텍스트가 길 경우 자동으로 줄바꿈 */
+  white-space: normal;
+}
+
+.selected-place-complete-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #ffc400;
+  color: #333;
+  font-weight: 600;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  box-shadow: 0 0 8px #ffc400aa;
+  transition: all 0.3s ease;
+}
+
+.selected-place-complete-button:hover {
+  background-color: #ffd633;
+}

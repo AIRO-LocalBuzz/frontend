@@ -1,0 +1,284 @@
+/* MyPage.css */
+@import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700&display=swap');
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Pretendard', sans-serif;
+  color: #333;
+  background-color: #f3f4f6;
+  overflow: auto;
+}
+
+.mypage-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 20px 15px; /* 상하좌우 패딩 조정 */
+  position: relative;
+  max-width: 420px;
+  margin: 0 auto;
+  background-color: #f3f4f6;
+}
+
+/* 헤더 */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.header-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.header-bell-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* 업데이트/공지사항 배너 */
+.notification-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: #555;
+  cursor: pointer;
+}
+
+.notification-text {
+  margin: 0;
+}
+
+/* 프로필 섹션 */
+.profile-section {
+  background-color: #fff;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
+}
+
+.profile-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.profile-avatar {
+  width: 64px;
+  height: 64px;
+  background-color: #e5e7eb;
+  border-radius: 50%;
+  margin-right: 16px;
+}
+
+.profile-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-nickname-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.profile-nickname {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0;
+  margin-right: 8px;
+}
+
+.profile-points-tag {
+  background-color: #fff7ed;
+  border: 1px solid #ffc400;
+  color: #f97316;
+  padding: 2px 8px;
+  border-radius: 15px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.profile-points {
+  margin: 0;
+}
+
+.profile-activity {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0;
+}
+
+.profile-bio {
+  color: #374151;
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.stats-container {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  font-size: 14px;
+  padding-top: 20px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.stat-item {
+  flex: 1;
+}
+
+.stat-item:nth-child(2) {
+  border-left: 1px solid #e5e7eb;
+  border-right: 1px solid #e5e7eb;
+}
+
+.stat-value {
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.stat-label {
+  color: #6b7280;
+  font-size: 12px;
+}
+
+/* 내가 쓴 글 섹션 */
+.posts-section {
+  background-color: #fff;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
+}
+
+.posts-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 16px 0;
+}
+
+.posts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.post-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.post-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.post-text-content {
+  flex: 1;
+  margin-right: 16px;
+}
+
+.post-tags-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.post-tag {
+  padding: 2px 8px;
+  border-radius: 15px;
+  font-weight: 600;
+  font-size: 12px;
+  margin-right: 8px;
+}
+
+.tag-new {
+  background-color: #fff7ed;
+  color: #f97316;
+}
+
+.tag-popular {
+  background-color: #ffc400;
+  color: #fff;
+}
+
+.tag-event {
+  background-color: #fff7ed;
+  color: #f97316;
+}
+
+.post-title {
+  font-weight: 600;
+  font-size: 16px;
+  margin: 0 0 4px 0;
+}
+
+.post-meta {
+  color: #6b7280;
+  font-size: 12px;
+  margin: 0;
+}
+
+.post-thumbnail-container {
+  flex-shrink: 0;
+}
+
+.post-thumbnail {
+  width: 64px;
+  height: 64px;
+  background-color: #e5e7eb;
+  border-radius: 8px;
+}
+
+/* 하단 버튼 */
+.footer-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20px 0;
+  margin-top: auto;
+}
+
+.contact-button,
+.logout-button {
+  width: 100%;
+  background-color: #fff;
+  padding: 12px;
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.contact-button {
+  color: #374151;
+}
+
+.logout-button {
+  color: #ef4444;
+}

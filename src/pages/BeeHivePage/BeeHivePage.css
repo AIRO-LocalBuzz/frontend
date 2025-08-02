@@ -1,0 +1,221 @@
+/* 전체 페이지 컨테이너 */
+.beehive-page {
+  font-family: 'Noto Sans KR', sans-serif;
+  background-color: #f8f8f8;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.main-content {
+  padding: 16px;
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+/* 헤더 */
+.beehive-header {
+  background-color: #fff;
+  padding: 16px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.beehive-header h2 {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0;
+  color: #333;
+}
+
+/* 이번 주 순위 섹션 */
+.weekly-rank {
+  background-color: #fff;
+  padding: 16px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.weekly-rank-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.weekly-rank-header h2 {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.rank-item-container {
+  border: 2px solid #ff9800;
+  border-radius: 10px;
+  padding: 4px 16px;
+}
+
+.rank-item {
+  padding: 8px 0;
+  display: flex;
+  align-items: center;
+}
+
+.rank-number {
+  font-size: 16px;
+  font-weight: bold;
+  color: #ff9800;
+  margin-right: 8px;
+}
+
+.rank-more-button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.rank-more-button img {
+  width: 20px; /* 아이콘 크기 조정 */
+  height: 20px;
+}
+
+/* 공지 섹션 */
+.announcements {
+  background-color: #fff;
+  padding: 16px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.announcements h2 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.announcement-item {
+  padding: 6px 0;
+  font-size: 14px;
+  color: #555;
+  display: flex; /* <-- 이 부분을 추가해야 gap 동작 */
+  align-items: flex-start; 
+  gap: 6px; /* [이벤트]와 텍스트 사이의 간격 */
+}
+
+.announcement-item-category {
+  color: #ff9800;
+  font-weight: bold;
+  flex-shrink: 0; /* 글자가 길어져도 이 요소는 줄어들지 않도록 함 */
+}
+
+/* 후기 미리보기 섹션 (가족여행) */
+.review-preview {
+  background-color: #fff;
+  padding: 16px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+}
+
+.review-header-preview {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 12px;
+  color: #777;
+}
+
+.review-header-preview span:first-child {
+  /* 이미지에서 "체험 / 음식점 / 가족" 글자가 진하게 보임 */
+  font-weight: 600;
+  color: #333;
+}
+
+.review-preview h3 {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 6px;
+  color: #333;
+}
+
+.review-preview p {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 12px;
+}
+
+.review-actions-preview {
+  display: flex;
+  gap: 15px;
+  font-size: 12px;
+  color: #999;
+  margin-bottom: 10px;
+}
+
+.review-buttons-preview {
+  display: flex;
+  gap: 10px;
+}
+
+.review-buttons-preview button {
+  flex-grow: 1;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #555;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.review-buttons-preview button img {
+  width: 16px;
+  height: 16px;
+}
+
+/* 다른 후기 미리보기 섹션 (3가지 활동) */
+.another-review-preview {
+  background-color: #fff;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+}
+
+.another-review-preview .review-header-preview {
+  /* 스타일 재사용 */
+}
+
+.another-review-preview h3 {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.review-comment-preview {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 8px; /* 위쪽 여백 추가 */
+  color: #999;
+  font-size: 14px;
+}
+
+.review-comment-preview img {
+  width: 40px;
+  height: 40px;
+}
