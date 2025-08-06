@@ -16,21 +16,36 @@ export default function DetailPage({ isKakaoMapLoaded }) {
   // 카카오맵 마커 SVG 아이콘
   const markerSvgIcon = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23FFC400' stroke='%23FFC400' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z'%3E%3C/path%3E%3Ccircle cx='12' cy='9' r='3' fill='%23fff' stroke='%23FFC400' stroke-width='1.5'/%3E%3C/svg%3E`;
 
-  // useEffect를 수정하여 로컬 스토리지에서 게시물 데이터를 로드합니다.
-  useEffect(() => {
-    // 로컬 스토리지에서 모든 게시물 데이터를 가져옵니다.
-    const savedPosts = JSON.parse(localStorage.getItem('posts')) || [];
-    // URL 파라미터 id와 일치하는 게시물을 찾습니다.
-    const post = savedPosts.find(p => p.id === Number(id));
 
-    // 찾은 게시물이 있으면 상태를 업데이트합니다.
-    if (post) {
+useEffect(() => {
+  const fetchPost = async () => {
+    try {
+      const headers = {
+        'Authorization': `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzIiwiaWF0IjoxNzU0MTY1NzI3LCJleHAiOjM2MTc1NDE2NTcyN30.1E2JEdWvdSbChE0L9Jnp5ZP_X08Dy7XjYLIFv3GLcyI`,
+        'Content-Type': 'application/json',
+      };
+
+      const response = await fetch(`https://airo-buzz.shop/api/v1/posts/${id}`, {
+        method: 'GET',
+        headers,
+      });
+      console.log(response.body)
+      if (!response.ok) {
+        throw new Error('게시물 데이터를 불러오지 못했습니다.');
+      }
+
+      const post = await response.json();
       setPostData(post);
-    } else {
-      // 게시물을 찾을 수 없는 경우, postData를 null로 설정하여 "게시물을 찾을 수 없습니다" 메시지를 표시합니다.
+    } catch (error) {
+      console.error('게시물 조회 오류:', error);
       setPostData(null);
     }
-  }, [id]); // id가 변경될 때마다 다시 실행됩니다.
+  };
+
+  if (id) {
+    fetchPost();
+  }
+}, [id]);
 
   // 지도 초기화
   useEffect(() => {
@@ -94,7 +109,7 @@ export default function DetailPage({ isKakaoMapLoaded }) {
     );
   }
 
-  const {
+const {
     content,
     date,
     placeVisited,
@@ -137,7 +152,7 @@ export default function DetailPage({ isKakaoMapLoaded }) {
 
         {/* 유저 정보 및 위치 날짜 */}
         <div className="user-info">
-          <h2 className="user-nickname">신사동 카리나</h2>
+          <h2 className="user-nickname">아이로</h2>
           <p className="post-meta">
             <span>{placeVisited || '위치 정보 없음'}</span> ·
             <span> {formatFullDate(date)}</span>

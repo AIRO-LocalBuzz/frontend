@@ -81,11 +81,15 @@ export default function PhotoUploadPage() {
     }
   }
 
+  // PhotoUploadPage.jsx 파일 내부
   const handleComplete = () => {
-    const selected = selectedIndexes.map(i => allFiles[i])
-    setSelectedPhotos(selected)
-    navigate('/write')
-  }
+    const selected = selectedIndexes.map(i => allFiles[i]);
+    setSelectedPhotos(selected);
+    
+    // 이전 페이지의 state를 가져와서 WritePage로 돌아갈 때 함께 넘겨줍니다.
+    const prevLocationState = window.history.state?.usr;
+    navigate('/write', { state: prevLocationState });
+  };
 
   const handleCancel = () => {
     navigate('/write')

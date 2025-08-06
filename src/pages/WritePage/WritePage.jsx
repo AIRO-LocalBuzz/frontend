@@ -1,7 +1,7 @@
 import ReactCalendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import { useNavigate, useLocation, useSearchParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { usePhoto } from '../../contexts/PhotoContext';
 import iconPrev from '../../assets/icons/common/icon-prev.svg';
 import iconCamera from '../../assets/icons/common/icon-camera.svg';
@@ -12,227 +12,340 @@ import Statusbar from '../../components/statusBar';
 export default function WritePage() {
   const navigate = useNavigate();
   const location = useLocation();
+
   const [searchParams] = useSearchParams();
   const postId = searchParams.get('id');
   const isNewWrite = searchParams.get('new') === 'true';
-
+  
+  const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [date, setDate] = useState('');
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [travelDate, settravelDate] = useState(null);
   const [category, setCategory] = useState('');
-  const [placeVisited, setPlaceVisited] = useState('');
-  const [companions, setCompanions] = useState('');
-  const [emotions, setEmotions] = useState('');
+  const [adress, setadress] = useState('');
+  const [withWhoTag, setwithWhoTag] = useState('');
+  const [forWhatTag, setforWhatTag] = useState('');
+  const [emotionTags, setemotionTags] = useState([]);
+  
+  // 딱 한 번만 초기화되도록 useRef 추가
+  const initializedRef = useRef(false);
+  const prevPreviewUrlsRef = useRef([]);
 
   const [loading, setLoading] = useState(false);
   const { selectedPhotos, setSelectedPhotos, resetPhotos } = usePhoto();
   const [previewUrls, setPreviewUrls] = useState([]);
 
-  // 사진 미리보기 URL 생성 및 해제
+  const withWhoTagMap = {
+    '혼자': 'ALLONE',
+    '친구': 'FRIEND',
+    '가족': 'FAMILY',
+    '연인': 'PARTNER',
+  };
+
+  const forWhatTagMap = {
+    '업무': 'WORK',
+    '세미나': 'SEMINAR',
+    '학교': 'SCHOOL',
+    '힐링': 'HEALING',
+    '공부': 'STUDY',
+    '식도락': 'CULINARY',
+  };
+
+  const emotionMap = {
+    '행복': 'HAPPY',
+    '설렘': 'EXCITED',
+    '만족감': 'SATISFIED',
+    '충만함': 'FULFILLED',
+    '평온함': 'PEACEFUL',
+    '여유로움': 'RELAXED',
+    '감동': 'TOUCHED',
+    '벅차오름': 'OVERWHELMED',
+    '친근함': 'FRIENDLY',
+    '따듯함': 'WARM',
+  };
+
+  const categoryOptions = [
+    { key: 'food', label: '음식점', value: 'RESTORANT' },
+    { key: 'cafe', label: '카페', value: 'CAFE' },
+    { key: 'living', label: '숙소', value: 'ACCOMMODATION' },
+    { key: 'event', label: '행사', value: 'EVENT' },
+    { key: 'experience', label: '체험', value: 'EXPERIENCE' },
+    { key: 'challenge', label: '챌린지', value: 'CHALLENGE' },
+    { key: 'leisure', label: '여가', value: 'LEISURE' },
+  ];
+
   useEffect(() => {
-    if (selectedPhotos.length === 0 || typeof selectedPhotos[0] === 'string') {
-      setPreviewUrls(selectedPhotos);
+
+    if (selectedPhotos.length === 0) {
+      if (prevPreviewUrlsRef.current.length !== 0) {
+        setPreviewUrls([]);
+        prevPreviewUrlsRef.current = [];
+      }
       return;
     }
 
-    const urls = selectedPhotos.map(file => URL.createObjectURL(file));
-    setPreviewUrls(urls);
+    const isFileArray = selectedPhotos[0] instanceof File;
+
+    if (!isFileArray) {
+      const isSame = prevPreviewUrlsRef.current.length === selectedPhotos.length &&
+        prevPreviewUrlsRef.current.every((url, i) => url === selectedPhotos[i]);
+      if (!isSame) {
+        setPreviewUrls(selectedPhotos);
+        prevPreviewUrlsRef.current = selectedPhotos;
+      }
+      return;
+    }
+
+    const newUrls = selectedPhotos.map(file => URL.createObjectURL(file));
+    const isSameFiles = prevPreviewUrlsRef.current.length === newUrls.length &&
+      prevPreviewUrlsRef.current.every((url, i) => url === newUrls[i]);
+
+    if (!isSameFiles) {
+      setPreviewUrls(newUrls);
+      prevPreviewUrlsRef.current = newUrls;
+    }
 
     return () => {
-      urls.forEach(url => URL.revokeObjectURL(url));
+      console.log('[디버그] selectedPhotos 변경됨', selectedPhotos);
+      newUrls.forEach(url => URL.revokeObjectURL(url));
     };
   }, [selectedPhotos]);
 
-  // 이펙트 훅 통합 및 API 로직 추가
-  useEffect(() => {
-    // 1. 검색 페이지에서 돌아온 경우, location.state의 위치 정보를 우선 반영
-    if (location.state && location.state.selectedPlace) {
-      setPlaceVisited(location.state.selectedPlace.place_name);
-      window.history.replaceState({}, document.title, location.pathname);
-      return;
+  const images = previewUrls.map(url => ({
+    imageUrl: url.replace(/^blob:/, ''),  // 'blob:' 접두사 제거
+    mimeType: 'image/jpeg',               // 필요시 확장자 기반으로 변경 가능
+  }));
+
+// WritePage.jsx 파일 내부
+useEffect(() => {
+  const state = location.state;
+  if (!state) return;
+
+  console.log('✅ location.state 복원:', state);
+
+  // 복원할 데이터가 담긴 객체를 찾습니다.
+  // SearchPage에서 돌아온 경우, state.selectedPlace와 state.currentWriteState를 모두 사용
+  // PhotoUploadPage에서 돌아온 경우, state 자체에 데이터가 있을 수도 있습니다.
+  const dataToRestore = state.currentWriteState || state;
+
+  if (dataToRestore) {
+    if (state.selectedPlace) {
+      // 위치는 selectedPlace에서 가져옴
+      setadress(state.selectedPlace);
+    } else if (dataToRestore.adress) {
+      // 그 외의 경우 currentWriteState 또는 state에서 가져옴
+      setadress(dataToRestore.adress);
     }
+    
+    // 나머지 필드들은 dataToRestore 객체에서 가져와 복원
+    if (dataToRestore.title) setTitle(dataToRestore.title);
+    if (dataToRestore.content) setContent(dataToRestore.content);
+    if (dataToRestore.category) setCategory(dataToRestore.category);
+    if (dataToRestore.date) setDate(dataToRestore.date);
+    if (dataToRestore.withWhoTag) setwithWhoTag(dataToRestore.withWhoTag);
+    if (dataToRestore.forWhatTag) setforWhatTag(dataToRestore.forWhatTag);
+    if (dataToRestore.emotionTags) setemotionTags(dataToRestore.emotionTags);
+    
+    // 이 코드는 PhotoUploadPage에서 돌아왔을 때의 로직을 처리하는 부분입니다.
+    // usePhoto 컨텍스트를 사용하므로 이 부분은 필요 없을 수 있습니다.
+    // if (dataToRestore.selectedPhotos) setSelectedPhotos(dataToRestore.selectedPhotos);
 
-    // 2. 수정 모드일 경우 (postId가 있을 때)
-    if (postId) {
-      const savedPosts = JSON.parse(localStorage.getItem('posts')) || [];
-      const postToEdit = savedPosts.find(p => p.id === Number(postId));
+    // 복원이 완료된 후 state를 제거하여 새로고침 시 초기화 방지
+    window.history.replaceState({}, document.title, location.pathname);
+    }
+}, [location.state, setSelectedPhotos]);
 
-      if (postToEdit) {
+
+
+  useEffect(() => {
+    if (!postId) return;
+
+    const fetchPost = async () => {
+      try {
+        const accessToken = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzIiwiaWF0IjoxNzU0MTY1NzI3LCJleHAiOjM2MTc1NDE2NTcyN30.1E2JEdWvdSbChE0L9Jnp5ZP_X08Dy7XjYLIFv3GLcyI';
+        if (!accessToken) throw new Error('로그인이 필요합니다.');
+
+        const response = await fetch(`https://airo-buzz.shop/api/v1/posts/${postId}`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+
+        if (!response.ok) throw new Error('Failed to fetch post');
+
+        const postToEdit = await response.json();
+
+        setTitle(postToEdit.title || '');
         setContent(postToEdit.content || '');
         setCategory(postToEdit.category || '');
         setDate(postToEdit.date || '');
-        setPlaceVisited(postToEdit.placeVisited || ''); // localStorage에서 저장된 위치값 로드
-        setCompanions(postToEdit.companions || '');
-        setEmotions(postToEdit.emotions || '');
-        setSelectedPhotos(postToEdit.selectedPhotos || []);
-      } else {
+        setadress(postToEdit.adress || '');
+        setwithWhoTag(postToEdit.withWhoTag || '');
+        setforWhatTag(postToEdit.forWhatTag || '');
+        setemotionTags(postToEdit.emotionTags || []);
+        setSelectedPhotos(postToEdit.images || []);
+      } catch (error) {
+        console.error('Error fetching post:', error);
+        alert(error.message || '게시물을 불러오는 데 실패했습니다. 새 글쓰기 페이지로 이동합니다.');
         navigate('/write?new=true');
       }
-    }
-    // 3. 새 글쓰기 모드일 경우
-    else if (isNewWrite) {
+    };
+
+    fetchPost();
+  }, [postId, navigate, setSelectedPhotos]);
+
+
+  useEffect(() => {
+    // '처음 새 글쓰기 페이지에 들어왔을 때만 초기화' 되게 함
+    const isFreshStart =
+      isNewWrite &&
+      !location.state?.selectedPlace &&
+      !location.state?.fromPhoto &&
+      !initializedRef.current;
+
+    if (isFreshStart) {
+      console.log('✅ 초기화 실행됨');
+
+      setTitle('');
       setContent('');
       setCategory('');
       setDate('');
-      setPlaceVisited('');
-      setCompanions('');
-      setEmotions('');
-      setSelectedDate(null);
-      localStorage.removeItem('writeDraft');
+      setadress('');
+      setwithWhoTag('');
+      setforWhatTag('');
+      setemotionTags([]);
+      settravelDate(null);
+      setSelectedPhotos([]);
+      setPreviewUrls([]);
       resetPhotos();
-    }
-    // 4. 기존 초안(draft) 로드
-    else {
-      const saved = localStorage.getItem('writeDraft');
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        setContent(parsed.content || '');
-        setCategory(parsed.category || '');
-        setDate(parsed.date || '');
-        setPlaceVisited(parsed.placeVisited || '');
-        setCompanions(parsed.companions || '');
-        setEmotions(parsed.emotions || '');
-      }
-    }
-  }, [postId, isNewWrite, navigate, location.search, location.state]);
 
-  // date 값 변경 시 selectedDate 동기화
+      initializedRef.current = true;
+    }
+  }, [isNewWrite, location.state, resetPhotos, setSelectedPhotos]); // 의존성 배열에 location.state 추가
+
+
   useEffect(() => {
     if (date) {
-      const parsed = new Date(date)
+      const parsed = new Date(date);
       if (!isNaN(parsed.getTime())) {
-        setSelectedDate(parsed)
+        settravelDate(parsed);
+      } else {
+        settravelDate(null);
       }
+    } else {
+      settravelDate(null);
     }
-  }, [date])
-
-  // 값이 바뀔 때마다 localStorage에 저장
-  useEffect(() => {
-    const allEmpty = !content && !category && !date && !placeVisited && !companions && !emotions
-    if (allEmpty) return
-
-    const draft = { content, category, date, placeVisited, companions, emotions }
-    localStorage.setItem('writeDraft', JSON.stringify(draft))
-  }, [content, category, date, placeVisited, companions, emotions])
-
-  // 날짜 포맷 함수 추가
+  }, [date]);
+  
   const formatFullDate = (dateObj) => {
-    if (!dateObj || isNaN(dateObj.getTime())) return ''
-    const year = dateObj.getFullYear()
-    const month = dateObj.getMonth() + 1
-    const date = dateObj.getDate()
-    const weekday = ['일', '월', '화', '수', '목', '금', '토'][dateObj.getDay()]
-    return `${year - 2000}년 ${month}월 ${date}일 ${weekday}요일`
-  }
+    if (!dateObj || isNaN(dateObj.getTime())) return '';
+    const year = dateObj.getFullYear();
+    const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+    const date = String(dateObj.getDate()).padStart(2, '0');
+    return `${year}-${month}-${date}`;
+  };
 
   function formatDateToLocalISO(date) {
-    const year = date.getFullYear()
-    const month = String(date.getMonth() + 1).padStart(2, '0')
-    const day = String(date.getDate()).padStart(2, '0')
-    return `${year}-${month}-${day}`
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
   }
 
-  const [modalOpen, setModalOpen] = useState(null)
-  const [customCategory, setCustomCategory] = useState('');
+  const [modalOpen, setModalOpen] = useState(null);
+  const [selectedCategoryKey, setSelectedCategoryKey] = useState(category);
 
-  const isActive = content && category && date && placeVisited
-
-  const closeModal = () => {
-    if (modalOpen === 'category' && customCategory) {
-      setCategory('custom:' + customCategory);
-    }
-    setModalOpen(null);
-  }
-
-  const resizeImage = (file, maxWidth, maxHeight) => {
-    return new Promise((resolve) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = (event) => {
-        const img = new Image();
-        img.src = event.target.result;
-
-        img.onload = () => {
-          const canvas = document.createElement('canvas');
-          let width = img.width;
-          let height = img.height;
-
-          if (width > height) {
-            if (width > maxWidth) {
-              height *= maxWidth / width;
-              width = maxWidth;
-            }
-          } else {
-            if (height > maxHeight) {
-              width *= maxHeight / height;
-              height = maxHeight;
-            }
-          }
-
-          canvas.width = width;
-          canvas.height = height;
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0, width, height);
-
-          resolve(canvas.toDataURL('image/jpeg', 0.7));
-        };
-      };
+  const handleEmotionTagClick = (tag) => {
+    setemotionTags(prevTags => {
+      if (prevTags.includes(tag)) {
+        return prevTags.filter(t => t !== tag);
+      } else {
+        return [...prevTags, tag];
+      }
     });
   };
+  
+  const isActive = title && content && category && date && adress && emotionTags.length > 0 && withWhoTag && forWhatTag;
 
-  // 게시 버튼 핸들러
-  const handleSubmit = async () => {
-    if (isActive && !loading) {
-      setLoading(true);
-
-      const processedPhotos = await Promise.all(
-        selectedPhotos.map(file => {
-          if (typeof file === 'string') {
-            return file;
-          }
-          return resizeImage(file, 800, 800);
-        })
-      );
-
-      const newPostId = postId ? Number(postId) : Date.now();
-
-      const postData = {
-        id: newPostId,
-        content,
-        category,
-        date,
-        placeVisited,
-        companions,
-        emotions,
-        selectedPhotos: processedPhotos,
-        selectedDate,
-      };
-
-      try {
-        let savedPosts = JSON.parse(localStorage.getItem('posts')) || [];
-        if (postId) {
-          savedPosts = savedPosts.map(post => post.id === Number(postId) ? postData : post);
-        } else {
-          savedPosts.push(postData);
-        }
-        localStorage.setItem('posts', JSON.stringify(savedPosts));
-        localStorage.removeItem('writeDraft');
-
-        navigate(`/detail/${newPostId}`);
-      } catch (e) {
-        console.error('Failed to submit post:', e);
-        alert('게시물 저장에 실패했습니다. 다시 시도해 주세요.');
-      } finally {
-        setLoading(false);
-      }
-    }
+  const closeModal = () => {
+    setModalOpen(null);
+  };
+  
+  const handleCategoryModalClose = () => {
+    setCategory(selectedCategoryKey);
+    setModalOpen(null);
   };
 
+  const handleSubmit = async () => {
+    if (!isActive || loading) {
+      alert('필수 정보를 모두 입력해주세요.');
+      return;
+    }
+    
+    setLoading(true);
+
+    const accessToken = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzIiwiaWF0IjoxNzU0MTY1NzI3LCJleHAiOjM2MTc1NDE2NTcyN30.1E2JEdWvdSbChE0L9Jnp5ZP_X08Dy7XjYLIFv3GLcyI';
+
+    if (!accessToken) {
+      alert('로그인이 필요합니다.');
+      setLoading(false);
+      navigate('/login');
+      return;
+    }
+
+    const postData = {
+    title,
+    content,
+    status: "PUBLISHED", // 또는 조건에 따라 변경 가능
+    withWhoTag: withWhoTagMap[withWhoTag] || '',
+    forWhatTag: forWhatTagMap[forWhatTag] || '',
+    emotionTags: emotionTags.map(tag => emotionMap[tag]).filter(Boolean),
+    category: categoryOptions.find(opt => opt.key === category)?.value || '',
+    travelDate: date,
+    adress,
+    images: images, // images는 URL 문자열 배열 등 JSON에 포함될 데이터 형태여야 함
+    isFeatured: false
+    };
+
+  console.log("전송될 JSON 데이터:", JSON.stringify(postData, null, 2));
+
+  try {
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${accessToken}`,
+    };
+    
+  const response = await fetch(
+    postId
+      ? `https://airo-buzz.shop/api/v1/posts/${postId}`
+      : 'https://airo-buzz.shop/api/v1/posts',
+    {
+      method: postId ? 'PUT' : 'POST',  // 수정이면 PUT, 신규면 POST (필요 시 변경)
+      headers,
+      body: JSON.stringify(postData),
+    }
+  );
+
+  
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || '게시물 저장 실패');
+  }
+
+    const savedPost = await response.json();
+    console.log("response :: ",savedPost.id);
+    navigate(`/detail/${savedPost.id}`);
+  } catch (e) {
+    console.error('게시물 제출 실패:', e);
+    alert(e.message || '게시물 저장에 실패했습니다.');
+  } finally {
+    setLoading(false);
+  }
+    };
 
   return (
     <div className="write-page">
       <Statusbar />
-      {/* 상단 헤더 */}
       <header className="write-header">
         <div className="write-header-left">
           <button className="icon-button" onClick={() => navigate('/review')}>
@@ -249,71 +362,68 @@ export default function WritePage() {
         </button>
       </header>
 
-      {/* 입력 폼 */}
       <div className="write-form">
-        {/* 날짜와 위치 한 줄 */}
-        <div className="row date-placeVisited-row">
+        <div className="row date-adress-row">
           <button
             type="button"
             className="input-button date-button"
             onClick={() => setModalOpen('date')}
           >
-            <div className="label-group">
-              <span className="label">날짜</span>
-              <img src={iconPrev} alt="아래 화살표" className="icon-arrow-down" />
-            </div>
-
-            <span className="date-select">{formatFullDate(selectedDate)}</span>
+          <div className="label-group">
+            <span className="label">날짜</span>
+            <img src={iconPrev} alt="아래 화살표" className="icon-arrow-down" />
+          </div>
+            
+            <span className="date-select">{formatFullDate(travelDate)}</span>
           </button>
 
-          <div className="placeVisited-container">
+          <div className="adress-container">
             <button
               type="button"
-              className="input-button placeVisited-button"
-              onClick={() => navigate('/search', { state: { fromWrite: true, postId: postId } })}
+              className="input-button adress-button"
+              // 위치 선택 버튼 클릭 시 예시
+              onClick={() => navigate('/search', {
+                state: {
+                  fromWrite: true,
+                  currentWriteState: {
+                    title, content, date, category, adress, withWhoTag, forWhatTag, emotionTags
+                  }
+                }
+              })}
             >
-              <span className="placeVisited-text">{placeVisited || '위치'}</span>
+              <span className="adress-text">{adress.place_name || '위치'}</span>
             </button>
             <img src={iconPrev} alt="아래 화살표" className="icon-arrow-down-fixed" />
           </div>
         </div>
 
-        {/* 카테고리 한 줄 */}
         <div className="row category-row">
           <button
             type="button"
             className={`input-button ${category ? '' : 'placeholder'}`}
-            onClick={() => setModalOpen('category')}
+            onClick={() => {
+              setModalOpen('category');
+              setSelectedCategoryKey(category);
+            }}
           >
             <div className="label-group">
               <span className="label">카테고리</span>
               <img src={iconPrev} alt="아래 화살표" className="icon-arrow-down" />
             </div>
             <span className="category-select">
-              {category.startsWith('custom:')
-                ? category.replace('custom:', '')
-                : category === 'food'
-                  ? '음식'
-                  : category === 'travel'
-                    ? '여행'
-                    : category === 'daily'
-                      ? '일상'
-                      : category === 'experience'
-                        ? '체험'
-                        : ''}
+              {categoryOptions.find(opt => opt.key === category)?.label || ''}
             </span>
           </button>
         </div>
 
-        {/* 누구와 갔나요? */}
         <div className="row label-tag-row">
           <p className="label">누구와 갔나요?</p>
           <div className="tag-group">
             {['혼자', '친구', '가족', '연인'].map((tag, i) => (
               <button
                 key={i}
-                className={`tag-button ${companions === tag ? 'selected' : ''}`}
-                onClick={() => setCompanions(tag)}
+                className={`tag-button ${withWhoTag === tag ? 'selected' : ''}`}
+                onClick={() => setwithWhoTag(tag)}
               >
                 {tag}
               </button>
@@ -321,15 +431,29 @@ export default function WritePage() {
           </div>
         </div>
 
-        {/* 왜 갔나요? */}
         <div className="row label-tag-row">
           <p className="label">왜 갔나요?</p>
+          <div className="tag-group">
+            {['업무', '세미나', '학교', '힐링', '공부', '식도락'].map((tag, i) => (
+              <button
+                key={i}
+                className={`tag-button ${forWhatTag === tag ? 'selected' : ''}`}
+                onClick={() => setforWhatTag(tag)}
+              >
+                {tag}
+              </button>
+            ))}
+          </div>
+        </div>
+        
+        <div className="row label-tag-row">
+          <p className="label">어떤 감정이었나요?</p>
           <div className="tag-group">
             {['행복', '설렘', '만족감', '충만함', '평온함', '여유로움', '감동', '벅차오름', '친근함', '따듯함'].map((tag, i) => (
               <button
                 key={i}
-                className={`tag-button ${emotions === tag ? 'selected' : ''}`}
-                onClick={() => setEmotions(tag)}
+                className={`tag-button ${emotionTags.includes(tag) ? 'selected' : ''}`}
+                onClick={() => handleEmotionTagClick(tag)}
               >
                 {tag}
               </button>
@@ -337,7 +461,6 @@ export default function WritePage() {
           </div>
         </div>
 
-        {/* 사진 미리보기 */}
         <div
           className="photo-placeholder"
           style={{
@@ -347,7 +470,14 @@ export default function WritePage() {
           {previewUrls.length === 0 ? (
             <div
               className="photo-placeholder clickable"
-              onClick={() => navigate('/upload-photo')}
+              onClick={() => navigate('/upload-photo', {
+                state: {
+                  fromWrite: true,
+                  currentWriteState: {
+                    title, content, date, category, adress, withWhoTag, forWhatTag, emotionTags
+                  }
+                }
+              })}
             >
               <div className="placeholder-content">
                 <div className="plus-icon">+</div>
@@ -368,7 +498,14 @@ export default function WritePage() {
           )}
         </div>
 
-        {/* 내용 텍스트 */}
+        <input
+          type="text"
+          value={title}
+          onChange={e => setTitle(e.target.value)}
+          placeholder="제목을 입력하세요."
+          className="input-title"
+        />
+
         <textarea
           value={content}
           onChange={e => setContent(e.target.value)}
@@ -379,117 +516,86 @@ export default function WritePage() {
         />
       </div>
 
-      {/* 하단 버튼 */}
       <div className="bottom-action-buttons">
         <button className="btn-ai">AI 도구</button>
-        <button className="btn-camera" onClick={() => navigate('/upload-photo')}>
+        <button className="btn-camera" 
+          onClick={() => navigate('/upload-photo', {
+            state: {
+              fromWrite: true,
+              currentWriteState: {
+                title, content, date, category, adress, withWhoTag, forWhatTag, emotionTags
+              }
+            }
+          })}
+        >
           <img src={iconCamera} alt="카메라" />
         </button>
       </div>
 
-      {/* 모달 */}
       {modalOpen && (
         <div className="modal-backdrop" onClick={closeModal}>
           <div className="modal-content" onClick={e => e.stopPropagation()}>
             <div className="modal-inner">
 
-              {/* 모달 상단 헤더 (닫기 버튼 포함) */}
               <div className="modal-header">
                 <button className="modal-close-x" onClick={closeModal}>
                   <img src={iconExit} alt="닫기" />
                 </button>
               </div>
 
-              {/* 모달 컨텐츠 영역 */}
-              {/* 날짜 선택 */}
               {modalOpen === 'date' && (
                 <>
-                  {/* 상단에 표시되는 선택된 날짜 */}
                   <div className="modal-custom-date-header">
                     <span className="date-title">날짜 : </span>
-                    {selectedDate ? (
+                    {travelDate ? (
                       <>
-                        <span className="year">{selectedDate.getFullYear()}년</span>
-                        <span className="month">{selectedDate.getMonth() + 1}월</span>
-                        <span className="date">{selectedDate.getDate()}일</span>
+                        <span className="year">{travelDate.getFullYear()}년</span>
+                        <span className="month">{travelDate.getMonth() + 1}월</span>
+                        <span className="date">{travelDate.getDate()}일</span>
                       </>
                     ) : (
                       <span>선택된 날짜가 없습니다</span>
                     )}
                   </div>
 
-                  {/* 실제 달력 라이브러리 */}
                   <ReactCalendar
                     onChange={(value) => {
-                      setSelectedDate(value)
+                      settravelDate(value)
                       setDate(formatDateToLocalISO(value))
                     }}
-                    value={selectedDate || new Date()}
+                    value={travelDate || new Date()}
                     showNeighboringMonth={false}
                     prev2Label={null}
                     next2Label={null}
-                  // locale="ko-KR"
                   />
                 </>
               )}
 
-              {/* 카테고리 선택 */}
               {modalOpen === 'category' && (
                 <div className="modal-category-list custom-grid">
-                  {/* 2x2 grid 버튼 */}
-                  {[
-                    { value: 'food', label: '음식' },
-                    { value: 'travel', label: '여행' },
-                    { value: 'daily', label: '일상' },
-                    { value: 'experience', label: '체험' },
-                  ].map(opt => (
+                  {categoryOptions.map(({ key, label }) => (
                     <button
-                      key={opt.value}
-                      className={`modal-category-item ${category === opt.value ? 'selected' : ''
-                        }`}
+                      key={key}
+                      className={`modal-category-item ${selectedCategoryKey === key ? 'selected' : ''}`}
                       onClick={() => {
-                        setCategory(opt.value);
-                        setCustomCategory('');
+                        setSelectedCategoryKey(key);
                       }}
                     >
-                      {opt.label}
+                      {label}
                     </button>
                   ))}
-
-                  {/* 기타 입력 - 버튼 자체가 입력으로 변하는 방식 */}
-                  <div className="custom-category-full">
-                    {category.startsWith('custom:') ? (
-                      <input
-                        type="text"
-                        placeholder="카테고리 입력"
-                        className="modal-input-placeVisited full-width"
-                        value={customCategory || category.replace('custom:', '')}
-                        onChange={(e) => setCustomCategory(e.target.value)}
-                      />
-                    ) : (
-                      <button
-                        className="modal-category-item full-width"
-                        onClick={() => {
-                          setCategory('custom:');
-                          setCustomCategory('');
-                        }}
-                      >
-                        기타 : 직접 입력하기
-                      </button>
-                    )}
-
-                  </div>
                 </div>
               )}
-
-              <button className="modal-close-btn" onClick={closeModal}>
+              <button 
+                className="modal-close-btn"
+                onClick={modalOpen === 'category' ? handleCategoryModalClose : closeModal}
+              >
                 설정
               </button>
             </div>
           </div>
         </div>
       )}
-
     </div>
-  )
+  );
 }

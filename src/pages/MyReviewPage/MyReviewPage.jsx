@@ -50,11 +50,11 @@ export default function MyReviewPage() {
                   )}
                 </div>
                 <div className="post-details">
-                  <h3>{post.placeVisited || '장소 정보 없음'}</h3>
+                  <h3>{post.adress || '장소 정보 없음'}</h3>
                   <p className="post-content-preview">{post.content.substring(0, 50)}...</p>
                   <div className="post-meta-preview">
-                    <span>#{post.companions}</span>
-                    <span>#{post.emotions}</span>
+                    <span>#{post.withWhoTag}</span>
+                    <span>#{post.emotionTags}</span>
                   </div>
                 </div>
 
