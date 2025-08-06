@@ -5,7 +5,7 @@
     padding-left: 16px;
     padding-right: 16px;
     box-sizing: border-box;
-    position: fixed;
+    position: sticky;
     top: 50px;
     display: flex;
     justify-content: space-between;

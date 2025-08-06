@@ -7,6 +7,7 @@ import iconPrev from '../../assets/icons/common/icon-prev.svg';
 import iconCamera from '../../assets/icons/common/icon-camera.svg';
 import iconExit from '../../assets/icons/common/icon-exit.svg';
 import './WritePage.css';
+import Statusbar from '../../components/statusBar';
 
 export default function WritePage() {
   const navigate = useNavigate();
@@ -378,7 +379,7 @@ try {
               className="input-button adress-button"
               onClick={() => navigate('/search', { state: { fromWrite: true, postId: postId } })}
             >
-              <span className="adress-text">{adress || '위치'}</span>
+              <span className="adress-text">{adress.place_name || '위치'}</span>
             </button>
             <img src={iconPrev} alt="아래 화살표" className="icon-arrow-down-fixed" />
           </div>

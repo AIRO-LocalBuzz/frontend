@@ -10,6 +10,7 @@ const LoginPage = () => {
         navigate('/home');
     };
 
+
     return (
         <>
             <section className='login'>
@@ -41,7 +42,9 @@ const LoginPage = () => {
                     </div>
                     <div className='signup'>
                         <div className='email'>
-                            <button className='kakao'>
+                            <button
+                                className='kakao'
+                            >
                                 <div className='kakao_container'>
                                     <img
                                         className='kakao_logo'

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { usePhoto } from '../../contexts/PhotoContext'
 import './PhotoUploadPage.css'
+import Statusbar from '../../components/statusBar'
 
 export default function PhotoUploadPage() {
   const navigate = useNavigate()
@@ -92,19 +93,20 @@ export default function PhotoUploadPage() {
 
   return (
     <div className="upload-page">
+      <Statusbar />
       {/* 헤더 */}
       <div className="upload-header">
         <button className="header-btn" onClick={handleCancel}>✕</button>
         <div className="header-title">
-            {selectedIndexes.length > 0 ? `${selectedIndexes.length}장 선택됨 (최대 10장)` : '사진 선택'}
+          {selectedIndexes.length > 0 ? `${selectedIndexes.length}장 선택됨 (최대 10장)` : '사진 선택'}
         </div>
-      <button
-        className={`header-btn complete ${isChanged() ? 'active' : ''}`}
-        onClick={handleComplete}
-        disabled={!isChanged()}
-      >
-        <span>완료</span>
-      </button>
+        <button
+          className={`header-btn complete ${isChanged() ? 'active' : ''}`}
+          onClick={handleComplete}
+          disabled={!isChanged()}
+        >
+          <span>완료</span>
+        </button>
       </div>
 
       {/* 사진 업로드 버튼 */}
@@ -119,7 +121,7 @@ export default function PhotoUploadPage() {
         />
         <label htmlFor="fileInput" className="custom-upload-button">
           <span className="upload-text">
-              {selectedIndexes.length > 0 ? `사진 추가하기` : '사진 고르기'}
+            {selectedIndexes.length > 0 ? `사진 추가하기` : '사진 고르기'}
           </span>
         </label>
         {selectedIndexes.length > 0 && (
