@@ -13,11 +13,10 @@ export default function WritePage() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const prevPreviewUrlsRef = useRef([]);
   const [searchParams] = useSearchParams();
   const postId = searchParams.get('id');
   const isNewWrite = searchParams.get('new') === 'true';
-
+  
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [date, setDate] = useState('');
@@ -28,11 +27,13 @@ export default function WritePage() {
   const [forWhatTag, setforWhatTag] = useState('');
   const [emotionTags, setemotionTags] = useState([]);
   
+  // 딱 한 번만 초기화되도록 useRef 추가
+  const initializedRef = useRef(false);
+  const prevPreviewUrlsRef = useRef([]);
+
   const [loading, setLoading] = useState(false);
   const { selectedPhotos, setSelectedPhotos, resetPhotos } = usePhoto();
   const [previewUrls, setPreviewUrls] = useState([]);
-
-  const [placeInitDone, setPlaceInitDone] = useState(false);
 
   const withWhoTagMap = {
     '혼자': 'ALLONE',
@@ -41,7 +42,6 @@ export default function WritePage() {
     '연인': 'PARTNER',
   };
 
-  // 💡 PostForWhatTag 열거형에 맞춰 forWhatTagMap 수정
   const forWhatTagMap = {
     '업무': 'WORK',
     '세미나': 'SEMINAR',
@@ -74,53 +74,88 @@ export default function WritePage() {
     { key: 'leisure', label: '여가', value: 'LEISURE' },
   ];
 
-useEffect(() => {
-  if (selectedPhotos.length === 0) {
-    if (prevPreviewUrlsRef.current.length !== 0) {
-      setPreviewUrls([]);
-      prevPreviewUrlsRef.current = [];
-    }
-    return;
-  }
-
-  const isFileArray = selectedPhotos[0] instanceof File;
-
-  if (!isFileArray) {
-    const isSame = prevPreviewUrlsRef.current.length === selectedPhotos.length &&
-      prevPreviewUrlsRef.current.every((url, i) => url === selectedPhotos[i]);
-    if (!isSame) {
-      setPreviewUrls(selectedPhotos);
-      prevPreviewUrlsRef.current = selectedPhotos;
-    }
-    return;
-  }
-
-  const newUrls = selectedPhotos.map(file => URL.createObjectURL(file));
-  const isSameFiles = prevPreviewUrlsRef.current.length === newUrls.length &&
-    prevPreviewUrlsRef.current.every((url, i) => url === newUrls[i]);
-
-  if (!isSameFiles) {
-    setPreviewUrls(newUrls);
-    prevPreviewUrlsRef.current = newUrls;
-  }
-
-  return () => {
-    newUrls.forEach(url => URL.revokeObjectURL(url));
-  };
-}, [selectedPhotos]);
-
-const images = previewUrls.map(url => ({
-  imageUrl: url.replace(/^blob:/, ''),  // 'blob:' 접두사 제거
-  mimeType: 'image/jpeg',               // 필요시 확장자 기반으로 변경 가능
-}));
-
   useEffect(() => {
-    if (location.state?.selectedPlace && !placeInitDone) {
-      setadress(location.state.selectedPlace);
-      setPlaceInitDone(true);
-      window.history.replaceState({}, document.title, location.pathname);
+
+    if (selectedPhotos.length === 0) {
+      if (prevPreviewUrlsRef.current.length !== 0) {
+        setPreviewUrls([]);
+        prevPreviewUrlsRef.current = [];
+      }
+      return;
     }
-  }, [location.state?.selectedPlace, placeInitDone]);
+
+    const isFileArray = selectedPhotos[0] instanceof File;
+
+    if (!isFileArray) {
+      const isSame = prevPreviewUrlsRef.current.length === selectedPhotos.length &&
+        prevPreviewUrlsRef.current.every((url, i) => url === selectedPhotos[i]);
+      if (!isSame) {
+        setPreviewUrls(selectedPhotos);
+        prevPreviewUrlsRef.current = selectedPhotos;
+      }
+      return;
+    }
+
+    const newUrls = selectedPhotos.map(file => URL.createObjectURL(file));
+    const isSameFiles = prevPreviewUrlsRef.current.length === newUrls.length &&
+      prevPreviewUrlsRef.current.every((url, i) => url === newUrls[i]);
+
+    if (!isSameFiles) {
+      setPreviewUrls(newUrls);
+      prevPreviewUrlsRef.current = newUrls;
+    }
+
+    return () => {
+      console.log('[디버그] selectedPhotos 변경됨', selectedPhotos);
+      newUrls.forEach(url => URL.revokeObjectURL(url));
+    };
+  }, [selectedPhotos]);
+
+  const images = previewUrls.map(url => ({
+    imageUrl: url.replace(/^blob:/, ''),  // 'blob:' 접두사 제거
+    mimeType: 'image/jpeg',               // 필요시 확장자 기반으로 변경 가능
+  }));
+
+// WritePage.jsx 파일 내부
+useEffect(() => {
+  const state = location.state;
+  if (!state) return;
+
+  console.log('✅ location.state 복원:', state);
+
+  // 복원할 데이터가 담긴 객체를 찾습니다.
+  // SearchPage에서 돌아온 경우, state.selectedPlace와 state.currentWriteState를 모두 사용
+  // PhotoUploadPage에서 돌아온 경우, state 자체에 데이터가 있을 수도 있습니다.
+  const dataToRestore = state.currentWriteState || state;
+
+  if (dataToRestore) {
+    if (state.selectedPlace) {
+      // 위치는 selectedPlace에서 가져옴
+      setadress(state.selectedPlace);
+    } else if (dataToRestore.adress) {
+      // 그 외의 경우 currentWriteState 또는 state에서 가져옴
+      setadress(dataToRestore.adress);
+    }
+    
+    // 나머지 필드들은 dataToRestore 객체에서 가져와 복원
+    if (dataToRestore.title) setTitle(dataToRestore.title);
+    if (dataToRestore.content) setContent(dataToRestore.content);
+    if (dataToRestore.category) setCategory(dataToRestore.category);
+    if (dataToRestore.date) setDate(dataToRestore.date);
+    if (dataToRestore.withWhoTag) setwithWhoTag(dataToRestore.withWhoTag);
+    if (dataToRestore.forWhatTag) setforWhatTag(dataToRestore.forWhatTag);
+    if (dataToRestore.emotionTags) setemotionTags(dataToRestore.emotionTags);
+    
+    // 이 코드는 PhotoUploadPage에서 돌아왔을 때의 로직을 처리하는 부분입니다.
+    // usePhoto 컨텍스트를 사용하므로 이 부분은 필요 없을 수 있습니다.
+    // if (dataToRestore.selectedPhotos) setSelectedPhotos(dataToRestore.selectedPhotos);
+
+    // 복원이 완료된 후 state를 제거하여 새로고침 시 초기화 방지
+    window.history.replaceState({}, document.title, location.pathname);
+    }
+}, [location.state, setSelectedPhotos]);
+
+
 
   useEffect(() => {
     if (!postId) return;
@@ -159,8 +194,18 @@ const images = previewUrls.map(url => ({
     fetchPost();
   }, [postId, navigate, setSelectedPhotos]);
 
+
   useEffect(() => {
-    if (isNewWrite) {
+    // '처음 새 글쓰기 페이지에 들어왔을 때만 초기화' 되게 함
+    const isFreshStart =
+      isNewWrite &&
+      !location.state?.selectedPlace &&
+      !location.state?.fromPhoto &&
+      !initializedRef.current;
+
+    if (isFreshStart) {
+      console.log('✅ 초기화 실행됨');
+
       setTitle('');
       setContent('');
       setCategory('');
@@ -173,8 +218,11 @@ const images = previewUrls.map(url => ({
       setSelectedPhotos([]);
       setPreviewUrls([]);
       resetPhotos();
+
+      initializedRef.current = true;
     }
-  }, [isNewWrite, resetPhotos, setSelectedPhotos]);
+  }, [isNewWrite, location.state, resetPhotos, setSelectedPhotos]); // 의존성 배열에 location.state 추가
+
 
   useEffect(() => {
     if (date) {
@@ -245,73 +293,28 @@ const images = previewUrls.map(url => ({
       return;
     }
 
-    // const postData = {
-    //   title,
-    //   content,
-    //   status: "PUBLISHED",
-    //   withWhoTag: withWhoTagMap[withWhoTag] || '',
-    //   forWhatTag: forWhatTagMap[forWhatTag] || '',
-    //   emotionTags: emotionTags.map(tag => emotionMap[tag]),
-    //   category: categoryOptions.find(opt => opt.key === category)?.value || '',
-    //   travelDate: date,
-    //   adress,
-    //   images: imagesData, // 💡 images 필드 추가
-    //   isFeatured: false, 
-    // };
-    
-    // const postData = {
-    //   "title": "강릉 분위기 좋은 카페",
-    //   "content": "정말 좋은 여행이었습니다...",
-    //   "status": "PUBLISHED",
-    //   "withWhoTag": "FRIEND",
-    //   "forWhatTag": "HEALING",
-    //   "emotionTags": [
-    //     "EXCITED",
-    //     "JOYFUL"
-    //   ],
-    //   "category": "CAFE",
-    //   "travelDate": "2025-08-02",
-    //   "adress": "강릉",
-    //   "images": [
-    //     {
-    //       "imageUrl": "https://example.com/image1.jpg",
-    //       "mimeType": "image/jpeg"
-    //     },
-    //     {
-    //       "imageUrl": "https://example.com/image2.png",
-    //       "mimeType": "image/png"
-    //     }
-    //   ],
-    //   "isFeatured": false
-    // };'
-
-    // const imagesData = selectedPhotos.map(file => ({
-    //   imageUrl: file instanceof File ? `temp-url/${file.name}` : file,
-    //   mimeType: file instanceof File ? file.type : 'image/jpeg',
-    // }));
-
     const postData = {
-  title,
-  content,
-  status: "PUBLISHED", // 또는 조건에 따라 변경 가능
-  withWhoTag: withWhoTagMap[withWhoTag] || '',
-  forWhatTag: forWhatTagMap[forWhatTag] || '',
-  emotionTags: emotionTags.map(tag => emotionMap[tag]).filter(Boolean),
-  category: categoryOptions.find(opt => opt.key === category)?.value || '',
-  travelDate: date,
-  adress,
-  images: images, // images는 URL 문자열 배열 등 JSON에 포함될 데이터 형태여야 함
-  isFeatured: false
-};
+    title,
+    content,
+    status: "PUBLISHED", // 또는 조건에 따라 변경 가능
+    withWhoTag: withWhoTagMap[withWhoTag] || '',
+    forWhatTag: forWhatTagMap[forWhatTag] || '',
+    emotionTags: emotionTags.map(tag => emotionMap[tag]).filter(Boolean),
+    category: categoryOptions.find(opt => opt.key === category)?.value || '',
+    travelDate: date,
+    adress,
+    images: images, // images는 URL 문자열 배열 등 JSON에 포함될 데이터 형태여야 함
+    isFeatured: false
+    };
 
-console.log("전송될 JSON 데이터:", JSON.stringify(postData, null, 2));
+  console.log("전송될 JSON 데이터:", JSON.stringify(postData, null, 2));
 
-try {
-  const headers = {
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${accessToken}`,
-  };
-  
+  try {
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${accessToken}`,
+    };
+    
   const response = await fetch(
     postId
       ? `https://airo-buzz.shop/api/v1/posts/${postId}`
@@ -329,19 +332,20 @@ try {
     throw new Error(errorData.message || '게시물 저장 실패');
   }
 
-  const savedPost = await response.json();
-  console.log("response :: ",savedPost.id);
-  navigate(`/detail/${savedPost.id}`);
-} catch (e) {
-  console.error('게시물 제출 실패:', e);
-  alert(e.message || '게시물 저장에 실패했습니다.');
-} finally {
-  setLoading(false);
-}
-  };
+    const savedPost = await response.json();
+    console.log("response :: ",savedPost.id);
+    navigate(`/detail/${savedPost.id}`);
+  } catch (e) {
+    console.error('게시물 제출 실패:', e);
+    alert(e.message || '게시물 저장에 실패했습니다.');
+  } finally {
+    setLoading(false);
+  }
+    };
 
   return (
     <div className="write-page">
+      <Statusbar />
       <header className="write-header">
         <div className="write-header-left">
           <button className="icon-button" onClick={() => navigate('/review')}>
@@ -377,7 +381,15 @@ try {
             <button
               type="button"
               className="input-button adress-button"
-              onClick={() => navigate('/search', { state: { fromWrite: true, postId: postId } })}
+              // 위치 선택 버튼 클릭 시 예시
+              onClick={() => navigate('/search', {
+                state: {
+                  fromWrite: true,
+                  currentWriteState: {
+                    title, content, date, category, adress, withWhoTag, forWhatTag, emotionTags
+                  }
+                }
+              })}
             >
               <span className="adress-text">{adress.place_name || '위치'}</span>
             </button>
@@ -458,7 +470,14 @@ try {
           {previewUrls.length === 0 ? (
             <div
               className="photo-placeholder clickable"
-              onClick={() => navigate('/upload-photo')}
+              onClick={() => navigate('/upload-photo', {
+                state: {
+                  fromWrite: true,
+                  currentWriteState: {
+                    title, content, date, category, adress, withWhoTag, forWhatTag, emotionTags
+                  }
+                }
+              })}
             >
               <div className="placeholder-content">
                 <div className="plus-icon">+</div>
@@ -499,7 +518,16 @@ try {
 
       <div className="bottom-action-buttons">
         <button className="btn-ai">AI 도구</button>
-        <button className="btn-camera" onClick={() => navigate('/upload-photo')}>
+        <button className="btn-camera" 
+          onClick={() => navigate('/upload-photo', {
+            state: {
+              fromWrite: true,
+              currentWriteState: {
+                title, content, date, category, adress, withWhoTag, forWhatTag, emotionTags
+              }
+            }
+          })}
+        >
           <img src={iconCamera} alt="카메라" />
         </button>
       </div>

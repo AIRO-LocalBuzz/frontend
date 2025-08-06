@@ -248,7 +248,7 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
   /* 기존 12px → 8px 또는 4px */
   padding-top: 4px;
   /* 선택 사항: 위 여백 조금 줄이기 */

@@ -14,14 +14,13 @@ const SearchPage = ({ isKakaoMapLoaded }) => {
   const [searchKeyword, setSearchKeyword] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [selectedPlace, setSelectedPlace] = useState(null);
-  const [currentPosition, setCurrentPosition] = useState(null);
 
   // 사용자 정의 SVG 아이콘 데이터 (노란색으로 채워진 핀 모양으로 통일)
   const markerSvgIcon = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23FFC400' stroke='%23FFC400' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z'%3E%3C/path%3E%3Ccircle cx='12' cy='9' r='3' fill='%23fff' stroke='%23FFC400' stroke-width='1.5'/%3E%3C/svg%3E`;
 
   // 지도 초기화 및 현재 위치 가져오기
   useEffect(() => {
-    console.log(isKakaoMapLoaded);
+    console.log("isKakaoMapLoaded: ", isKakaoMapLoaded);
 
     if (isKakaoMapLoaded && mapContainer.current) {
       console.log("카카오 맵 API 로딩 완료, 지도 초기화 시작");
@@ -32,7 +31,6 @@ const SearchPage = ({ isKakaoMapLoaded }) => {
             const lat = position.coords.latitude;
             const lon = position.coords.longitude;
             const pos = new window.kakao.maps.LatLng(lat, lon);
-            setCurrentPosition(pos);
 
             const options = {
               center: pos,
@@ -83,7 +81,7 @@ const SearchPage = ({ isKakaoMapLoaded }) => {
   const searchPlaces = () => {
     if (!psRef.current || !mapRef.current) return;
 
-    psRef.current.keywordSearch(searchKeyword, (data, status, pagination) => {
+    psRef.current.keywordSearch(searchKeyword, (data, status) => {
       if (status === window.kakao.maps.services.Status.OK) {
         setSearchResults(data);
         displayPlaces(data);
@@ -137,42 +135,45 @@ const SearchPage = ({ isKakaoMapLoaded }) => {
     }
   };
 
-  const handleComplete = () => {
-    if (selectedPlace) {
-      const postId = location.state?.postId;
-      const navigateTo = postId ? `/write?id=${postId}` : '/write';
-
-      // 객체 대신 place_name 문자열만 전달
-      navigate(navigateTo, {
-        state: { selectedPlace: selectedPlace.place_name },
-      });
-    }
+  // '취소' 버튼 핸들러
+  const handleCancel = () => {
+    // location.state에 있는 이전 데이터를 그대로 가지고 WritePage로 돌아갑니다.
+    const prevState = location.state || {};
+    const navigateTo = '/write';
+    navigate(navigateTo, { state: prevState });
   };
 
+  // 장소 목록에서 클릭 시, 장소 선택만 하고 페이지 이동은 하지 않음
   const handlePlaceSelect = (place) => {
-    // location.state에서 postId를 가져옵니다.
-    const postId = location.state?.postId;
-
-    // 장소 선택 상태 업데이트
     setSelectedPlace(place);
 
-    // 지도 중심 이동
     if (mapRef.current) {
       const moveLatLon = new window.kakao.maps.LatLng(place.y, place.x);
       mapRef.current.setCenter(moveLatLon);
       mapRef.current.setLevel(3);
     }
+  };
 
-    // postId가 있으면 '/detail?id={postId}'로, 없으면 '/write'로 이동합니다.
-    const navigateTo = postId ? `/write?id=${postId}` : '/write';
+  // '선택 완료' 버튼 핸들러
+  const handleComplete = () => {
+    if (!selectedPlace) return;
 
-    // 장소 데이터를 state에 담아 WritePage로 전달합니다.
+    const prevState = location.state || {};
+    const navigateTo = '/write';
+
+    console.log("navigate 전 location.state:", prevState);
+    console.log("선택된 장소:", selectedPlace);
+
+    // 이전 상태와 선택된 장소 정보를 함께 넘겨줍니다.
     navigate(navigateTo, {
       state: {
-        selectedPlace: place,
+        ...prevState,
+        selectedPlace: selectedPlace,
+        fromSearch: true,
       },
     });
   };
+
 
   if (!isKakaoMapLoaded) {
     return (
@@ -186,9 +187,10 @@ const SearchPage = ({ isKakaoMapLoaded }) => {
     <div className="search-page-container">
       <Statusbar />
       <header className="search-header">
-        <button onClick={() => navigate(-1)} className="cancel-button">
+        <button onClick={handleCancel} className="cancel-button">
           <X size={24} />
         </button>
+
         <h1 className="search-title">장소 검색</h1>
         <button
           className={`complete-button ${selectedPlace ? 'active' : 'inactive'}`}
