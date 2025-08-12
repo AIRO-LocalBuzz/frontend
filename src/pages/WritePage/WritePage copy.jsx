@@ -23,7 +23,7 @@ export default function WritePage() {
   const [adress, setadress] = useState('');
   const [withWhoTag, setwithWhoTag] = useState('');
   const [emotionTags, setemotionTags] = useState('');
-  
+
   const [loading, setLoading] = useState(false);
   const { selectedPhotos, setSelectedPhotos, resetPhotos } = usePhoto();
   const [previewUrls, setPreviewUrls] = useState([]);
@@ -66,7 +66,7 @@ export default function WritePage() {
             'Authorization': `Bearer ${accessToken}`
           }
         });
-        
+
         if (!response.ok) {
           throw new Error('Failed to fetch post');
         }
@@ -80,7 +80,7 @@ export default function WritePage() {
         setadress(postToEdit.adress || '');
         setwithWhoTag(postToEdit.withWhoTag || '');
         setemotionTags(postToEdit.emotionTags || '');
-        setSelectedPhotos(postToEdit.images || []); 
+        setSelectedPhotos(postToEdit.images || []);
 
       } catch (error) {
         console.error("Error fetching post:", error);
@@ -92,7 +92,7 @@ export default function WritePage() {
     if (postId) {
       fetchPost();
     }
-    
+
     // 3. 새 글쓰기 모드일 경우
     else if (isNewWrite) {
       setTitle('');
@@ -120,7 +120,7 @@ export default function WritePage() {
       settravelDate(null);
     }
   }, [date]);
-  
+
   // 날짜 포맷 함수
   const formatFullDate = (dateObj) => {
     if (!dateObj || isNaN(dateObj.getTime())) return '';
@@ -128,7 +128,7 @@ export default function WritePage() {
     const month = dateObj.getMonth() + 1;
     const date = dateObj.getDate();
     const weekday = ['일', '월', '화', '수', '목', '금', '토'][dateObj.getDay()];
-    return `${year-2000}년 ${month}월 ${date}일 ${weekday}요일`;
+    return `${year - 2000}년 ${month}월 ${date}일 ${weekday}요일`;
   };
 
   function formatDateToLocalISO(date) {
@@ -157,7 +157,7 @@ export default function WritePage() {
       alert('필수 정보를 모두 입력해주세요.'); // 필수 정보 누락 시 알림
       return;
     }
-    
+
     setLoading(true);
 
     const postData = {
@@ -178,7 +178,7 @@ export default function WritePage() {
       navigate('/login');
       return;
     }
-    
+
     try {
       let response;
       const headers = {
@@ -199,14 +199,14 @@ export default function WritePage() {
           body: JSON.stringify(postData),
         });
       }
-      
+
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || '게시물 저장 실패');
       }
 
       const savedPost = await response.json();
-      
+
       navigate(`/detail/${savedPost.id}`);
 
     } catch (e) {
@@ -246,11 +246,11 @@ export default function WritePage() {
             className="input-button date-button"
             onClick={() => setModalOpen('date')}
           >
-          <div className="label-group">
-            <span className="label">날짜</span>
-            <img src={iconPrev} alt="아래 화살표" className="icon-arrow-down" />
-          </div>
-            
+            <div className="label-group">
+              <span className="label">날짜</span>
+              <img src={iconPrev} alt="아래 화살표" className="icon-arrow-down" />
+            </div>
+
             <span className="date-select">{formatFullDate(travelDate)}</span>
           </button>
 
@@ -281,14 +281,14 @@ export default function WritePage() {
               {category.startsWith('custom:')
                 ? category.replace('custom:', '')
                 : category === 'food'
-                ? '음식'
-                : category === 'travel'
-                ? '여행'
-                : category === 'daily'
-                ? '일상'
-                : category === 'experience'
-                ? '체험'
-                : ''}
+                  ? '음식'
+                  : category === 'travel'
+                    ? '여행'
+                    : category === 'daily'
+                      ? '일상'
+                      : category === 'experience'
+                        ? '체험'
+                        : ''}
             </span>
           </button>
         </div>
@@ -425,7 +425,7 @@ export default function WritePage() {
                     showNeighboringMonth={false}
                     prev2Label={null}
                     next2Label={null}
-                    // locale="ko-KR"
+                  // locale="ko-KR"
                   />
                 </>
               )}
@@ -434,25 +434,24 @@ export default function WritePage() {
               {modalOpen === 'category' && (
                 <div className="modal-category-list custom-grid">
                   {/* 2x2 grid 버튼 */}
-                {[
-                  { value: 'food', label: '음식' },
-                  { value: 'travel', label: '여행' },
-                  { value: 'daily', label: '일상' },
-                  { value: 'experience', label: '체험' },
-                ].map(opt => (
-                  <button
-                    key={opt.value}
-                    className={`modal-category-item ${
-                      category === opt.value ? 'selected' : ''
-                    }`}
-                    onClick={() => {
-                      setCategory(opt.value);
-                      setCustomCategory('');
-                    }}
-                  >
-                    {opt.label}
-                  </button>
-                ))}
+                  {[
+                    { value: 'food', label: '음식' },
+                    { value: 'travel', label: '여행' },
+                    { value: 'daily', label: '일상' },
+                    { value: 'experience', label: '체험' },
+                  ].map(opt => (
+                    <button
+                      key={opt.value}
+                      className={`modal-category-item ${category === opt.value ? 'selected' : ''
+                        }`}
+                      onClick={() => {
+                        setCategory(opt.value);
+                        setCustomCategory('');
+                      }}
+                    >
+                      {opt.label}
+                    </button>
+                  ))}
 
                   {/* 기타 입력 - 버튼 자체가 입력으로 변하는 방식 */}
                   <div className="custom-category-full">

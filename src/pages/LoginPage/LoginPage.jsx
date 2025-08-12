@@ -1,15 +1,23 @@
 import React from 'react';
 import './LoginPage.css';
 import { useNavigate } from 'react-router-dom';
-import Statusbar from '../../components/statusBar';
+import { useSocialLogin } from '../../hooks/useSocialLogin';
+import Statusbar from '../../components/Statusbar/Statusbar';
 
 const LoginPage = () => {
     const navigate = useNavigate();
+    const { loginWithKakao, loginWithGoogle, isLoggedIn } = useSocialLogin();
+
+    // // 이미 로그인되어 있다면 홈으로 리다이렉트 (선택사항)
+    // React.useEffect(() => {
+    //     if (isLoggedIn()) {
+    //         navigate('/home');
+    //     }
+    // }, [isLoggedIn, navigate]);
 
     const handleStart = () => {
         navigate('/home');
     };
-
 
     return (
         <>
@@ -44,6 +52,7 @@ const LoginPage = () => {
                         <div className='email'>
                             <button
                                 className='kakao'
+                                onClick={loginWithKakao}
                             >
                                 <div className='kakao_container'>
                                     <img
@@ -54,7 +63,10 @@ const LoginPage = () => {
                                     <p>카카오로 시작하기</p>
                                 </div>
                             </button>
-                            <button className='google'>
+                            <button
+                                className='google'
+                                onClick={loginWithGoogle}
+                            >
                                 <div className='google_container'>
                                     <img
                                         className='google_logo'
@@ -74,7 +86,6 @@ const LoginPage = () => {
                             <p>가입하지 않고 둘러볼래요</p>
                         </button>
                     </div>
-
                 </div>
             </section>
         </>

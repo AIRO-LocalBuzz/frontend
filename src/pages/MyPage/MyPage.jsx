@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronRight, Bell } from 'lucide-react';
 import './MyPage.css';
-import Statusbar from '../../components/statusBar';
+import Statusbar from '../../components/Statusbar/Statusbar';
 
 const MyPage = () => {
   const navigate = useNavigate();

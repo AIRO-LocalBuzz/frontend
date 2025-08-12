@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ChevronLeft } from 'lucide-react';
 import './DetailPage.css';
-import Statusbar from '../../components/statusBar';
+import Statusbar from '../../components/Statusbar/Statusbar';
 
 // DetailPage 컴포넌트는 isKakaoMapLoaded를 prop으로 받습니다.
 export default function DetailPage({ isKakaoMapLoaded }) {
@@ -17,35 +17,35 @@ export default function DetailPage({ isKakaoMapLoaded }) {
   const markerSvgIcon = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23FFC400' stroke='%23FFC400' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z'%3E%3C/path%3E%3Ccircle cx='12' cy='9' r='3' fill='%23fff' stroke='%23FFC400' stroke-width='1.5'/%3E%3C/svg%3E`;
 
 
-useEffect(() => {
-  const fetchPost = async () => {
-    try {
-      const headers = {
-        'Authorization': `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzIiwiaWF0IjoxNzU0MTY1NzI3LCJleHAiOjM2MTc1NDE2NTcyN30.1E2JEdWvdSbChE0L9Jnp5ZP_X08Dy7XjYLIFv3GLcyI`,
-        'Content-Type': 'application/json',
-      };
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        const headers = {
+          'Authorization': `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzIiwiaWF0IjoxNzU0MTY1NzI3LCJleHAiOjM2MTc1NDE2NTcyN30.1E2JEdWvdSbChE0L9Jnp5ZP_X08Dy7XjYLIFv3GLcyI`,
+          'Content-Type': 'application/json',
+        };
 
-      const response = await fetch(`https://airo-buzz.shop/api/v1/posts/${id}`, {
-        method: 'GET',
-        headers,
-      });
-      console.log(response.body)
-      if (!response.ok) {
-        throw new Error('게시물 데이터를 불러오지 못했습니다.');
+        const response = await fetch(`https://airo-buzz.shop/api/v1/posts/${id}`, {
+          method: 'GET',
+          headers,
+        });
+        console.log(response.body)
+        if (!response.ok) {
+          throw new Error('게시물 데이터를 불러오지 못했습니다.');
+        }
+
+        const post = await response.json();
+        setPostData(post);
+      } catch (error) {
+        console.error('게시물 조회 오류:', error);
+        setPostData(null);
       }
+    };
 
-      const post = await response.json();
-      setPostData(post);
-    } catch (error) {
-      console.error('게시물 조회 오류:', error);
-      setPostData(null);
+    if (id) {
+      fetchPost();
     }
-  };
-
-  if (id) {
-    fetchPost();
-  }
-}, [id]);
+  }, [id]);
 
   // 지도 초기화
   useEffect(() => {
@@ -109,7 +109,7 @@ useEffect(() => {
     );
   }
 
-const {
+  const {
     content,
     date,
     placeVisited,
