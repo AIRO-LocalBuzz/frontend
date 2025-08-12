@@ -1,9 +1,9 @@
 import React from 'react';
-import './Nav.css';
+import './HomeNav.css';
 
 export default function Nav() {
     return (
-        <nav className='main_nav'>
+        <nav className='home_nav'>
             <img
                 className='localbuzz_logo'
                 src={`/src/assets/images/img-localbuzz.png`}

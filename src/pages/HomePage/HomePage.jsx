@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import Statusbar from '../../components/statusBar';
-import Nav from '../../components/Nav';
-import Banner from '../../components/Banner';
-import RegionSelect from '../../components/RegionSelect';
-import CategorySelect from '../../components/CategorySelect';
-import Review from '../../components/Review';
-import Lists from '../../components/Lists';
-import Modal from '../../components/Modal';
+import Statusbar from '../../components/Statusbar/Statusbar';
+import Nav from '../../components/HomeNav/HomeNav';
+import Banner from '../../components/Banner/Banner';
+import RegionSelect from '../../components/RegionSelect/RegionSelect';
+import CategorySelect from '../../components/CategorySelect/CategorySelect';
+import Review from '../../components/ReviewItem/ReviewItem';
+import Lists from '../../components/Lists/Lists';
+import Modal from '../../components/Modal/Modal';
 import './HomePage.css';
 
 const HomePage = () => {
