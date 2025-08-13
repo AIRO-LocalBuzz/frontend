@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Statusbar from '../../components/statusBar';
+import Statusbar from '../../components/Statusbar';
 import Nav from '../../components/Nav';
 import Banner from '../../components/Banner';
 import RegionSelect from '../../components/RegionSelect';

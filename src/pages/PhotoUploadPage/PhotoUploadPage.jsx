@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { usePhoto } from '../../contexts/PhotoContext'
 import './PhotoUploadPage.css'
-import Statusbar from '../../components/statusBar'
+import Statusbar from '../../components/Statusbar'
 
 export default function PhotoUploadPage() {
   const navigate = useNavigate()

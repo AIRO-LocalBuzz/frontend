@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ChevronLeft } from 'lucide-react';
 import './DetailPage.css';
-import Statusbar from '../../components/statusBar';
+import Statusbar from '../../components/Statusbar';
 
 // DetailPage 컴포넌트는 isKakaoMapLoaded를 prop으로 받습니다.
 export default function DetailPage({ isKakaoMapLoaded }) {
