@@ -7,7 +7,7 @@ import iconPrev from '../../assets/icons/common/icon-prev.svg';
 import iconCamera from '../../assets/icons/common/icon-camera.svg';
 import iconExit from '../../assets/icons/common/icon-exit.svg';
 import './WritePage.css';
-import Statusbar from '../../components/statusBar';
+import Statusbar from '../../components/Statusbar';
 
 export default function WritePage() {
   const navigate = useNavigate();
