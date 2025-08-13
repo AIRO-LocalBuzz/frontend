@@ -5,7 +5,7 @@ import heartIcon from '../../assets/icons/common/icon-heart.svg'
 import commentIcon from '../../assets/icons/common/icon-comment.svg'
 
 import './BeeHivePage.css';
-import Statusbar from '../../components/statusBar';
+import Statusbar from '../../components/Statusbar';
 
 function BeeHivePage() {
   const navigate = useNavigate();
