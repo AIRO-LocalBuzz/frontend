@@ -1,7 +1,7 @@
 import React from 'react';
 import './SplashPage.css';
 import { useNavigate } from 'react-router-dom';
-import Statusbar from '../../components/statusBar';
+import Statusbar from '../../components/StatusBar';
 
 const SplashPage = () => {
     const navigate = useNavigate();
