@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Search, MapPin, X } from 'lucide-react';
 import './SearchPage.css';
-import Statusbar from '../../components/Statusbar';
+import Statusbar from '../../components/Statusbar/Statusbar';
 
 const SearchPage = ({ isKakaoMapLoaded }) => {
   const navigate = useNavigate();

@@ -21,6 +21,10 @@ export default function BottomNav() {
         <img src={pathname === '/beehive' ? postIconActive : postIcon} alt="게시글" className="nav-icon" />
         <span>게시글</span>
       </NavLink>
+      <NavLink to="/my-review" className={({ isActive }) => isActive ? 'nav-item active' : 'nav-item'}>
+        <img src={pathname === '/my-review' ? myPageIconActive : myPageIcon} alt="꿀모으기" className="nav-icon" />
+        <span>꿀모으기</span>
+      </NavLink>
       <NavLink to="/mypage" className={({ isActive }) => isActive ? 'nav-item active' : 'nav-item'}>
         <img src={pathname === '/mypage' ? myPageIconActive : myPageIcon} alt="마이페이지" className="nav-icon" />
         <span>마이페이지</span>

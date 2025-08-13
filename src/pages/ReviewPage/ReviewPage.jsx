@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import './ReviewPage.css'; // ReviewPage 전용 CSS 파일
-import Statusbar from '../../components/Statusbar';
+import Statusbar from '../../components/Statusbar/Statusbar';
 
 export default function ReviewPage() {
   const navigate = useNavigate();
@@ -21,13 +21,13 @@ export default function ReviewPage() {
         navigate('/login');
         return;
       }
-      
+
       const response = await fetch('https://airo-buzz.shop/api/v1/posts', {
         headers: {
           'Authorization': `Bearer ${accessToken}`,
         },
       });
-      
+
       if (!response.ok) {
         throw new Error('게시물 목록을 불러오는 데 실패했습니다.');
       }
@@ -92,7 +92,7 @@ export default function ReviewPage() {
   if (error) {
     return <div className="review-page">오류: {error}</div>;
   }
-  
+
   return (
     <div className="review-page">
       <Statusbar />

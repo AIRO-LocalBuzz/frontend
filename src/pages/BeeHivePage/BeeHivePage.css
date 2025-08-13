@@ -1,18 +1,21 @@
 /* 전체 페이지 컨테이너 */
-.beehive-page {
+.beehive-container {
   font-family: 'Pretendard';
   background-color: #f8f8f8;
   padding: 0;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
+  width: 390px;
+  height: 812px;
+  overflow-x: hidden;
+}
+
+.beehive-container::-webkit-scrollbar {
+  display: none;
 }
 
 .main-content {
   padding: 16px;
-  overflow-y: auto;
   flex-grow: 1;
+  margin-bottom: 100px;
 }
 
 /* 헤더 */

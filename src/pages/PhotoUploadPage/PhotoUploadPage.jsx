@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { usePhoto } from '../../contexts/PhotoContext'
 import './PhotoUploadPage.css'
-import Statusbar from '../../components/Statusbar'
+import Statusbar from '../../components/Statusbar/Statusbar'
 
 export default function PhotoUploadPage() {
   const navigate = useNavigate()
@@ -85,7 +85,7 @@ export default function PhotoUploadPage() {
   const handleComplete = () => {
     const selected = selectedIndexes.map(i => allFiles[i]);
     setSelectedPhotos(selected);
-    
+
     // 이전 페이지의 state를 가져와서 WritePage로 돌아갈 때 함께 넘겨줍니다.
     const prevLocationState = window.history.state?.usr;
     navigate('/write', { state: prevLocationState });

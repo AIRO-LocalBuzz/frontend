@@ -1,7 +1,9 @@
 import React from 'react';
 import './SplashPage.css';
 import { useNavigate } from 'react-router-dom';
-import Statusbar from '../../components/Statusbar';
+import Statusbar from '../../components/Statusbar/Statusbar';
+import logoImg from '../../assets/images/common/img-localbuzz.png';
+import splashImg from '../../assets/images/splash/img-splash.gif';
 
 const SplashPage = () => {
     const navigate = useNavigate();
@@ -17,13 +19,13 @@ const SplashPage = () => {
                 <div className='splash_container'>
                     <img
                         className='localbuzz_logo'
-                        src={`/src/assets/images/img-localbuzz.png`}
+                        src={logoImg}
                         alt='localbuzz_logo'
                     />
                     <div className='img_container'>
                         <img
                             className='bee_gif'
-                            src={`/src/assets/images/img-splash.gif`}
+                            src={splashImg}
                         />
                     </div>
                     <div className='sub_txt'>

@@ -1,8 +1,6 @@
 // context/AuthContext.jsx
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-
-
 const AuthContext = createContext();
 
 export const useAuth = () => {
@@ -39,7 +37,7 @@ export const AuthProvider = ({ children }) => {
         provider
       });
     }
-    
+
     setIsLoading(false);
   }, []);
 
@@ -97,7 +95,7 @@ export const AuthProvider = ({ children }) => {
         'Content-Type': 'application/json'
       };
     }
-    
+
     return {
       'Authorization': `Bearer ${tokens.accessToken}`,
       'Content-Type': 'application/json'

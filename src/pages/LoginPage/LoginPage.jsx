@@ -2,7 +2,11 @@ import React from 'react';
 import './LoginPage.css';
 import { useNavigate } from 'react-router-dom';
 import { useSocialLogin } from '../../hooks/useSocialLogin';
-import Statusbar from '../../components/Statusbar';
+import Statusbar from '../../components/Statusbar/Statusbar';
+import beeImg from '../../assets/images/common/img-bee.png';
+import logoImg from '../../assets/images/common/img-localbuzz.png';
+import kakaoLogoImg from '../../assets/images/login/img-kakao_logo.png';
+import googleLogoImg from '../../assets/images/login/img-google_logo.png';
 
 const LoginPage = () => {
     const navigate = useNavigate();
@@ -27,7 +31,7 @@ const LoginPage = () => {
                     <div className='intro'>
                         <img
                             className='bee_img'
-                            src={`/src/assets/images/img-bee.png`}
+                            src={beeImg}
                             alt='localbuzz_character'
                         />
                         <div className='txt'>
@@ -37,7 +41,7 @@ const LoginPage = () => {
                             <div className='localbuzz_txt'>
                                 <img
                                     className='localbuzz_logo'
-                                    src={`/src/assets/images/img-localbuzz.png`}
+                                    src={logoImg}
                                     alt='localbuzz_logo'
                                 />
                                 <p>로컬버즈입니다 !</p>
@@ -57,20 +61,20 @@ const LoginPage = () => {
                                 <div className='kakao_container'>
                                     <img
                                         className='kakao_logo'
-                                        src={`/src/assets/images/img-kakao_logo.png`}
+                                        src={kakaoLogoImg}
                                         alt='kakao_logo'
                                     />
                                     <p>카카오로 시작하기</p>
                                 </div>
                             </button>
-                            <button 
+                            <button
                                 className='google'
                                 onClick={loginWithGoogle}
                             >
                                 <div className='google_container'>
                                     <img
                                         className='google_logo'
-                                        src={`/src/assets/images/img-google_logo.png`}
+                                        src={googleLogoImg}
                                         alt='google_logo'
                                     />
                                     <p>구글로 시작하기</p>
