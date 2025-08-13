@@ -2,7 +2,7 @@ import React from 'react';
 import './LoginPage.css';
 import { useNavigate } from 'react-router-dom';
 import { useSocialLogin } from '../../hooks/useSocialLogin';
-import Statusbar from '../../components/statusBar';
+import Statusbar from '../../components/StatusBar';
 
 const LoginPage = () => {
     const navigate = useNavigate();
