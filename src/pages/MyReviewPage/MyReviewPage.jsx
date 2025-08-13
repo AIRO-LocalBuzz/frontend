@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import './MyReviewPage.css'; // ReviewPage 전용 CSS 파일
-import Statusbar from '../../components/Statusbar';
+import Statusbar from '../../components/Statusbar/Statusbar';
 
 export default function MyReviewPage() {
   const navigate = useNavigate();

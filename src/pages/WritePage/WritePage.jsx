@@ -7,7 +7,7 @@ import iconPrev from '../../assets/icons/common/icon-prev.svg';
 import iconCamera from '../../assets/icons/common/icon-camera.svg';
 import iconExit from '../../assets/icons/common/icon-exit.svg';
 import './WritePage.css';
-import Statusbar from '../../components/Statusbar';
+import Statusbar from '../../components/Statusbar/Statusbar';
 
 export default function WritePage() {
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ export default function WritePage() {
   const [searchParams] = useSearchParams();
   const postId = searchParams.get('id');
   const isNewWrite = searchParams.get('new') === 'true';
-  
+
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [date, setDate] = useState('');
@@ -26,7 +26,7 @@ export default function WritePage() {
   const [withWhoTag, setwithWhoTag] = useState('');
   const [forWhatTag, setforWhatTag] = useState('');
   const [emotionTags, setemotionTags] = useState([]);
-  
+
   // 딱 한 번만 초기화되도록 useRef 추가
   const initializedRef = useRef(false);
   const prevPreviewUrlsRef = useRef([]);
@@ -116,44 +116,44 @@ export default function WritePage() {
     mimeType: 'image/jpeg',               // 필요시 확장자 기반으로 변경 가능
   }));
 
-// WritePage.jsx 파일 내부
-useEffect(() => {
-  const state = location.state;
-  if (!state) return;
+  // WritePage.jsx 파일 내부
+  useEffect(() => {
+    const state = location.state;
+    if (!state) return;
 
-  console.log('✅ location.state 복원:', state);
+    console.log('✅ location.state 복원:', state);
 
-  // 복원할 데이터가 담긴 객체를 찾습니다.
-  // SearchPage에서 돌아온 경우, state.selectedPlace와 state.currentWriteState를 모두 사용
-  // PhotoUploadPage에서 돌아온 경우, state 자체에 데이터가 있을 수도 있습니다.
-  const dataToRestore = state.currentWriteState || state;
+    // 복원할 데이터가 담긴 객체를 찾습니다.
+    // SearchPage에서 돌아온 경우, state.selectedPlace와 state.currentWriteState를 모두 사용
+    // PhotoUploadPage에서 돌아온 경우, state 자체에 데이터가 있을 수도 있습니다.
+    const dataToRestore = state.currentWriteState || state;
 
-  if (dataToRestore) {
-    if (state.selectedPlace) {
-      // 위치는 selectedPlace에서 가져옴
-      setadress(state.selectedPlace);
-    } else if (dataToRestore.adress) {
-      // 그 외의 경우 currentWriteState 또는 state에서 가져옴
-      setadress(dataToRestore.adress);
+    if (dataToRestore) {
+      if (state.selectedPlace) {
+        // 위치는 selectedPlace에서 가져옴
+        setadress(state.selectedPlace);
+      } else if (dataToRestore.adress) {
+        // 그 외의 경우 currentWriteState 또는 state에서 가져옴
+        setadress(dataToRestore.adress);
+      }
+
+      // 나머지 필드들은 dataToRestore 객체에서 가져와 복원
+      if (dataToRestore.title) setTitle(dataToRestore.title);
+      if (dataToRestore.content) setContent(dataToRestore.content);
+      if (dataToRestore.category) setCategory(dataToRestore.category);
+      if (dataToRestore.date) setDate(dataToRestore.date);
+      if (dataToRestore.withWhoTag) setwithWhoTag(dataToRestore.withWhoTag);
+      if (dataToRestore.forWhatTag) setforWhatTag(dataToRestore.forWhatTag);
+      if (dataToRestore.emotionTags) setemotionTags(dataToRestore.emotionTags);
+
+      // 이 코드는 PhotoUploadPage에서 돌아왔을 때의 로직을 처리하는 부분입니다.
+      // usePhoto 컨텍스트를 사용하므로 이 부분은 필요 없을 수 있습니다.
+      // if (dataToRestore.selectedPhotos) setSelectedPhotos(dataToRestore.selectedPhotos);
+
+      // 복원이 완료된 후 state를 제거하여 새로고침 시 초기화 방지
+      window.history.replaceState({}, document.title, location.pathname);
     }
-    
-    // 나머지 필드들은 dataToRestore 객체에서 가져와 복원
-    if (dataToRestore.title) setTitle(dataToRestore.title);
-    if (dataToRestore.content) setContent(dataToRestore.content);
-    if (dataToRestore.category) setCategory(dataToRestore.category);
-    if (dataToRestore.date) setDate(dataToRestore.date);
-    if (dataToRestore.withWhoTag) setwithWhoTag(dataToRestore.withWhoTag);
-    if (dataToRestore.forWhatTag) setforWhatTag(dataToRestore.forWhatTag);
-    if (dataToRestore.emotionTags) setemotionTags(dataToRestore.emotionTags);
-    
-    // 이 코드는 PhotoUploadPage에서 돌아왔을 때의 로직을 처리하는 부분입니다.
-    // usePhoto 컨텍스트를 사용하므로 이 부분은 필요 없을 수 있습니다.
-    // if (dataToRestore.selectedPhotos) setSelectedPhotos(dataToRestore.selectedPhotos);
-
-    // 복원이 완료된 후 state를 제거하여 새로고침 시 초기화 방지
-    window.history.replaceState({}, document.title, location.pathname);
-    }
-}, [location.state, setSelectedPhotos]);
+  }, [location.state, setSelectedPhotos]);
 
 
 
@@ -236,7 +236,7 @@ useEffect(() => {
       settravelDate(null);
     }
   }, [date]);
-  
+
   const formatFullDate = (dateObj) => {
     if (!dateObj || isNaN(dateObj.getTime())) return '';
     const year = dateObj.getFullYear();
@@ -264,13 +264,13 @@ useEffect(() => {
       }
     });
   };
-  
+
   const isActive = title && content && category && date && adress && emotionTags.length > 0 && withWhoTag && forWhatTag;
 
   const closeModal = () => {
     setModalOpen(null);
   };
-  
+
   const handleCategoryModalClose = () => {
     setCategory(selectedCategoryKey);
     setModalOpen(null);
@@ -281,7 +281,7 @@ useEffect(() => {
       alert('필수 정보를 모두 입력해주세요.');
       return;
     }
-    
+
     setLoading(true);
 
     const accessToken = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzIiwiaWF0IjoxNzU0MTY1NzI3LCJleHAiOjM2MTc1NDE2NTcyN30.1E2JEdWvdSbChE0L9Jnp5ZP_X08Dy7XjYLIFv3GLcyI';
@@ -294,54 +294,54 @@ useEffect(() => {
     }
 
     const postData = {
-    title,
-    content,
-    status: "PUBLISHED", // 또는 조건에 따라 변경 가능
-    withWhoTag: withWhoTagMap[withWhoTag] || '',
-    forWhatTag: forWhatTagMap[forWhatTag] || '',
-    emotionTags: emotionTags.map(tag => emotionMap[tag]).filter(Boolean),
-    category: categoryOptions.find(opt => opt.key === category)?.value || '',
-    travelDate: date,
-    adress,
-    images: images, // images는 URL 문자열 배열 등 JSON에 포함될 데이터 형태여야 함
-    isFeatured: false
+      title,
+      content,
+      status: "PUBLISHED", // 또는 조건에 따라 변경 가능
+      withWhoTag: withWhoTagMap[withWhoTag] || '',
+      forWhatTag: forWhatTagMap[forWhatTag] || '',
+      emotionTags: emotionTags.map(tag => emotionMap[tag]).filter(Boolean),
+      category: categoryOptions.find(opt => opt.key === category)?.value || '',
+      travelDate: date,
+      adress,
+      images: images, // images는 URL 문자열 배열 등 JSON에 포함될 데이터 형태여야 함
+      isFeatured: false
     };
 
-  console.log("전송될 JSON 데이터:", JSON.stringify(postData, null, 2));
+    console.log("전송될 JSON 데이터:", JSON.stringify(postData, null, 2));
 
-  try {
-    const headers = {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${accessToken}`,
-    };
-    
-  const response = await fetch(
-    postId
-      ? `https://airo-buzz.shop/api/v1/posts/${postId}`
-      : 'https://airo-buzz.shop/api/v1/posts',
-    {
-      method: postId ? 'PUT' : 'POST',  // 수정이면 PUT, 신규면 POST (필요 시 변경)
-      headers,
-      body: JSON.stringify(postData),
+    try {
+      const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`,
+      };
+
+      const response = await fetch(
+        postId
+          ? `https://airo-buzz.shop/api/v1/posts/${postId}`
+          : 'https://airo-buzz.shop/api/v1/posts',
+        {
+          method: postId ? 'PUT' : 'POST',  // 수정이면 PUT, 신규면 POST (필요 시 변경)
+          headers,
+          body: JSON.stringify(postData),
+        }
+      );
+
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || '게시물 저장 실패');
+      }
+
+      const savedPost = await response.json();
+      console.log("response :: ", savedPost.id);
+      navigate(`/detail/${savedPost.id}`);
+    } catch (e) {
+      console.error('게시물 제출 실패:', e);
+      alert(e.message || '게시물 저장에 실패했습니다.');
+    } finally {
+      setLoading(false);
     }
-  );
-
-  
-  if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.message || '게시물 저장 실패');
-  }
-
-    const savedPost = await response.json();
-    console.log("response :: ",savedPost.id);
-    navigate(`/detail/${savedPost.id}`);
-  } catch (e) {
-    console.error('게시물 제출 실패:', e);
-    alert(e.message || '게시물 저장에 실패했습니다.');
-  } finally {
-    setLoading(false);
-  }
-    };
+  };
 
   return (
     <div className="write-page">
@@ -369,11 +369,11 @@ useEffect(() => {
             className="input-button date-button"
             onClick={() => setModalOpen('date')}
           >
-          <div className="label-group">
-            <span className="label">날짜</span>
-            <img src={iconPrev} alt="아래 화살표" className="icon-arrow-down" />
-          </div>
-            
+            <div className="label-group">
+              <span className="label">날짜</span>
+              <img src={iconPrev} alt="아래 화살표" className="icon-arrow-down" />
+            </div>
+
             <span className="date-select">{formatFullDate(travelDate)}</span>
           </button>
 
@@ -445,7 +445,7 @@ useEffect(() => {
             ))}
           </div>
         </div>
-        
+
         <div className="row label-tag-row">
           <p className="label">어떤 감정이었나요?</p>
           <div className="tag-group">
@@ -518,7 +518,7 @@ useEffect(() => {
 
       <div className="bottom-action-buttons">
         <button className="btn-ai">AI 도구</button>
-        <button className="btn-camera" 
+        <button className="btn-camera"
           onClick={() => navigate('/upload-photo', {
             state: {
               fromWrite: true,
@@ -586,7 +586,7 @@ useEffect(() => {
                   ))}
                 </div>
               )}
-              <button 
+              <button
                 className="modal-close-btn"
                 onClick={modalOpen === 'category' ? handleCategoryModalClose : closeModal}
               >

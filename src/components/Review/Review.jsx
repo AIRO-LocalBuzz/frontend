@@ -4,6 +4,12 @@ import './Review.css';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 
+import topReview1Img from '../../assets/images/sample/review/img-topReview1.jpg';
+import topReview2Img from '../../assets/images/sample/review/img-topReview2.jpg';
+import topReview3Img from '../../assets/images/sample/review/img-topReview3.jpg';
+import topReview4Img from '../../assets/images/sample/review/img-topReview4.jpg';
+import topReview5Img from '../../assets/images/sample/review/img-topReview5.jpg';
+
 export default function Review() {
     const reviewItems = [
         {
@@ -12,7 +18,7 @@ export default function Review() {
             title: '지방살이 해보기',
             writer: '덕업일치 유튜버 김00님',
             tag: ['마감임박', 'NEW'],
-            image: `/src/assets/images/img-topReview1.jpg`,
+            image: topReview1Img,
         },
         {
             number: 2,
@@ -20,7 +26,7 @@ export default function Review() {
             title: '동구박 우리동네',
             writer: '역사 해설가 이00님',
             tag: ['NEW'],
-            image: `/src/assets/images/img-topReview2.jpg`,
+            image: topReview2Img,
         },
         {
             number: 3,
@@ -28,7 +34,7 @@ export default function Review() {
             title: '고구마 캐기 대작전',
             writer: '육아 인플루언서 오00님',
             tag: ['마감임박', 'NEW'],
-            image: `/src/assets/images/img-topReview3.jpg`,
+            image: topReview3Img,
         },
         {
             number: 4,
@@ -36,7 +42,7 @@ export default function Review() {
             title: '숨은 포토스팟 투어',
             writer: '사진작가 유00님',
             tag: ['NEW'],
-            image: `/src/assets/images/img-topReview4.jpg`,
+            image: topReview4Img,
         },
         {
             number: 5,
@@ -44,7 +50,7 @@ export default function Review() {
             title: '달빛 아래 한옥스테이',
             writer: '에세이 작가 박00님',
             tag: ['NEW'],
-            image: `/src/assets/images/img-topReview5.jpg`,
+            image: topReview5Img,
         }
     ];
 

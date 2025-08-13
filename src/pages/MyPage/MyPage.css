@@ -1,43 +1,26 @@
 /* MyPage.css */
 @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700&display=swap');
 
-html,
-body,
-#root {
-  height: 100%;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: 'Pretendard', sans-serif;
-  color: #333;
-  background-color: #f3f4f6;
-  overflow: auto;
-}
-
 .mypage-container {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  padding: 20px 15px;
-  /* 상하좌우 패딩 조정 */
-  position: relative;
   max-width: 420px;
-  margin: 0 auto;
+  width: 390px;
+  height: 812px;
   background-color: #f3f4f6;
+  position: relative;
+  margin: 0 auto;
+  overflow-x: hidden;
 }
 
-.mypage-container .status_bar {
-  position: absolute;
-  top: 0;
-  left: 0;
+.mypage-container::-webkit-scrollbar {
+  display: none;
+}
+
+.mypage-container .mypage {
+  padding: 20px 15px;
 }
 
 /* 헤더 */
-.header {
+.mypage-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -296,4 +279,5 @@ body {
 
 .logout-button {
   color: #ef4444;
+  margin-bottom: 100px;
 }

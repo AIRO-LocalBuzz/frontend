@@ -5,15 +5,18 @@ import heartIcon from '../../assets/icons/common/icon-heart.svg'
 import commentIcon from '../../assets/icons/common/icon-comment.svg'
 
 import './BeeHivePage.css';
-import Statusbar from '../../components/Statusbar';
+import Statusbar from '../../components/Statusbar/Statusbar';
 
 function BeeHivePage() {
   const navigate = useNavigate();
 
 
   return (
-    <div className="beehive-page">
+    <div className="beehive-container">
       <Statusbar />
+      <div className='beehive-page'>
+
+      </div>
       <header className="beehive-header">
         <h2>벌집 페이지</h2>
       </header>

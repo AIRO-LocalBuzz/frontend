@@ -1,23 +1,6 @@
 /* DetailPage.css */
 @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700&display=swap');
 
-html,
-body,
-#root {
-  height: 100%;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: 'Pretendard', sans-serif;
-  color: #333;
-  background-color: #f7f7f7;
-  overflow: hidden;
-}
-
 .detail-page-container {
   height: 812px;
   display: flex;
