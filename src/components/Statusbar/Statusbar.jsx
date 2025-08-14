@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './StatusBar.css';
+import './Statusbar.css';
 import networkIcon from '../../assets/icons/statusbar/icon-network.svg';
 import wifiIcon from '../../assets/icons/statusbar/icon-wifi.svg';
 import batteryIcon from '../../assets/icons/statusbar/icon-battery.svg';
