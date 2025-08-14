@@ -1,0 +1,68 @@
+/* 헤더 컨테이너 */
+.write-header {
+  position: sticky; /* 스크롤 시 상단에 고정 */
+  top: 0;
+  background-color: white;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 16px;
+  border-bottom: 1px solid #ddd;
+}
+
+/* 헤더 왼쪽 영역 (버튼 + 제목) */
+.write-header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 아이콘 버튼 기본 스타일 */
+.icon-button {
+  background: none;
+  border: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+/* 뒤로가기 아이콘 이미지 */
+.icon-prev {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  display: block;
+}
+
+/* 게시하기 버튼 */
+.btn-submit {
+  padding: 8px 16px;
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 20px;
+  height: 35px;
+  min-width: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+/* 게시하기 버튼 - 비활성 상태 */
+.btn-submit.inactive {
+  color: #999;
+  background-color: #f0f0f0;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* 게시하기 버튼 - 활성 상태 */
+.btn-submit.active {
+  color: #000;
+  background-color: #ffc400;
+  cursor: pointer;
+  box-shadow: 0 0 8px #ffc400aa;
+}

@@ -6,7 +6,7 @@ import pointIcon from '../../assets/icons/nav/icon-point.svg';
 
 export default function HomeNav() {
     return (
-        <nav className='main_nav'>
+        <nav className='home_nav'>
             <img
                 className='localbuzz_logo'
                 src={logoImg}

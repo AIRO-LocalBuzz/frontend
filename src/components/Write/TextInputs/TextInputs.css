@@ -1,0 +1,34 @@
+/* 제목 입력란 */
+.input-title {
+  width: 100%;
+  padding: 10px 0;
+  border: none;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  outline: none;
+}
+
+.input-title::placeholder {
+  color: #a0a0a0;
+  font-weight: normal;
+}
+
+/* 본문 입력란 */
+.textarea-content {
+  width: 100%; /* 부모 요소에 맞춤 */
+  border: none;
+  outline: none;
+  resize: none;
+  font-size: 15px;
+  padding: 8px;
+  border-radius: 6px;
+  min-height: 156px;
+  box-sizing: border-box; /* 패딩, 보더를 너비에 포함 */
+}
+
+.textarea-content::placeholder {
+  color: #C9C9C9;
+  opacity: 1;
+}
