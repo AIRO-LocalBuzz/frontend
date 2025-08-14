@@ -146,7 +146,7 @@ const HomePage = () => {
         <>
             <section className='main'>
                 <Statusbar />
-                <Nav />
+                <HomeNav />
                 <Banner />
                 <div className='region_container'>
                     <RegionSelect
