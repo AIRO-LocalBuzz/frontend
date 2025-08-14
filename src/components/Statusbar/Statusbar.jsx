@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import './Statusbar.css';
+import './StatusBar.css';
 import networkIcon from '../../assets/icons/statusbar/icon-network.svg';
 import wifiIcon from '../../assets/icons/statusbar/icon-wifi.svg';
 import batteryIcon from '../../assets/icons/statusbar/icon-battery.svg';
 
-export default function Statusbar() {
+export default function StatusBar() {
     const [time, setTime] = useState(getCurrentTime());
 
     useEffect(() => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import './SplashPage.css';
 import { useNavigate } from 'react-router-dom';
-import Statusbar from '../../components/Statusbar/Statusbar';
+import StatusBar from '../../components/StatusBar/StatusBar';
 import logoImg from '../../assets/images/common/img-localbuzz.png';
 import splashImg from '../../assets/images/splash/img-splash.gif';
 

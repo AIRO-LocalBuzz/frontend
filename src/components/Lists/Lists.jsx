@@ -28,7 +28,6 @@ export default function Lists({ listItems, category }) {
                                     <p className='placeholder_text'>콘텐츠 준비 중입니다.</p>
                                 </div>
                             ) : (
-                                // <img src='/src/assets/images/bee.png' alt='sample' />
                                 <img src={item.image} alt='list thumbnail' />
                             )}
                         </div>

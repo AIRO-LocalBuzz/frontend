@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Statusbar from '../../components/Statusbar/Statusbar';
-import Nav from '../../components/HomeNav/HomeNav';
+import StatusBar from '../../components/StatusBar/StatusBar';
+import HomeNav from '../../components/HomeNav/HomeNav';
 import Banner from '../../components/Banner/Banner';
 import RegionSelect from '../../components/RegionSelect/RegionSelect';
 import CategorySelect from '../../components/CategorySelect/CategorySelect';
@@ -17,7 +17,7 @@ const HomePage = () => {
     const [cityCode, setCityCode] = useState(null);
     const [listItems, setListItems] = useState([]);
     const [activeCategory, setActiveCategory] = useState('음식점');
-   
+
     // TO-DO : 리팩터링 과정에서 삭제 필요 (확인 후 진행)
     const getUniqueRandomImageNumbers = (max, count) => {
         const set = new Set();
@@ -145,7 +145,7 @@ const HomePage = () => {
     return (
         <>
             <section className='main'>
-                <Statusbar />
+                <StatusBar />
                 <HomeNav />
                 <Banner />
                 <div className='region_container'>

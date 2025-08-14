@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useWriteForm } from '../../hooks/useWriteForm';
 
-import Statusbar from '../../components/Statusbar/Statusbar';
+import StatusBar from '../../components/StatusBar/StatusBar';
 import WriteHeader from '../../components/Write/WriteHeader/WriteHeader';
 import WriteForm from '../../components/Write/WriteForm/WriteForm';
 import BottomActions from '../../components/Write/BottomActions/BottomActions';
@@ -16,7 +16,7 @@ export default function WritePage() {
 
   // 카테고리 모달은 '선택' 후 '설정' 버튼을 누르므로 임시 상태가 필요
   const [selectedCategoryKey, setSelectedCategoryKey] = useState(form.category);
-  
+
   // 모달 닫기 로직
   const closeModal = () => form.setModalOpen(null);
 
@@ -25,13 +25,13 @@ export default function WritePage() {
     form.setCategory(selectedCategoryKey);
     closeModal();
   };
-  
+
   // 날짜 변경 핸들러
   const handleDateChange = (value) => {
     form.setTravelDate(value);
     form.setDate(form.formatDateToLocalISO(value));
   };
-  
+
   // 현재 폼 상태를 객체로 만들어 다른 페이지로 이동 시 전달
   const currentWriteState = {
     title: form.title, content: form.content, date: form.date, category: form.category,
@@ -41,14 +41,14 @@ export default function WritePage() {
 
   return (
     <div className="write-page">
-      <Statusbar />
+      <StatusBar />
       <WriteHeader
         onBack={() => form.navigate('/review')}
         onSubmit={form.handleSubmit}
         isActive={form.isActive}
         loading={form.loading}
       />
-      
+
       <WriteForm
         {...form} // 폼에 필요한 모든 props를 한번에 전달
         onCategoryModalOpen={() => {
@@ -71,7 +71,7 @@ export default function WritePage() {
           onConfirm={form.modalOpen === 'category' ? handleCategoryConfirm : closeModal}
         >
           {form.modalOpen === 'date' && (
-            <DateModal 
+            <DateModal
               travelDate={form.travelDate}
               onDateChange={handleDateChange}
             />

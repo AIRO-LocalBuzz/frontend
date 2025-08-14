@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Search, MapPin, X } from 'lucide-react';
 import './SearchPage.css';
-import Statusbar from '../../components/Statusbar/Statusbar';
+import StatusBar from '../../components/StatusBar/StatusBar';
 
 const SearchPage = ({ isKakaoMapLoaded }) => {
   const navigate = useNavigate();
@@ -159,7 +159,7 @@ const SearchPage = ({ isKakaoMapLoaded }) => {
     if (!selectedPlace) return;
 
     // 이전 WritePage 상태 복사
-    const prevState = location.state?.currentWriteState || {};    
+    const prevState = location.state?.currentWriteState || {};
     const navigateTo = '/write';
 
     console.log("navigate 전 location.state:", prevState);
@@ -189,7 +189,7 @@ const SearchPage = ({ isKakaoMapLoaded }) => {
 
   return (
     <div className="search-page-container">
-      <Statusbar />
+      <StatusBar />
       <header className="search-header">
         <button onClick={handleCancel} className="cancel-button">
           <X size={24} />

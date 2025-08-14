@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronRight, Bell } from 'lucide-react';
 import './MyPage.css';
-import Statusbar from '../../components/Statusbar/Statusbar';
+import StatusBar from '../../components/StatusBar/StatusBar';
 import charImg from '../../assets/images/common/img-bee.png';
 
 const MyPage = () => {
@@ -14,7 +14,7 @@ const MyPage = () => {
 
   return (
     <div className="mypage-container">
-      <Statusbar />
+      <StatusBar />
       <div className='mypage'>
         {/* 상단 헤더 */}
         <header className="mypage-header">
