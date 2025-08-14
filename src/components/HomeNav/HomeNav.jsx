@@ -4,7 +4,7 @@ import logoImg from '../../assets/images/common/img-localbuzz.png';
 import searchIcon from '../../assets/icons/nav/icon-search.svg';
 import pointIcon from '../../assets/icons/nav/icon-point.svg';
 
-export default function Nav() {
+export default function HomeNav() {
     return (
         <nav className='main_nav'>
             <img
