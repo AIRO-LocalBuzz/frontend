@@ -1,0 +1,722 @@
+/* 스크롤바 숨기기 (Chrome, Safari, Edge, IE, Firefox) */
+.write-page {
+  overflow-y: auto;
+  -ms-overflow-style: none;
+  /* IE, Edge */
+  scrollbar-width: none;
+  /* Firefox */
+  height: 740px;
+}
+
+.write-page::-webkit-scrollbar {
+  display: none;
+  /* Chrome, Safari */
+}
+
+/* 공통 헤더 스타일 */
+.write-header {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 16px;
+  border-bottom: 1px solid #ddd;
+}
+
+/* 왼쪽 영역에 버튼 + 타이틀 */
+.write-header-left {
+  display: flex;
+  align-items: center;
+  /* 요게 중요 */
+  gap: 8px;
+}
+
+/* 버튼 리셋 + 중앙 정렬 */
+.icon-button {
+  background: none;
+  border: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+/* 이미지 크기 명확히 지정 */
+.icon-prev {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  display: block;
+}
+
+.btn-submit {
+  padding: 8px 16px;
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 20px;
+  height: 35px;
+  min-width: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+/* 비활성 */
+.btn-submit.inactive {
+  color: #999;
+  background-color: #f0f0f0;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* 활성 */
+.btn-submit.active {
+  color: #000;
+  background-color: #ffc400;
+  cursor: pointer;
+  box-shadow: 0 0 8px #ffc400aa;
+}
+
+
+/* 입력 폼 */
+.write-form {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* 날짜-위치 한 줄 */
+.date-adress-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 8px;
+  gap: 12px;
+  /* 버튼 사이 여백 */
+}
+
+.input-button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  padding: 8px 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  font-weight: bold;
+  color: #000;
+}
+
+/* 날짜/위치/카테고리 + ▼ 그룹 */
+.label-group {
+  display: flex;
+  align-items: center;
+  gap: 0px;
+  /* "날짜"와 ▼ 아이콘 사이 간격 */
+
+}
+
+/* 선택된 날짜 */
+.date-select {
+  margin-left: 5px;
+  /* 날짜+아이콘 그룹과의 거리 */
+  font-weight: 500;
+  color: #555;
+  margin-right: 10px;
+  font-size: 15px;
+}
+
+.date-button {
+  flex-shrink: 0;
+  /* 내용 길이에 따라만 넓어짐 */
+}
+
+.adress-container {
+  position: relative;
+  display: inline-block;
+  display: flex;
+  align-items: center;
+  max-width: 150px;
+  height: 32px;
+  /* 고정 높이 */
+  gap: 4px;
+}
+
+.adress-button {
+  width: 100%;
+  height: 100%;
+  padding-right: 20px;
+  /* 아이콘 공간 확보 */
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+.adress-text {
+  display: inline-block;
+  max-width: 120px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.4;
+}
+
+.icon-arrow-down-fixed {
+  padding-top: 4px;
+  position: absolute;
+  right: 0;
+  top: 20%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+  transform: rotate(-90deg);
+  /* 항상 아래 화살표 */
+  transition: transform 0.3s ease;
+}
+
+.icon-arrow-down {
+  width: 16px;
+  height: 16px;
+  margin-left: 8px;
+  transform: rotate(-90deg);
+  /* 항상 아래 화살표 */
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+  display: block;
+}
+
+/* 카테고리 줄 */
+.category-row {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 8px;
+}
+
+/* 선택된 카테고리 */
+.category-select {
+  margin-left: 5px;
+  /* 카테고리+아이콘 그룹과의 거리 */
+  font-weight: 500;
+  color: #555;
+  margin-right: 10px;
+  font-size: 15px;
+}
+
+.modal-category-list.custom-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.modal-category-item {
+  padding: 12px;
+  border-radius: 8px;
+  background-color: #eee;
+  text-align: center;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+.modal-category-item.selected {
+  background-color: #cce5ff;
+}
+
+/* 기타 버튼이 한 줄 전체 차지 */
+.custom-category-full {
+  grid-column: 1 / -1;
+}
+
+/* input 도 마찬가지로 전체 너비 차지 */
+.modal-input-adress.full-width {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.label-tag-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 4px;
+  /* 기존 12px → 8px 또는 4px */
+  padding-top: 4px;
+  /* 선택 사항: 위 여백 조금 줄이기 */
+}
+
+.label {
+  font-weight: bold;
+  font-size: 14px;
+  color: #222;
+  margin: 0;
+  /* margin 제거 */
+  line-height: 1.2;
+}
+
+.tag-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tag-button {
+  padding: 6px 12px;
+  background-color: #f0f0f0;
+  border-radius: 16px;
+  border: none;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tag-button.selected {
+  background-color: #ffc400;
+  color: #000;
+  font-weight: 600;
+}
+
+/* 사진 첨부용 박스 */
+.photo-placeholder {
+  height: 227px;
+  /* 일정한 높이 유지 */
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  color: #666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 12px;
+  font-size: 14px;
+  /* 사진이 있을 때 flex-start로 변경할 거라 기본은 center */
+}
+
+.photo-placeholder.clickable {
+  width: 100%;
+  cursor: pointer;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  height: 227px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: #666;
+  transition: background-color 0.3s ease;
+}
+
+.photo-placeholder.clickable:hover {
+  background-color: #ececec;
+}
+
+.placeholder-content {
+  text-align: center;
+}
+
+.plus-icon {
+  font-size: 40px;
+  color: #aaa;
+  margin-bottom: 8px;
+}
+
+.photo-preview-scroll {
+  display: flex;
+  flex-wrap: nowrap;
+  /* 한 줄로 유지 */
+  overflow-x: auto;
+  /* 스크롤은 필요하면 보여줌 */
+  gap: 10px;
+  width: 100%;
+  height: auto;
+  /* 부모 높이에 의존하지 않음 */
+  box-sizing: border-box;
+
+  /* 스크롤바 숨기기 */
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE/Edge */
+}
+
+.photo-preview-scroll::-webkit-scrollbar {
+  display: none;
+  /* Chrome, Safari */
+}
+
+.write-page .photo-scroll-thumb {
+  height: 225px;
+  aspect-ratio: 3 / 4;
+  border-radius: 6px;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 3px solid #ffc400;
+  box-sizing: border-box;
+}
+
+.input-title {
+  width: 100%;
+  padding: 10px 0;
+  border: none;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  outline: none;
+}
+
+.input-title::placeholder {
+  color: #a0a0a0;
+  font-weight: normal;
+}
+
+.textarea-content {
+  border: none;
+  outline: none;
+  resize: none;
+  /* 크기 조절 핸들 제거 (선택사항) */
+  font-size: 15px;
+  padding: 8px;
+  border-radius: 6px;
+  min-height: 156px;
+}
+
+.textarea-content::placeholder {
+  color: #C9C9C9;
+  /* 원하는 색상으로 지정 */
+  opacity: 1;
+  /* 불투명도 명시 (선택사항) */
+}
+
+/* AI 도구, 카메라 도구 */
+.bottom-action-buttons {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0 16px;
+  gap: 24px;
+  z-index: 100;
+  border-top: 1px solid #eee;
+}
+
+.bottom-action-buttons button {
+  width: 36px;
+  height: 36px;
+  border: none;
+  font-size: 13px;
+  color: #333;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.btn-ai {
+  background: #eee;
+  color: #333;
+}
+
+.btn-camera {
+  background: none;
+  justify-content: center;
+}
+
+.btn-camera img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+}
+
+/* 모달 */
+.modal-date-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* 모달 헤더 */
+.modal-header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-bottom: 12px;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+/* 닫기 버튼 */
+.modal-close-x {
+  width: 32px;
+  height: 32px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.close-button img {
+  width: 20px;
+  /* 원하는 아이콘 크기 */
+  height: 20px;
+}
+
+.modal-close-x:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.modal-custom-date-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.modal-custom-date-header .date-title {
+  font-weight: 700;
+}
+
+.modal-backdrop {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  z-index: 1000;
+}
+
+.modal-content {
+  width: 100%;
+  max-width: 480px;
+  background-color: #fff;
+  border-radius: 16px 16px 0 0;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  animation: slideUp 0.3s ease-out forwards;
+  overflow: hidden;
+}
+
+.modal-inner {
+  padding: 20px;
+  /* 좌우 기준 통일 */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0%);
+  }
+}
+
+.modal-input-date,
+.modal-input-adress {
+  width: 100%;
+  font-size: 16px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+}
+
+.modal-category-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.modal-category-item {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: #fafafa;
+  cursor: pointer;
+  text-align: center;
+  font-size: 16px;
+}
+
+.modal-category-item.selected {
+  border-color: #ffc400;
+  background: #fff5cc;
+  font-weight: 700;
+}
+
+.modal-close-btn {
+  background: #ffc400;
+  color: #F6F7F9;
+  border: none;
+  width: 100%;
+  padding: 12px 0;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* react-calendar 전체 스타일 초기화 */
+.react-calendar {
+  width: 100%;
+  max-width: 100%;
+  border: none;
+  font-family: 'Noto Sans KR', sans-serif;
+  color: #000;
+  /* 검정색 기본 글자색 */
+  background-color: #fff;
+  box-sizing: border-box;
+}
+
+/* 요일 헤더 */
+.react-calendar__month-view__weekdays {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0 4px 0;
+  margin: 0;
+  border-bottom: none;
+  /* 점선 줄 제거 */
+  box-shadow: none;
+  /* 혹시 그림자 있으면 제거 */
+}
+
+/* 요일 각 셀 */
+.react-calendar__month-view__weekdays__weekday {
+  color: #000;
+  /* 검정색 */
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-align: center;
+  flex-grow: 1;
+  user-select: none;
+  padding: 0;
+  border: none;
+  /* 점선 줄 없애기 */
+}
+
+/* 날짜 셀 */
+.react-calendar__tile {
+  height: 38px;
+  line-height: 38px;
+  text-align: center;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.25s ease, color 0.25s ease;
+  user-select: none;
+
+  /* 숫자를 중앙에 정확히 위치하도록 flexbox 사용 */
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  /* 패딩 없애서 숫자 중앙 정렬 */
+}
+
+/* 오늘 날짜 테두리 */
+.react-calendar__tile--now {
+  border: 2px solid #ffc400 !important;
+  /* !important로 우선순위 강제 */
+  background-color: transparent !important;
+  color: #000 !important;
+  font-weight: 700 !important;
+  box-shadow: none !important;
+  position: relative;
+  /* 혹시 필요하면 */
+  z-index: 1;
+  /* 겹침 방지 */
+}
+
+/* 선택된 날짜 배경과 글자색 */
+.react-calendar__tile--active {
+  background-color: #ffc400;
+  color: #000;
+  font-weight: 700;
+  box-shadow: 0 0 8px #ffc400AA;
+}
+
+/* 선택된 날짜 호버 - 조금 더 진한 노란색 */
+.react-calendar__tile--active:hover {
+  background-color: #e6b800;
+}
+
+/* 일반 날짜 호버 - 노란색 배경에 검정 글자 */
+.react-calendar__tile:hover:not(.react-calendar__tile--active):not(.react-calendar__tile--disabled) {
+  background-color: #FFF5CC;
+  color: #000;
+  border-radius: 8px;
+}
+
+/* 다른 달 날짜 - 흐리게 */
+.react-calendar__tile--neighboringMonth {
+  color: #aaa;
+}
+
+/* 달력 내부 배경 */
+.react-calendar__month-view {
+  padding: 12px 10px;
+  background-color: #fff;
+  border-radius: 14px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 네비게이션 버튼 */
+.react-calendar__navigation button {
+  color: #ffc400;
+  background: none;
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 8px 8px;
+  /* 기존 4px 10px에서 키움 */
+  border-radius: 8px;
+  transition: background-color 0.25s ease;
+  font-size: 1rem;
+  /* 글자 크기 키우기 */
+  min-width: 40px;
+  /* 버튼 너비 최소 40px 확보 */
+  height: 50px;
+  /* 버튼 높이 지정 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.react-calendar__navigation button:hover {
+  background-color: #FFF5CC;
+}
+
+/* 네비게이션 레이블 */
+.react-calendar__navigation__label {
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: #000;
+  user-select: none;
+}

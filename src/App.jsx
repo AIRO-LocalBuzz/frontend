@@ -22,7 +22,6 @@ function App() {
   const [isKakaoMapLoaded, setIsKakaoMapLoaded] = useState(false);
 
   useEffect(() => {
-    const KAKAO_APP_KEY = "25f6f1eddf013e7b80c35cf6f2b1d32d";
 
     // 카카오맵 스크립트가 이미 로드되어 있으면 바로 상태를 true로 변경
     if (window.kakao && window.kakao.maps) {
@@ -31,7 +30,7 @@ function App() {
     }
 
     const script = document.createElement('script');
-    script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_APP_KEY}&libraries=services&autoload=false`;
+    script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${import.meta.env.VITE_KAKAO_APP_KEY}&libraries=services&autoload=false`;
     script.async = true;
     document.head.appendChild(script);
 

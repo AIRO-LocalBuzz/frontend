@@ -1,0 +1,62 @@
+/* 사진 첨부 영역 기본 박스 */
+.photo-placeholder {
+  height: 227px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  color: #666;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* 사진 없을 땐 중앙 정렬 */
+  text-align: center;
+  padding: 12px;
+  font-size: 14px;
+}
+
+/* 사진 추가 클릭 가능 영역 */
+.photo-placeholder.clickable {
+  width: 100%;
+  cursor: pointer;
+  flex-direction: column;
+  transition: background-color 0.3s ease;
+}
+
+.photo-placeholder.clickable:hover {
+  background-color: #ececec;
+}
+
+.placeholder-content {
+  text-align: center;
+}
+
+.plus-icon {
+  font-size: 40px;
+  color: #aaa;
+  margin-bottom: 8px;
+}
+
+/* 사진 미리보기 스크롤 영역 */
+.photo-preview-scroll {
+  display: flex;
+  flex-wrap: nowrap; /* 한 줄로 나열 */
+  overflow-x: auto; /* 가로 스크롤 */
+  gap: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+.photo-preview-scroll::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
+/* 미리보기 이미지 썸네일 */
+.photo-scroll-thumb {
+  height: 225px;
+  aspect-ratio: 3 / 4;
+  border-radius: 6px;
+  object-fit: cover;
+  flex-shrink: 0; /* 이미지 크기 유지 */
+  border: 3px solid #ffc400;
+  box-sizing: border-box;
+}

@@ -10,6 +10,8 @@ import googleLogoImg from '../../assets/images/login/img-google_logo.png';
 
 const LoginPage = () => {
     const navigate = useNavigate();
+
+    // TO-DO : 리팩터링 과정에서 삭제 필요
     const { loginWithKakao, loginWithGoogle, isLoggedIn } = useSocialLogin();
 
     // // 이미 로그인되어 있다면 홈으로 리다이렉트 (선택사항)

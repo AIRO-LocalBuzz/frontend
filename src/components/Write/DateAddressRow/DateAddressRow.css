@@ -1,0 +1,58 @@
+/* 날짜-주소 행 */
+.date-address-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 8px;
+  gap: 12px;
+}
+
+/* 날짜, 주소 공통 버튼 스타일 */
+.input-button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  padding: 8px 0;
+  cursor: pointer;
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+  white-space: nowrap;
+  font-weight: bold;
+  color: #000;
+}
+
+/* 라벨 + 화살표 */
+.label-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* 날짜 텍스트 */
+.date-select {
+  font-weight: 500;
+  color: #555;
+  font-size: 15px;
+}
+
+/* 주소 텍스트 */
+.address-text {
+  max-width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 500;
+  color: #555;
+  font-size: 15px;
+}
+
+/* 공통 화살표 아이콘 */
+.icon-arrow-down {
+  width: 16px;
+  height: 16px;
+  transform: rotate(-90deg);
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
