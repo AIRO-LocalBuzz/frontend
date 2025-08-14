@@ -15,7 +15,7 @@ const SplashPage = () => {
     return (
         <>
             <section className='splash'>
-                <StatusBar />
+                <Statusbar />
                 <div className='splash_container'>
                     <img
                         className='localbuzz_logo'
