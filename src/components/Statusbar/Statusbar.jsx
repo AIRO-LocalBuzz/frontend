@@ -4,7 +4,7 @@ import networkIcon from '../../assets/icons/statusbar/icon-network.svg';
 import wifiIcon from '../../assets/icons/statusbar/icon-wifi.svg';
 import batteryIcon from '../../assets/icons/statusbar/icon-battery.svg';
 
-export default function StatusBar() {
+export default function Statusbar() {
     const [time, setTime] = useState(getCurrentTime());
 
     useEffect(() => {

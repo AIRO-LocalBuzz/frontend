@@ -5,7 +5,7 @@ import heartIcon from '../../assets/icons/common/icon-heart.svg'
 import commentIcon from '../../assets/icons/common/icon-comment.svg'
 
 import './BeeHivePage.css';
-import StatusBar from '../../components/StatusBar/StatusBar';
+import Statusbar from '../../components/Statusbar/Statusbar';
 
 function BeeHivePage() {
   const navigate = useNavigate();
@@ -13,7 +13,7 @@ function BeeHivePage() {
 
   return (
     <div className="beehive-container">
-      <StatusBar />
+      <Statusbar />
       <div className='beehive-page'>
 
       </div>

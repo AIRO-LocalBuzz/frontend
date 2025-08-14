@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import StatusBar from '../../components/StatusBar/StatusBar';
+import Statusbar from '../../components/Statusbar/Statusbar';
 import Nav from '../../components/HomeNav/HomeNav';
 import Banner from '../../components/Banner/Banner';
 import RegionSelect from '../../components/RegionSelect/RegionSelect';
@@ -145,7 +145,7 @@ const HomePage = () => {
     return (
         <>
             <section className='main'>
-                <StatusBar />
+                <Statusbar />
                 <Nav />
                 <Banner />
                 <div className='region_container'>

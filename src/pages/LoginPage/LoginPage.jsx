@@ -2,7 +2,7 @@ import React from 'react';
 import './LoginPage.css';
 import { useNavigate } from 'react-router-dom';
 import { useSocialLogin } from '../../hooks/useSocialLogin';
-import StatusBar from '../../components/StatusBar/StatusBar';
+import Statusbar from '../../components/Statusbar/Statusbar';
 import beeImg from '../../assets/images/common/img-bee.png';
 import logoImg from '../../assets/images/common/img-localbuzz.png';
 import kakaoLogoImg from '../../assets/images/login/img-kakao_logo.png';
@@ -28,7 +28,7 @@ const LoginPage = () => {
     return (
         <>
             <section className='login'>
-                <StatusBar />
+                <Statusbar />
                 <div className='login_container'>
                     <div className='intro'>
                         <img
