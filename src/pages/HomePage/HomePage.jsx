@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import Statusbar from '../../components/Statusbar/Statusbar';
+import StatusBar from '../../components/StatusBar/StatusBar';
 import Nav from '../../components/HomeNav/HomeNav';
 import Banner from '../../components/Banner/Banner';
 import RegionSelect from '../../components/RegionSelect/RegionSelect';
 import CategorySelect from '../../components/CategorySelect/CategorySelect';
-import Review from '../../components/Review/Review';
+import ReviewItem from '../../components/ReviewItem/ReviewItem';
 import Lists from '../../components/Lists/Lists';
 import Modal from '../../components/Modal/Modal';
 import { apiUrl } from '../../lib/apiUrl';
@@ -18,7 +18,7 @@ const HomePage = () => {
     const [listItems, setListItems] = useState([]);
     const [activeCategory, setActiveCategory] = useState('음식점');
    
-    // TO-DO : 리팩터링 과정에서 삭제 필요
+    // TO-DO : 리팩터링 과정에서 삭제 필요 (확인 후 진행)
     const getUniqueRandomImageNumbers = (max, count) => {
         const set = new Set();
         while (set.size < count) {
@@ -145,7 +145,7 @@ const HomePage = () => {
     return (
         <>
             <section className='main'>
-                <Statusbar />
+                <StatusBar />
                 <Nav />
                 <Banner />
                 <div className='region_container'>
@@ -163,7 +163,7 @@ const HomePage = () => {
                         }}
                     />
                     <div className='content'>
-                        <Review />
+                        <ReviewItem />
                         <Lists listItems={listItems} category={activeCategory} />
                     </div>
                 </div>

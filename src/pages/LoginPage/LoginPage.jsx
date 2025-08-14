@@ -2,7 +2,7 @@ import React from 'react';
 import './LoginPage.css';
 import { useNavigate } from 'react-router-dom';
 import { useSocialLogin } from '../../hooks/useSocialLogin';
-import Statusbar from '../../components/Statusbar/Statusbar';
+import StatusBar from '../../components/StatusBar/StatusBar';
 import beeImg from '../../assets/images/common/img-bee.png';
 import logoImg from '../../assets/images/common/img-localbuzz.png';
 import kakaoLogoImg from '../../assets/images/login/img-kakao_logo.png';
@@ -10,6 +10,8 @@ import googleLogoImg from '../../assets/images/login/img-google_logo.png';
 
 const LoginPage = () => {
     const navigate = useNavigate();
+
+    // TO-DO : 리팩터링 과정에서 삭제 필요
     const { loginWithKakao, loginWithGoogle, isLoggedIn } = useSocialLogin();
 
     // // 이미 로그인되어 있다면 홈으로 리다이렉트 (선택사항)
@@ -26,7 +28,7 @@ const LoginPage = () => {
     return (
         <>
             <section className='login'>
-                <Statusbar />
+                <StatusBar />
                 <div className='login_container'>
                     <div className='intro'>
                         <img

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useWriteForm } from '../../hooks/useWriteForm';
 
-import Statusbar from '../../components/StatusBar/StatusBar';
+import StatusBar from '../../components/StatusBar/StatusBar';
 import WriteHeader from '../../components/Write/WriteHeader/WriteHeader';
 import WriteForm from '../../components/Write/WriteForm/WriteForm';
 import BottomActions from '../../components/Write/BottomActions/BottomActions';
@@ -41,7 +41,7 @@ export default function WritePage() {
 
   return (
     <div className="write-page">
-      <Statusbar />
+      <StatusBar />
       <WriteHeader
         onBack={() => form.navigate('/review')}
         onSubmit={form.handleSubmit}
