@@ -9,10 +9,7 @@ export default function RegionSelect({ activeRegion, onRegionClick }) {
         <div className='region'>
             <Swiper
                 className="region-swiper"
-                // spaceBetween={8}
                 slidesPerView="auto"
-            // slidesOffsetBefore={16}
-            // slidesOffsetAfter={16}
             >
                 {regions.map(region => (
                     <SwiperSlide key={region} style={{ width: 'auto' }}>

@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import './Statusbar.css';
+import './StatusBar.css';
+import networkIcon from '../../assets/icons/statusbar/icon-network.svg';
+import wifiIcon from '../../assets/icons/statusbar/icon-wifi.svg';
+import batteryIcon from '../../assets/icons/statusbar/icon-battery.svg';
 
-export default function Statusbar() {
+export default function StatusBar() {
     const [time, setTime] = useState(getCurrentTime());
 
     useEffect(() => {
@@ -30,17 +33,17 @@ export default function Statusbar() {
                 <div className='levels'>
                     <img
                         className='network'
-                        src={`/src/assets/images/img-network.png`}
+                        src={networkIcon}
                         alt='network'
                     />
                     <img
                         className='wifi'
-                        src={`/src/assets/images/img-wifi.png`}
+                        src={wifiIcon}
                         alt='wifi'
                     />
                     <img
                         className='battery'
-                        src={`/src/assets/images/img-battery.png`}
+                        src={batteryIcon}
                         alt='battery'
                     />
                 </div>

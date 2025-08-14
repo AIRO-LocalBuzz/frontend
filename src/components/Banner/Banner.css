@@ -14,7 +14,7 @@
 }
 
 .main .banner .banner_container .banner_choice {
-    width: 242px;
+    width: 156px;
     height: 36px;
     border-radius: 8px;
     padding: 3px;
@@ -28,11 +28,11 @@
 }
 
 .main .banner .banner_container .banner_choice .choice_container {
-    width: 236px;
+    /* width: 236px; */
     height: 30px;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 6px;
 }
 
 .banner_choice .choice_container button {
@@ -146,144 +146,3 @@
   color: #5d4037;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 } */
-
-/* 매거진 */
-.main .banner .banner_container .magazine_img {
-    width: 358px;
-    height: 492px;
-    object-fit: cover;
-    cursor: pointer;
-}
-
-.main .banner .banner_container .magazine_container {
-    width: 358px;
-    height: 281px;
-    position: absolute;
-    top: 211px;
-    background: linear-gradient(#D9D9D900, #000000);
-}
-
-.magazine_container .magazine_txt {
-    width: 240px;
-    height: 76px;
-    position: relative;
-    top: 126px;
-    left: 36px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-
-.magazine_container .magazine_txt .main_txt {
-    width: 240px;
-    height: 14px;
-
-    font-family: 'Pretendard';
-    font-weight: 600;
-    font-size: 20px;
-    line-height: 14px;
-    letter-spacing: 0;
-    color: #FFFFFF;
-}
-
-.magazine_container .magazine_txt .sub_txt {
-    width: 240px;
-    height: 46px;
-
-    font-family: 'Pretendard';
-    font-weight: 400;
-    font-size: 15px;
-    line-height: 150%;
-    letter-spacing: 0;
-    color: #FFFFFF;
-}
-
-.page {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    width: 358px !important;
-    height: 4px;
-    padding-left: 32px;
-    padding-right: 32px;
-    box-sizing: border-box;
-
-    position: absolute;
-    top: 449px;
-    z-index: 20;
-}
-
-.swiper-progressbar {
-    width: 265px !important;
-    height: 2px !important;
-    background: #444444 !important;
-    border-radius: 2px;
-    overflow: hidden;
-    position: relative !important;
-}
-
-.swiper-pagination-progressbar-fill {
-    background: #666666 !important;
-    height: 100%;
-    width: 0%;
-    transition: width 0.3s ease;
-}
-
-.swiper-fraction {
-    margin-left: 12px;
-    font-size: 12px;
-    color: #fff;
-    white-space: nowrap;
-}
-
-/* 후기 */
-.main .banner .banner_container .review_img {
-    width: 358px;
-    height: 492px;
-    object-fit: cover;
-    cursor: pointer;
-}
-
-.main .banner .banner_container .review_container {
-    width: 358px;
-    height: 281px;
-    position: absolute;
-    top: 211px;
-    background: linear-gradient(#D9D9D900, #000000);
-}
-
-.main .banner .banner_container .review_container .review_txt {
-    width: 240px;
-    height: 76px;
-    position: relative;
-    top: 126px;
-    left: 36px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-
-.main .banner .banner_container .review_container .review_txt .main_txt {
-    width: 240px;
-    height: 14px;
-
-    font-family: 'Pretendard';
-    font-weight: 600;
-    font-size: 20px;
-    line-height: 14px;
-    letter-spacing: 0;
-    color: #FFFFFF;
-}
-
-.main .banner .banner_container .review_container .review_txt .sub_txt {
-    width: 240px;
-    height: 46px;
-
-    font-family: 'Pretendard';
-    font-weight: 400;
-    font-size: 15px;
-    line-height: 150%;
-    letter-spacing: 0;
-    color: #FFFFFF;
-}

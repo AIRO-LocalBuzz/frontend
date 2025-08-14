@@ -11,14 +11,14 @@
   /* 위쪽에 흐린 그림자, 검정색, 투명도 15% */
   display: flex;
   justify-content: space-evenly;
-  /* space-around 대신 space-evenly 사용 */
   align-items: center;
   z-index: 10;
-  gap: 50px;
+  /* gap: 50px; */
 
 }
 
 .nav-item {
+  width: 52px;
   display: flex;
   flex-direction: column;
   align-items: center;

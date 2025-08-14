@@ -1,17 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './Banner.css';
-
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination } from 'swiper/modules';
-
-import 'swiper/css';
-import 'swiper/css/pagination';
+import mapImg from '../../assets/images/common/img-map.png';
+import beehiveImg from '../../assets/images/common/img-beehive-sample.png';
 
 export default function Banner() {
-    const [activeTab, setActiveTab] = useState('buzzmap');
-    const [current, setCurrent] = useState(1);
-    const [total, setTotal] = useState(1);
-    const [swiperInstance, setSwiperInstance] = useState(null);
+    const [activeTab, setActiveTab] = useState('myPos');
     const [zoomLevel, setZoomLevel] = useState(10);
     const containerRef = useRef(null);
 
@@ -77,43 +70,21 @@ export default function Banner() {
                 <div className='banner_choice'>
                     <div className='choice_container'>
                         <button
+                            className={`myPos ${activeTab === 'myPos' ? 'active' : ''}`}
+                            onClick={() => setActiveTab('myPos')}
+                        >
+                            <p>내위치</p>
+                        </button>
+                        <button
                             className={`buzzmap ${activeTab === 'buzzmap' ? 'active' : ''}`}
                             onClick={() => setActiveTab('buzzmap')}
                         >
                             <p>버즈맵</p>
                         </button>
-                        <button
-                            className={`magazine ${activeTab === 'magazine' ? 'active' : ''}`}
-                            onClick={() => {
-                                if (activeTab !== 'magazine') {
-                                    setCurrent(1);
-                                    setActiveTab('magazine');
-                                    setTimeout(() => {
-                                        if (swiperInstance) swiperInstance.slideTo(0);
-                                    }, 0);
-                                }
-                            }}
-                        >
-                            <p>매거진</p>
-                        </button>
-                        <button
-                            className={`review ${activeTab === 'review' ? 'active' : ''}`}
-                            onClick={() => {
-                                if (activeTab !== 'review') {
-                                    setCurrent(1);
-                                    setActiveTab('review');
-                                    setTimeout(() => {
-                                        if (swiperInstance) swiperInstance.slideTo(0);
-                                    }, 0);
-                                }
-                            }}
-                        >
-                            <p>후기</p>
-                        </button>
                     </div>
                 </div>
-                {/* 버즈맵 */}
-                {activeTab === 'buzzmap' && (
+                {/* 내위치 */}
+                {activeTab === 'myPos' && (
                     <>
                         <div className='map'>
                             <div className="map-area" ref={containerRef}>
@@ -126,14 +97,14 @@ export default function Banner() {
 
                                     {/* 디테일 지도: zoomLevel >= 14 */}
                                     <img
-                                        src={`/src/assets/images/img-map.svg`}
+                                        src={mapImg}
                                         className={`map-image map-detail ${zoomLevel >= 14 ? 'visible' : ''}`}
                                         alt="map"
                                     />
 
                                     {/* 기본 지도 + 일러스트 모드: zoomLevel < 14 */}
                                     <img
-                                        src={`/src/assets/images/img-beehive-sample.png`}
+                                        src={beehiveImg}
                                         className={`map-image map-basic ${zoomLevel < 14 ? 'visible' : ''}`}
                                         alt="beehive"
                                         style={{
@@ -146,161 +117,27 @@ export default function Banner() {
                         </div>
                     </>
                 )}
-                {/* 매거진 */}
-                {activeTab === 'magazine' && (
+                {/* 버즈맵 */}
+                {activeTab === 'buzzmap' && (
                     <>
-                        <Swiper
-                            modules={[Pagination]}
-                            pagination={{
-                                type: 'progressbar',
-                                el: '.swiper-progressbar',
-                            }}
-                            onSwiper={(swiper) => {
-                                setSwiperInstance(swiper);
-                                setTotal(swiper.slides.length);
-                            }}
-                            onSlideChange={(swiper) => {
-                                setCurrent(swiper.realIndex + 1);
-                                setTotal(swiper.slides.length);
-                            }}
-                        >
-                            <SwiperSlide>
-                                <img
-                                    className='magazine_img'
-                                    src={`/src/assets/images/img-magazine1.png`}
-                                    alt='magazine'
-                                />
-                                <div className='magazine_container'>
-                                    <div className='magazine_txt'>
-                                        <p className='main_txt'>9월 가족 여행지 추천</p>
-                                        <p className='sub_txt'>친구 또는 가족과 떠나는 여행 프로모션에 응모해보세요!</p>
-                                    </div>
-                                </div>
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <img
-                                    className='magazine_img'
-                                    src={`/src/assets/images/img-magazine2.png`}
-                                    alt='magazine'
-                                />
-                                <div className='magazine_container'>
-                                    <div className='magazine_txt'>
-                                        <p className='main_txt'>로컬밥상 따라 맛집 순례</p>
-                                        <p className='sub_txt'>가을 입맛 저격! 제철 체험과 식도락 코스</p>
-                                    </div>
-                                </div>
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <img
-                                    className='magazine_img'
-                                    src={`/src/assets/images/img-magazine3.png`}
-                                    alt='magazine'
-                                />
-                                <div className='magazine_container'>
-                                    <div className='magazine_txt'>
-                                        <p className='main_txt'>우리 마을에서 찍은 한 컷!</p>
-                                        <p className='sub_txt'>체험 사진 올리고 커피 쿠폰 받자!</p>
-                                    </div>
-                                </div>
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <img
-                                    className='magazine_img'
-                                    src={`/src/assets/images/img-magazine4.png`}
-                                    alt='magazine'
-                                />
-                                <div className='magazine_container'>
-                                    <div className='magazine_txt'>
-                                        <p className='main_txt'>MZ가 기획한 로컬 체험</p>
-                                        <p className='sub_txt'>지방살이 궁금한 청년을 위한 특별한 하루</p>
-                                    </div>
-                                </div>
-                            </SwiperSlide>
-                        </Swiper>
-                        <div className='page'>
-                            <div className="swiper-progressbar"></div>
-                            <div className="swiper-fraction">{current} / {total}</div>
-                        </div>
-                    </>
-                )}
-                {/* 후기 */}
-                {activeTab === 'review' && (
-                    <>
-                        <Swiper
-                            modules={[Pagination]}
-                            pagination={{
-                                type: 'progressbar',
-                                el: '.swiper-progressbar',
-                            }}
-                            onSwiper={(swiper) => {
-                                setSwiperInstance(swiper);
-                                setTotal(swiper.slides.length);
-                            }}
-                            onSlideChange={(swiper) => {
-                                setCurrent(swiper.realIndex + 1);
-                                setTotal(swiper.slides.length);
-                            }}
-                        >
-                            <SwiperSlide>
-                                <img
-                                    className='review_img'
-                                    src={`/src/assets/images/img-review1.png`}
-                                    alt='review'
-                                />
-                                <div className='review_container'>
-                                    <div className='review_txt'>
-                                        <p className='main_txt'>엄마랑 아빠랑</p>
-                                        <p className='sub_txt'>10월 전라도 축제 일정 및 8월 전주 여행 후기</p>
-                                    </div>
-                                </div>
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <img
-                                    className='review_img'
-                                    src={`/src/assets/images/img-review2.png`}
-                                    alt='review'
-                                />
-                                <div className='review_container'>
-                                    <div className='review_txt'>
-                                        <p className='main_txt'>나 혼자 보낸 하루</p>
-                                        <p className='sub_txt'>누구 눈치도 없이, 마음이 가는 대로 걷기</p>
-                                    </div>
-                                </div>
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <img
-                                    className='review_img'
-                                    src={`/src/assets/images/img-review3.png`}
-                                    alt='review'
-                                />
-                                <div className='review_container'>
-                                    <div className='review_txt'>
-                                        <p className='main_txt'>부모님과 함께한 느린 여행</p>
-                                        <p className='sub_txt'>서두르지 않았기에 더 오래 기억날 것 같아요</p>
-                                    </div>
-                                </div>
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <img
-                                    className='review_img'
-                                    src={`/src/assets/images/img-review4.png`}
-                                    alt='review'
-                                />
-                                <div className='review_container'>
-                                    <div className='review_txt'>
-                                        <p className='main_txt'>우리만의 조용한 마을 카페</p>
-                                        <p className='sub_txt'>#커플여행 #마을포토스팟 #기억저장</p>
-                                    </div>
-                                </div>
-                            </SwiperSlide>
+                        <div className='map'>
+                            <div className="map-area" ref={containerRef}>
+                                <div
+                                    className="zoom-content"
+                                >
 
-                        </Swiper>
-                        <div className='page'>
-                            <div className="swiper-progressbar"></div>
-                            <div className="swiper-fraction">{current} / {total}</div>
+                                    {/* 디테일 지도: zoomLevel >= 14 */}
+                                    <img
+                                        src={mapImg}
+                                        alt="map"
+                                    />
+
+                                </div>
+                            </div>
                         </div>
                     </>
                 )}
+
             </div>
         </div>
     )

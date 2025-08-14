@@ -12,8 +12,11 @@ function BeeHivePage() {
 
 
   return (
-    <div className="beehive-page">
+    <div className="beehive-container">
       <Statusbar />
+      <div className='beehive-page'>
+
+      </div>
       <header className="beehive-header">
         <h2>벌집 페이지</h2>
       </header>
