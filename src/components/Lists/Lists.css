@@ -2,7 +2,7 @@
     width: 435px;
     height: 285px;
     margin-top: 40px;
-    padding-bottom: 127px;
+    margin-bottom: 127px;
     display: flex;
     flex-direction: column;
     gap: 7px;

@@ -159,7 +159,7 @@ const SearchPage = ({ isKakaoMapLoaded }) => {
     if (!selectedPlace) return;
 
     // 이전 WritePage 상태 복사
-    const prevState = location.state?.currentWriteState || {};    
+    const prevState = location.state?.currentWriteState || {};
     const navigateTo = '/write';
 
     console.log("navigate 전 location.state:", prevState);

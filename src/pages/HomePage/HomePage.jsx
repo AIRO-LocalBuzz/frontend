@@ -17,7 +17,7 @@ const HomePage = () => {
     const [cityCode, setCityCode] = useState(null);
     const [listItems, setListItems] = useState([]);
     const [activeCategory, setActiveCategory] = useState('음식점');
-   
+
     // TO-DO : 리팩터링 과정에서 삭제 필요 (확인 후 진행)
     const getUniqueRandomImageNumbers = (max, count) => {
         const set = new Set();

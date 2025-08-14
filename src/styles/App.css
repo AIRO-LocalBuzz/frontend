@@ -49,3 +49,7 @@ body {
   height: 100%;
   padding-bottom: 0;
 }
+
+.no-bottom-nav::-webkit-scrollbar {
+  display: none;
+}

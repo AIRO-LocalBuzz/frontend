@@ -7,7 +7,7 @@ import iconPrev from '../../assets/icons/common/icon-prev.svg';
 import iconCamera from '../../assets/icons/common/icon-camera.svg';
 import iconExit from '../../assets/icons/common/icon-exit.svg';
 import './WritePage.css';
-import StatusBar from '../../components/StatusBar/StatusBar';
+import Statusbar from '../../components/Statusbar/Statusbar';
 
 export default function WritePage() {
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ export default function WritePage() {
   const [searchParams] = useSearchParams();
   const postId = searchParams.get('id');
   const isNewWrite = searchParams.get('new') === 'true';
-  
+
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [date, setDate] = useState('');
@@ -26,7 +26,7 @@ export default function WritePage() {
   const [withWhoTag, setWithWhoTag] = useState('');
   const [forWhatTag, setForWhatTag] = useState('');
   const [emotionTags, setEmotionTags] = useState([]);
-  
+
   // 딱 한 번만 초기화되도록 useRef 추가
   const initializedRef = useRef(false);
   const prevPreviewUrlsRef = useRef([]);
@@ -136,7 +136,7 @@ export default function WritePage() {
         // 그 외의 경우 currentWriteState 또는 state에서 가져옴
         setAddress(dataToRestore.adress);
       }
-      
+
       // 나머지 필드들은 dataToRestore 객체에서 가져와 복원
       if (dataToRestore.title) setTitle(dataToRestore.title);
       if (dataToRestore.content) setContent(dataToRestore.content);
@@ -145,14 +145,14 @@ export default function WritePage() {
       if (dataToRestore.withWhoTag) setWithWhoTag(dataToRestore.withWhoTag);
       if (dataToRestore.forWhatTag) setForWhatTag(dataToRestore.forWhatTag);
       if (dataToRestore.emotionTags) setEmotionTags(dataToRestore.emotionTags);
-      
+
       // 이 코드는 PhotoUploadPage에서 돌아왔을 때의 로직을 처리하는 부분입니다.
       // usePhoto 컨텍스트를 사용하므로 이 부분은 필요 없을 수 있습니다.
       // if (dataToRestore.selectedPhotos) setSelectedPhotos(dataToRestore.selectedPhotos);
 
       // 복원이 완료된 후 state를 제거하여 새로고침 시 초기화 방지
       window.history.replaceState({}, document.title, location.pathname);
-      }
+    }
   }, [location.state, setSelectedPhotos]);
 
 
@@ -194,7 +194,7 @@ export default function WritePage() {
     fetchPost();
   }, [postId, navigate, setSelectedPhotos]);
 
- 
+
   // 새 글 작성 시 초기화 로직
   useEffect(() => {
     // '처음 새 글쓰기 페이지에 들어왔을 때만 초기화' 되게 함
@@ -238,7 +238,7 @@ export default function WritePage() {
       setTravelDate(null);
     }
   }, [date]);
-  
+
   const formatFullDate = (dateObj) => {
     if (!dateObj || isNaN(dateObj.getTime())) return '';
     const year = dateObj.getFullYear();
@@ -266,13 +266,13 @@ export default function WritePage() {
       }
     });
   };
-  
+
   const isActive = title && content && category && date && adress && emotionTags.length > 0 && withWhoTag && forWhatTag;
 
   const closeModal = () => {
     setModalOpen(null);
   };
-  
+
   const handleCategoryModalClose = () => {
     setCategory(selectedCategoryKey);
     setModalOpen(null);
@@ -283,7 +283,7 @@ export default function WritePage() {
       alert('필수 정보를 모두 입력해주세요.');
       return;
     }
-    
+
     setLoading(true);
 
     const accessToken = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzIiwiaWF0IjoxNzU0MTY1NzI3LCJleHAiOjM2MTc1NDE2NTcyN30.1E2JEdWvdSbChE0L9Jnp5ZP_X08Dy7XjYLIFv3GLcyI';
@@ -308,7 +308,7 @@ export default function WritePage() {
       images: images, // images는 URL 문자열 배열 등 JSON에 포함될 데이터 형태여야 함
       isFeatured: false
     };
-    
+
     console.log("전송될 JSON 데이터:", JSON.stringify(postData, null, 2));
 
     try {
@@ -316,7 +316,7 @@ export default function WritePage() {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${accessToken}`,
       };
-      
+
       const response = await fetch(
         postId
           ? `https://airo-buzz.shop/api/v1/posts/${postId}`
@@ -328,14 +328,14 @@ export default function WritePage() {
         }
       );
 
-    
+
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || '게시물 저장 실패');
       }
 
       const savedPost = await response.json();
-      console.log("response :: ",savedPost.id);
+      console.log("response :: ", savedPost.id);
       navigate(`/detail/${savedPost.id}`);
     } catch (e) {
       console.error('게시물 제출 실패:', e);
@@ -347,7 +347,7 @@ export default function WritePage() {
 
   return (
     <div className="write-page">
-      <StatusBar />
+      <Statusbar />
       <header className="write-header">
         <div className="write-header-left">
           <button className="icon-button" onClick={() => navigate('/review')}>
@@ -371,11 +371,11 @@ export default function WritePage() {
             className="input-button date-button"
             onClick={() => setModalOpen('date')}
           >
-          <div className="label-group">
-            <span className="label">날짜</span>
-            <img src={iconPrev} alt="아래 화살표" className="icon-arrow-down" />
-          </div>
-            
+            <div className="label-group">
+              <span className="label">날짜</span>
+              <img src={iconPrev} alt="아래 화살표" className="icon-arrow-down" />
+            </div>
+
             <span className="date-select">{formatFullDate(travelDate)}</span>
           </button>
 
@@ -447,7 +447,7 @@ export default function WritePage() {
             ))}
           </div>
         </div>
-        
+
         <div className="row label-tag-row">
           <p className="label">어떤 감정이었나요?</p>
           <div className="tag-group">
@@ -520,7 +520,7 @@ export default function WritePage() {
 
       <div className="bottom-action-buttons">
         <button className="btn-ai">AI 도구</button>
-        <button className="btn-camera" 
+        <button className="btn-camera"
           onClick={() => navigate('/upload-photo', {
             state: {
               fromWrite: true,
@@ -588,7 +588,7 @@ export default function WritePage() {
                   ))}
                 </div>
               )}
-              <button 
+              <button
                 className="modal-close-btn"
                 onClick={modalOpen === 'category' ? handleCategoryModalClose : closeModal}
               >
