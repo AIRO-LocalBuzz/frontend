@@ -158,7 +158,8 @@ const SearchPage = ({ isKakaoMapLoaded }) => {
   const handleComplete = () => {
     if (!selectedPlace) return;
 
-    const prevState = location.state || {};
+    // 이전 WritePage 상태 복사
+    const prevState = location.state?.currentWriteState || {};    
     const navigateTo = '/write';
 
     console.log("navigate 전 location.state:", prevState);
@@ -167,8 +168,11 @@ const SearchPage = ({ isKakaoMapLoaded }) => {
     // 이전 상태와 선택된 장소 정보를 함께 넘겨줍니다.
     navigate(navigateTo, {
       state: {
-        ...prevState,
-        selectedPlace: selectedPlace,
+        currentWriteState: {
+          ...prevState,
+          address: selectedPlace,
+        },
+        selectedPlace,
         fromSearch: true,
       },
     });

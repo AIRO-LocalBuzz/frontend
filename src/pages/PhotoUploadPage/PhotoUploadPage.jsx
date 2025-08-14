@@ -52,11 +52,6 @@ export default function PhotoUploadPage() {
     const uniqueFiles = [...fileNames].map(name => newFiles.find(f => f.name === name))
 
     setAllFiles(uniqueFiles)
-
-    console.log(allFiles)
-
-
-    // 선택 상태는 자동 추가 X (사용자가 클릭해서 고르게 해야 함)
   }
 
   const isChanged = () => {

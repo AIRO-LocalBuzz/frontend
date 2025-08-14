@@ -1,0 +1,6 @@
+.write-form {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px; /* 각 입력 섹션(row) 사이의 간격 */
+}

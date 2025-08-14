@@ -1,0 +1,42 @@
+/* 태그 선택 영역 행 */
+.label-tag-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 4px;
+}
+
+/* "누구와 갔나요?" 같은 레이블 */
+.label {
+  font-weight: bold;
+  font-size: 14px;
+  color: #222;
+  margin: 0;
+  line-height: 1.2;
+}
+
+/* 태그 버튼들을 감싸는 그룹 */
+.tag-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* 개별 태그 버튼 */
+.tag-button {
+  padding: 6px 12px;
+  background-color: #f0f0f0;
+  border-radius: 16px;
+  border: none;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* 선택된 태그 버튼 */
+.tag-button.selected {
+  background-color: #ffc400;
+  color: #000;
+  font-weight: 600;
+}

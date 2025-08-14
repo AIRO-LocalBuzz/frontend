@@ -22,7 +22,7 @@ function App() {
   const [isKakaoMapLoaded, setIsKakaoMapLoaded] = useState(false);
 
   useEffect(() => {
-    const KAKAO_APP_KEY = "25f6f1eddf013e7b80c35cf6f2b1d32d";
+    const KAKAO_APP_KEY = "30b93a04130484165628bae6fad871f0";
 
     // 카카오맵 스크립트가 이미 로드되어 있으면 바로 상태를 true로 변경
     if (window.kakao && window.kakao.maps) {
