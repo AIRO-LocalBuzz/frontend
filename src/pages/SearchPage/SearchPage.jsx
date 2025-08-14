@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Search, MapPin, X } from 'lucide-react';
 import './SearchPage.css';
-import StatusBar from '../../components/StatusBar/StatusBar';
+import Statusbar from '../../components/Statusbar/Statusbar';
 
 const SearchPage = ({ isKakaoMapLoaded }) => {
   const navigate = useNavigate();
@@ -189,7 +189,7 @@ const SearchPage = ({ isKakaoMapLoaded }) => {
 
   return (
     <div className="search-page-container">
-      <StatusBar />
+      <Statusbar />
       <header className="search-header">
         <button onClick={handleCancel} className="cancel-button">
           <X size={24} />

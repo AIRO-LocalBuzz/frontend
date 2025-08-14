@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { usePhoto } from '../../contexts/PhotoContext'
 import './PhotoUploadPage.css'
-import StatusBar from '../../components/StatusBar/StatusBar'
+import Statusbar from '../../components/Statusbar/Statusbar'
 
 export default function PhotoUploadPage() {
   const navigate = useNavigate()
@@ -92,7 +92,7 @@ export default function PhotoUploadPage() {
 
   return (
     <div className="upload-page">
-      <StatusBar />
+      <Statusbar />
       {/* 헤더 */}
       <div className="upload-header">
         <button className="header-btn" onClick={handleCancel}>✕</button>

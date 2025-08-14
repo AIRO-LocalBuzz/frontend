@@ -7,7 +7,7 @@ import iconPrev from '../../assets/icons/common/icon-prev.svg';
 import iconCamera from '../../assets/icons/common/icon-camera.svg';
 import iconExit from '../../assets/icons/common/icon-exit.svg';
 import './WritePage.css';
-import StatusBar from '../../components/StatusBar/StatusBar';
+import Statusbar from '../../components/Statusbar/Statusbar';
 
 export default function WritePage() {
   const navigate = useNavigate();
@@ -347,7 +347,7 @@ export default function WritePage() {
 
   return (
     <div className="write-page">
-      <StatusBar />
+      <Statusbar />
       <header className="write-header">
         <div className="write-header-left">
           <button className="icon-button" onClick={() => navigate('/review')}>
