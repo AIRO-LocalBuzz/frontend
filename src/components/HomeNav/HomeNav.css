@@ -14,16 +14,14 @@
 }
 
 .home_nav .localbuzz_logo {
-    width: 191px;
-    height: 28px;
+    width: 150px;
+    height: 19px;
 }
 
 .home_nav .nav_container {
-    width: 100px;
     height: 32px;
     display: flex;
     align-items: center;
-    gap: 10px;
 }
 
 .home_nav .nav_container .search {
@@ -35,27 +33,14 @@
     cursor: pointer;
 }
 
-.home_nav .nav_container .point {
-    width: 58px;
-    height: 20px;
+.home_nav .nav_container .bell {
+    width: 32px;
+    height: 32px;
     display: flex;
     align-items: center;
-    gap: 3px;
-}
-
-.home_nav .nav_container .point .point_p {
-    width: 16px;
-    height: 16px;
-}
-
-.home_nav .nav_container .point p {
-    width: 39px;
-    height: 20px;
-
-    font-family: 'Pretendard';
-    font-weight: 500;
-    font-size: 18px;
-    line-height: 20px;
-    letter-spacing: 0;
-    color: #000000;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
 }
