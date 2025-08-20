@@ -2,7 +2,7 @@ import React from 'react';
 import './SplashPage.css';
 import { useNavigate } from 'react-router-dom';
 import Statusbar from '../../components/Statusbar/Statusbar';
-import logoImg from '../../assets/images/common/img-localbuzz.png';
+import logoIcon from '../../assets/icons/common/icon-logo.svg';
 import splashImg from '../../assets/images/splash/img-splash.gif';
 
 const SplashPage = () => {
@@ -19,7 +19,7 @@ const SplashPage = () => {
                 <div className='splash_container'>
                     <img
                         className='localbuzz_logo'
-                        src={logoImg}
+                        src={logoIcon}
                         alt='localbuzz_logo'
                     />
                     <div className='img_container'>
