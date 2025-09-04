@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Statusbar from '../../components/Statusbar/Statusbar';
-import Nav from '../../components/HomeNav/HomeNav';
+import HomeNav from '../../components/HomeNav/HomeNav';
 import Banner from '../../components/Banner/Banner';
 import RegionSelect from '../../components/RegionSelect/RegionSelect';
 import CategorySelect from '../../components/CategorySelect/CategorySelect';
@@ -137,8 +137,7 @@ const HomePage = ({ isKakaoMapLoaded }) => {
         <>
             <section className='main'>
                 <Statusbar />
-                <Nav />
-                {/* <Banner /> */}
+                <HomeNav />
                 <Banner isKakaoMapLoaded={isKakaoMapLoaded} />
                 <div className='region_container'>
                     <RegionSelect
