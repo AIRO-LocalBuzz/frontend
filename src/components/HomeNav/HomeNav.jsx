@@ -1,25 +1,24 @@
 import React from 'react';
 import './HomeNav.css';
-import logoImg from '../../assets/images/common/img-localbuzz.png';
+import logoIcon from '../../assets/icons/common/icon-logo.svg';
 import searchIcon from '../../assets/icons/nav/icon-search.svg';
-import pointIcon from '../../assets/icons/nav/icon-point.svg';
+import { Bell } from 'lucide-react';
 
-export default function Nav() {
+export default function HomeNav() {
     return (
-        <nav className='main_nav'>
+        <nav className='home_nav'>
             <img
                 className='localbuzz_logo'
-                src={logoImg}
+                src={logoIcon}
                 alt='localbuzz_logo'
             />
             <div className='nav_container'>
                 <div className='search'>
                     <img src={searchIcon} />
                 </div>
-                <div className='point'>
-                    <img src={pointIcon} className='point_p' />
-                    <p>1.2만</p>
-                </div>
+                <button className="bell">
+                    <Bell size={24} color="#333" />
+                </button>
             </div>
         </nav>
     )

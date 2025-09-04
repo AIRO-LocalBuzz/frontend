@@ -1,4 +1,4 @@
-.main_nav {
+.home_nav {
     width: 390px;
     height: 48px;
     background-color: #FFFFFF;
@@ -13,20 +13,18 @@
     z-index: 10;
 }
 
-.main_nav .localbuzz_logo {
-    width: 191px;
-    height: 28px;
+.home_nav .localbuzz_logo {
+    width: 150px;
+    height: 19px;
 }
 
-.main_nav .nav_container {
-    width: 100px;
+.home_nav .nav_container {
     height: 32px;
     display: flex;
     align-items: center;
-    gap: 10px;
 }
 
-.main_nav .nav_container .search {
+.home_nav .nav_container .search {
     width: 32px;
     height: 32px;
     display: flex;
@@ -35,27 +33,14 @@
     cursor: pointer;
 }
 
-.main_nav .nav_container .point {
-    width: 58px;
-    height: 20px;
+.home_nav .nav_container .bell {
+    width: 32px;
+    height: 32px;
     display: flex;
     align-items: center;
-    gap: 3px;
-}
-
-.main_nav .nav_container .point .point_p {
-    width: 16px;
-    height: 16px;
-}
-
-.main_nav .nav_container .point p {
-    width: 39px;
-    height: 20px;
-
-    font-family: 'Pretendard';
-    font-weight: 500;
-    font-size: 18px;
-    line-height: 20px;
-    letter-spacing: 0;
-    color: #000000;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
 }
