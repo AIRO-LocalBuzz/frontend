@@ -4,7 +4,7 @@ import HomeNav from '../../components/HomeNav/HomeNav';
 import Banner from '../../components/Banner/Banner';
 import RegionSelect from '../../components/RegionSelect/RegionSelect';
 import CategorySelect from '../../components/CategorySelect/CategorySelect';
-import Review from '../../components/Review/Review';
+import ReviewItem from '../../components/ReviewItem/ReviewItem';
 import Lists from '../../components/Lists/Lists';
 import Modal from '../../components/Modal/Modal';
 import { apiUrl } from '../../lib/apiUrl';
@@ -154,7 +154,7 @@ const HomePage = ({ isKakaoMapLoaded }) => {
                         }}
                     />
                     <div className='content'>
-                        <Review />
+                        <ReviewItem />
                         <Lists listItems={listItems} category={activeCategory} />
                     </div>
                 </div>

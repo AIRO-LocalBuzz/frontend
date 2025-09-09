@@ -1,5 +1,5 @@
 import React from 'react';
-import './Review.css';
+import './ReviewItem.css';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -10,7 +10,7 @@ import topReview3Img from '../../assets/images/sample/review/img-topReview3.jpg'
 import topReview4Img from '../../assets/images/sample/review/img-topReview4.jpg';
 import topReview5Img from '../../assets/images/sample/review/img-topReview5.jpg';
 
-export default function Review() {
+export default function ReviewItem() {
     const reviewItems = [
         {
             number: 1,

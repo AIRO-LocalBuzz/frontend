@@ -17,6 +17,7 @@ export const useSocialLogin = () => {
             'http://127.0.0.1:5173', // IP 주소 버전
             'http://localhost:3000', // 다른 포트도 지원 (필요시)
             'http://127.0.0.1:3000',
+            'https://site-navy-six-67.vercel.app',
             // 프로덕션 도메인이 있다면 여기에 추가
             // 'https://your-production-domain.com'
         ];

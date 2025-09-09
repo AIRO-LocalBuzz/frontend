@@ -4,12 +4,14 @@ import { useNavigate } from 'react-router-dom';
 import { useSocialLogin } from '../../hooks/useSocialLogin';
 import Statusbar from '../../components/Statusbar/Statusbar';
 import beeImg from '../../assets/images/common/img-bee.png';
-import logoImg from '../../assets/images/common/img-localbuzz.png';
+import logoIconBlack from '../../assets/icons/common/icon-logo-black.svg';
 import kakaoLogoImg from '../../assets/images/login/img-kakao_logo.png';
 import googleLogoImg from '../../assets/images/login/img-google_logo.png';
 
 const LoginPage = () => {
     const navigate = useNavigate();
+
+    // TO-DO : 리팩터링 과정에서 삭제 필요
     const { loginWithKakao, loginWithGoogle, isLoggedIn } = useSocialLogin();
 
     // // 이미 로그인되어 있다면 홈으로 리다이렉트 (선택사항)
@@ -41,7 +43,7 @@ const LoginPage = () => {
                             <div className='localbuzz_txt'>
                                 <img
                                     className='localbuzz_logo'
-                                    src={logoImg}
+                                    src={logoIconBlack}
                                     alt='localbuzz_logo'
                                 />
                                 <p>로컬버즈입니다 !</p>

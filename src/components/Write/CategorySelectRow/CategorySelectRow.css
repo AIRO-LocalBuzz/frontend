@@ -1,0 +1,49 @@
+/* 카테고리 행 */
+.category-row {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 8px;
+}
+
+/* 카테고리 행의 버튼은 너비를 100% 차지 */
+.category-row .input-button {
+  width: 100%;
+}
+
+/* 선택된 카테고리 텍스트 */
+.category-select {
+  margin-left: 5px;
+  font-weight: 500;
+  color: #555;
+  font-size: 15px;
+}
+
+/* 날짜/주소 컴포넌트와 공유하는 스타일 */
+.input-button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  padding: 8px 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  font-weight: bold;
+  color: #000;
+}
+
+.label-group {
+  display: flex;
+  align-items: center;
+  gap: 0px;
+}
+
+.icon-arrow-down {
+  width: 16px;
+  height: 16px;
+  margin-left: 8px;
+  transform: rotate(-90deg);
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+  display: block;
+}
