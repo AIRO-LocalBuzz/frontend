@@ -11,11 +11,7 @@
 }
 
 .main .region_container {
-    position: absolute;
-    top: 618px;
-    left: 16px;
-    /* box-sizing: border-box; */
-    /* transition: left 0.1s ease; */
+    margin: 20px 16px;
 }
 
 .main .category_container {
@@ -23,17 +19,12 @@
     height: 652px;
     padding-left: 16px;
 
-    position: absolute;
-    top: 669px;
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
 .main .container .content {
-    /* width: 435px; */
     height: 613px;
 
-    position: absolute;
-    top: 39px;
 }

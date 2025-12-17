@@ -1,68 +1,24 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import './Banner.css';
 import mapImg from '../../assets/images/common/img-map.png';
-import beehiveImg from '../../assets/images/common/img-beehive-sample.png';
+import exitIcon from '../../assets/icons/common/icon-exit.svg';
+import KakaoMapCanvas from '../../components/Map/KakaoMapCanvas';
+import BuzzMap from '../../components/Map/BuzzMap';
 
 export default function Banner() {
     const [activeTab, setActiveTab] = useState('myPos');
-    const [zoomLevel, setZoomLevel] = useState(10);
-    const containerRef = useRef(null);
+    const [recenterSignal, setRecenterSignal] = useState(0);
 
-    // 터치 기반 줌인/아웃 감지
-    useEffect(() => {
-        let initialDistance = null;
-
-        const getDistance = (touches) => {
-            const [a, b] = touches;
-            return Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
-        };
-
-        const onTouchStart = (e) => {
-            if (e.touches.length === 2) initialDistance = getDistance(e.touches);
-        };
-
-        const onTouchMove = (e) => {
-            if (e.touches.length === 2 && initialDistance !== null) {
-                const distance = getDistance(e.touches);
-                const diff = distance - initialDistance;
-                if (Math.abs(diff) > 10) {
-                    setZoomLevel((prev) =>
-                        diff > 0 ? Math.min(prev + 1, 20) : Math.max(prev - 1, 10)
-                    );
-                    initialDistance = distance;
-                }
-            }
-        };
-
-        const onTouchEnd = () => {
-            initialDistance = null;
-        };
-
-        const onWheel = (e) => {
-            if (e.ctrlKey) {
-                e.preventDefault();
-                setZoomLevel((prev) =>
-                    e.deltaY < 0 ? Math.min(prev + 1, 20) : Math.max(prev - 1, 10)
-                );
-            }
-        };
-
-        const container = containerRef.current;
-
-        container.addEventListener('touchstart', onTouchStart);
-        container.addEventListener('touchmove', onTouchMove);
-        container.addEventListener('touchend', onTouchEnd);
-
-        // window에 wheel 이벤트 등록
-        window.addEventListener('wheel', onWheel, { passive: false });
-
-        return () => {
-            container.removeEventListener('touchstart', onTouchStart);
-            container.removeEventListener('touchmove', onTouchMove);
-            container.removeEventListener('touchend', onTouchEnd);
-            window.removeEventListener('wheel', onWheel);
-        };
-    }, []);
+    // 기존 북마크
+    const bookmarks = [
+        {
+            address: '서울 강남구 테헤란로 145', // (13층, 14층)
+            label: '13·14층',
+            title: '강남 구름 스퀘어',
+            subtitle: '함께 만들어가는'
+        },
+        // { lat: 37.498, lng: 127.028, title: '직접 좌표 북마크' }
+    ];
 
     return (
         <div className='banner'>
@@ -71,7 +27,10 @@ export default function Banner() {
                     <div className='choice_container'>
                         <button
                             className={`myPos ${activeTab === 'myPos' ? 'active' : ''}`}
-                            onClick={() => setActiveTab('myPos')}
+                            onClick={() => {
+                                setActiveTab('myPos');
+                                setRecenterSignal(n => n + 1);
+                            }}
                         >
                             <p>내위치</p>
                         </button>
@@ -83,62 +42,32 @@ export default function Banner() {
                         </button>
                     </div>
                 </div>
-                {/* 내위치 */}
-                {activeTab === 'myPos' && (
-                    <>
-                        <div className='map'>
-                            <div className="map-area" ref={containerRef}>
-                                <div
-                                    className="zoom-content"
-                                    style={{
-                                        transform: `scale(${Math.max(zoomLevel / 15, 1)})`,
-                                    }}
-                                >
 
-                                    {/* 디테일 지도: zoomLevel >= 14 */}
-                                    <img
-                                        src={mapImg}
-                                        className={`map-image map-detail ${zoomLevel >= 14 ? 'visible' : ''}`}
-                                        alt="map"
-                                    />
+                {/* 내 위치: 카카오 지도 (항상 렌더) */}
+                <div className={`map ${activeTab === 'myPos' ? 'visible' : 'hidden'}`}>
+                    <div className="map-area">
+                        <KakaoMapCanvas
+                            isVisible={activeTab === 'myPos'}      // ✅ 가시성 전달
+                            recenterSignal={recenterSignal}
+                            bookmarks={bookmarks}
+                            closeIconSrc={exitIcon}
+                        />
+                        <button
+                            className='map-btn'
+                            aria-label="현재 위치로 이동"
+                            onClick={() => setRecenterSignal(n => n + 1)}
+                        >
+                            ⦿
+                        </button>
+                    </div>
+                </div>
 
-                                    {/* 기본 지도 + 일러스트 모드: zoomLevel < 14 */}
-                                    <img
-                                        src={beehiveImg}
-                                        className={`map-image map-basic ${zoomLevel < 14 ? 'visible' : ''}`}
-                                        alt="beehive"
-                                        style={{
-                                            transform: `scale(${1 + (zoomLevel - 10) * 0.03})`,
-                                            transition: 'transform 0.3s ease',
-                                        }}
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                    </>
-                )}
-                {/* 버즈맵 */}
-                {activeTab === 'buzzmap' && (
-                    <>
-                        <div className='map'>
-                            <div className="map-area" ref={containerRef}>
-                                <div
-                                    className="zoom-content"
-                                >
-
-                                    {/* 디테일 지도: zoomLevel >= 14 */}
-                                    <img
-                                        src={mapImg}
-                                        alt="map"
-                                    />
-
-                                </div>
-                            </div>
-                        </div>
-                    </>
-                )}
+                {/* 버즈맵 (항상 렌더) */}
+                <div className={`map ${activeTab === 'buzzmap' ? 'visible' : 'hidden'}`}>
+                    <BuzzMap imageSrc={mapImg} />
+                </div>
 
             </div>
         </div>
-    )
+    );
 }

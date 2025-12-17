@@ -10,22 +10,13 @@ import Modal from '../../components/Modal/Modal';
 import { apiUrl } from '../../lib/apiUrl';
 import './HomePage.css';
 
-const HomePage = () => {
+const HomePage = ({ isKakaoMapLoaded }) => {
     const [activeRegion, setActiveRegion] = useState('서울');
     const [isModalOpen, setModalOpen] = useState(false);
     const [megaCode, setMegaCode] = useState(null);
     const [cityCode, setCityCode] = useState(null);
     const [listItems, setListItems] = useState([]);
     const [activeCategory, setActiveCategory] = useState('음식점');
-
-    // TO-DO : 리팩터링 과정에서 삭제 필요 (확인 후 진행)
-    const getUniqueRandomImageNumbers = (max, count) => {
-        const set = new Set();
-        while (set.size < count) {
-            set.add(Math.floor(Math.random() * max) + 1);
-        }
-        return [...set];
-    };
 
     useEffect(() => {
         // 기본 지역: 서울특별시 종로구
@@ -147,7 +138,7 @@ const HomePage = () => {
             <section className='main'>
                 <Statusbar />
                 <HomeNav />
-                <Banner />
+                <Banner isKakaoMapLoaded={isKakaoMapLoaded} />
                 <div className='region_container'>
                     <RegionSelect
                         activeRegion={activeRegion}
