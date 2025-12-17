@@ -4,7 +4,6 @@ import { useWriteForm } from '../../hooks/useWriteForm';
 import Statusbar from '../../components/Statusbar/Statusbar';
 import WriteHeader from '../../components/Write/WriteHeader/WriteHeader';
 import WriteForm from '../../components/Write/WriteForm/WriteForm';
-import BottomActions from '../../components/Write/BottomActions/BottomActions';
 import ModalWrapper from '../../components/Write/modals/ModalWrapper/ModalWrapper';
 import DateModal from '../../components/Write/modals/DateModal/DateModal';
 import CategoryModal from '../../components/Write/modals/CategoryModal/CategoryModal';
@@ -56,12 +55,6 @@ export default function WritePage() {
           form.setModalOpen('category');
         }}
         currentWriteState={currentWriteState}
-      />
-
-      <BottomActions
-        onCameraClick={() => form.navigate('/upload-photo', {
-          state: { fromWrite: true, currentWriteState }
-        })}
       />
 
       {/* 모달 렌더링 로직 */}
