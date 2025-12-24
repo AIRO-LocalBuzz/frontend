@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import './Modal.css';
-import { apiUrl } from '../../lib/apiUrl';
+import {apiUrl} from '../../lib/apiUrl';
 
-export default function Modal({ region, onClose, onSelectRegion }) {
+export default function Modal({region, onClose, onSelectRegion}) {
   const [megaList, setMegaList] = useState([]);
   const [cityList, setCityList] = useState([]);
   const [selectedGroup, setSelectedGroup] = useState(region || '서울');
@@ -30,8 +30,8 @@ export default function Modal({ region, onClose, onSelectRegion }) {
     };
 
     Promise.all([
-      fetch(apiUrl('/v1/area/mega/code'), { headers }),
-      fetch(apiUrl('/v1/area/city/code'), { headers }),
+      fetch(apiUrl('/v1/area/mega/code'), {headers}),
+      fetch(apiUrl('/v1/area/city/code'), {headers}),
     ])
       .then(async ([res1, res2]) => {
         if (!res1.ok || !res2.ok) throw new Error('응답 오류 발생');
@@ -47,7 +47,7 @@ export default function Modal({ region, onClose, onSelectRegion }) {
   const selectedMegaNames = groupedMegaMap[selectedGroup] || [];
   const selectedMegaCodes = megaList
     .filter(m => selectedMegaNames.includes(m.megaName))
-    .map(m => ({ id: m.id, name: m.megaName }));
+    .map(m => ({id: m.id, name: m.megaName}));
 
   // 필터링된 도시 목록 (서울특별시 종로구)
   const filteredCityFullNames = cityList
@@ -119,11 +119,11 @@ export default function Modal({ region, onClose, onSelectRegion }) {
               <g clipPath="url(#clip0)">
                 <path
                   d="M15.6653 1.95098C16.1116 1.50467 16.1116 0.781049 15.6653 0.334735C15.219 -0.111578 14.4953 -0.111578 14.049 0.334735L8 6.38376L1.95098 0.334735C1.50467 -0.111578 0.781049 -0.111578 0.334735 0.334735C-0.111578 0.781049 -0.111578 1.50467 0.334735 1.95098L6.38376 8L0.334735 14.049C-0.111578 14.4953 -0.111578 15.219 0.334735 15.6653C0.781049 16.1116 1.50467 16.1116 1.95098 15.6653L8 9.61625L14.049 15.6653C14.4953 16.1116 15.219 16.1116 15.6653 15.6653C16.1116 15.219 16.1116 14.4953 15.6653 14.049L9.61625 8L15.6653 1.95098Z"
-                  fill="#666666" />
+                  fill="#666666"/>
               </g>
               <defs>
                 <clipPath id="clip0">
-                  <rect width="16" height="16" fill="white" />
+                  <rect width="16" height="16" fill="white"/>
                 </clipPath>
               </defs>
             </svg>

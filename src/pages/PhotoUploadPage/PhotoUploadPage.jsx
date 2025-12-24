@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { usePhoto } from '../../contexts/PhotoContext'
+import React, {useEffect, useState} from 'react'
+import {useNavigate} from 'react-router-dom'
+import {usePhoto} from '../../contexts/PhotoContext'
 import './PhotoUploadPage.css'
 import Statusbar from '../../components/Statusbar/Statusbar'
 
 export default function PhotoUploadPage() {
   const navigate = useNavigate()
 
-  const { selectedPhotos, setSelectedPhotos } = usePhoto()
+  const {selectedPhotos, setSelectedPhotos} = usePhoto()
   const [allFiles, setAllFiles] = useState([])
   const [selectedIndexes, setSelectedIndexes] = useState([])
   const [initialPhotos, setInitialPhotos] = useState([])
@@ -83,7 +83,7 @@ export default function PhotoUploadPage() {
 
     // 이전 페이지의 state를 가져와서 WritePage로 돌아갈 때 함께 넘겨줍니다.
     const prevLocationState = window.history.state?.usr;
-    navigate('/write', { state: prevLocationState });
+    navigate('/write', {state: prevLocationState});
   };
 
   const handleCancel = () => {
@@ -92,7 +92,7 @@ export default function PhotoUploadPage() {
 
   return (
     <div className="upload-page">
-      <Statusbar />
+      <Statusbar/>
       {/* 헤더 */}
       <div className="upload-header">
         <button className="header-btn" onClick={handleCancel}>✕</button>
@@ -116,7 +116,7 @@ export default function PhotoUploadPage() {
           accept="image/*"
           multiple
           onChange={handleImageUpload}
-          style={{ display: 'none' }}
+          style={{display: 'none'}}
         />
         <label htmlFor="fileInput" className="custom-upload-button">
           <span className="upload-text">

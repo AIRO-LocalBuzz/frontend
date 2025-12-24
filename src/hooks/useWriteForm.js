@@ -1,18 +1,48 @@
-import { useState, useEffect, useRef } from 'react';
-import { useNavigate, useLocation, useSearchParams } from 'react-router-dom';
-import { usePhoto } from '../contexts/PhotoContext';
+import {useEffect, useRef, useState} from 'react';
+import {useLocation, useNavigate, useSearchParams} from 'react-router-dom';
+import {usePhoto} from '../contexts/PhotoContext';
 
 // 컴포넌트 밖에서 선언하여 불필요한 재선언 방지
-export const withWhoTagMap = { '혼자': 'ALLONE', '친구': 'FRIEND', '가족': 'FAMILY', '연인': 'PARTNER' };
-export const forWhatTagMap = { '업무': 'WORK', '세미나': 'SEMINAR', '학교': 'SCHOOL', '힐링': 'HEALING', '공부': 'STUDY', '식도락': 'CULINARY' };
-export const emotionMap = { '행복': 'HAPPY', '설렘': 'EXCITED', '만족감': 'SATISFIED', '충만함': 'FULFILLED', '평온함': 'PEACEFUL', '여유로움': 'RELAXED', '감동': 'TOUCHED', '벅차오름': 'OVERWHELMED', '친근함': 'FRIENDLY', '따듯함': 'WARM' };
-export const categoryOptions = [ { key: 'food', label: '음식점', value: 'RESTORANT' }, { key: 'cafe', label: '카페', value: 'CAFE' }, { key: 'living', label: '숙소', value: 'ACCOMMODATION' }, { key: 'event', label: '행사', value: 'EVENT' }, { key: 'experience', label: '체험', value: 'EXPERIENCE' }, { key: 'challenge', label: '챌린지', value: 'CHALLENGE' }, { key: 'leisure', label: '여가', value: 'LEISURE' }];
+export const withWhoTagMap = {'혼자': 'ALLONE', '친구': 'FRIEND', '가족': 'FAMILY', '연인': 'PARTNER'};
+export const forWhatTagMap = {
+  '업무': 'WORK',
+  '세미나': 'SEMINAR',
+  '학교': 'SCHOOL',
+  '힐링': 'HEALING',
+  '공부': 'STUDY',
+  '식도락': 'CULINARY'
+};
+export const emotionMap = {
+  '행복': 'HAPPY',
+  '설렘': 'EXCITED',
+  '만족감': 'SATISFIED',
+  '충만함': 'FULFILLED',
+  '평온함': 'PEACEFUL',
+  '여유로움': 'RELAXED',
+  '감동': 'TOUCHED',
+  '벅차오름': 'OVERWHELMED',
+  '친근함': 'FRIENDLY',
+  '따듯함': 'WARM'
+};
+export const categoryOptions = [{key: 'food', label: '음식점', value: 'RESTORANT'}, {
+  key: 'cafe',
+  label: '카페',
+  value: 'CAFE'
+}, {key: 'living', label: '숙소', value: 'ACCOMMODATION'}, {
+  key: 'event',
+  label: '행사',
+  value: 'EVENT'
+}, {key: 'experience', label: '체험', value: 'EXPERIENCE'}, {
+  key: 'challenge',
+  label: '챌린지',
+  value: 'CHALLENGE'
+}, {key: 'leisure', label: '여가', value: 'LEISURE'}];
 
 export const useWriteForm = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [searchParams] = useSearchParams();
-  const { selectedPhotos, setSelectedPhotos, resetPhotos } = usePhoto();
+  const {selectedPhotos, setSelectedPhotos, resetPhotos} = usePhoto();
 
   // 원본 코드의 모든 상태 관리
   const [title, setTitle] = useState('');
@@ -38,7 +68,7 @@ export const useWriteForm = () => {
 
   // 사진 미리보기 로직
   useEffect(() => {
-        if (selectedPhotos.length === 0) {
+    if (selectedPhotos.length === 0) {
       if (prevPreviewUrlsRef.current.length !== 0) {
         setPreviewUrls([]);
         prevPreviewUrlsRef.current = [];
@@ -105,7 +135,7 @@ export const useWriteForm = () => {
       if (dataToRestore.withWhoTag) setWithWhoTag(dataToRestore.withWhoTag);
       if (dataToRestore.forWhatTag) setForWhatTag(dataToRestore.forWhatTag);
       if (dataToRestore.emotionTags) setEmotionTags(dataToRestore.emotionTags);
-      
+
       // 기존 주소도 일단 복원
       if (dataToRestore.address) setAddress(dataToRestore.address);
     }
@@ -117,7 +147,7 @@ export const useWriteForm = () => {
 
     // 3. 복원이 완료된 후 state를 제거하여 새로고침 시 초기화 방지
     window.history.replaceState({}, document.title, location.pathname);
-    
+
   }, [location.state]);
 
 
@@ -158,7 +188,7 @@ export const useWriteForm = () => {
 
     fetchPost();
   }, [postId, navigate, setSelectedPhotos]);
-  
+
 
   // 새 글 작성 시 초기화 로직
   useEffect(() => {
@@ -190,7 +220,7 @@ export const useWriteForm = () => {
     }
   }, [isNewWrite, location.state, resetPhotos, setSelectedPhotos]); // 의존성 배열에 location.state 추가
 
-  
+
   // date 문자열 -> travelDate 객체 동기화 로직
   useEffect(() => {
     if (date) {
@@ -208,7 +238,7 @@ export const useWriteForm = () => {
 
   // 원본 코드의 모든 핸들러 및 유틸리티 함수
   const handleEmotionTagClick = (tag) => {
-    setEmotionTags(prevTags => 
+    setEmotionTags(prevTags =>
       prevTags.includes(tag) ? prevTags.filter(t => t !== tag) : [...prevTags, tag]
     );
   };
@@ -218,7 +248,7 @@ export const useWriteForm = () => {
       alert('필수 정보를 모두 입력해주세요.');
       return;
     }
-    
+
     setLoading(true);
 
     const accessToken = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzIiwiaWF0IjoxNzU0MTY1NzI3LCJleHAiOjM2MTc1NDE2NTcyN30.1E2JEdWvdSbChE0L9Jnp5ZP_X08Dy7XjYLIFv3GLcyI';
@@ -243,7 +273,7 @@ export const useWriteForm = () => {
       images: images, // images는 URL 문자열 배열 등 JSON에 포함될 데이터 형태여야 함
       isFeatured: false
     };
-    
+
     console.log("전송될 JSON 데이터:", JSON.stringify(postData, null, 2));
 
     try {
@@ -251,7 +281,7 @@ export const useWriteForm = () => {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${accessToken}`,
       };
-      
+
       const response = await fetch(
         postId
           ? `https://airo-buzz.shop/api/v1/posts/${postId}`
@@ -263,14 +293,14 @@ export const useWriteForm = () => {
         }
       );
 
-    
+
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || '게시물 저장 실패');
       }
 
       const savedPost = await response.json();
-      console.log("response :: ",savedPost.id);
+      console.log("response :: ", savedPost.id);
       navigate(`/detail/${savedPost.id}`);
     } catch (e) {
       console.error('게시물 제출 실패:', e);

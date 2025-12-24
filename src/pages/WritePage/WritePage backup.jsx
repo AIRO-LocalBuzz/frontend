@@ -1,8 +1,8 @@
 import ReactCalendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import { useNavigate, useLocation, useSearchParams } from 'react-router-dom';
-import { useState, useEffect, useRef } from 'react';
-import { usePhoto } from '../../contexts/PhotoContext';
+import {useLocation, useNavigate, useSearchParams} from 'react-router-dom';
+import {useEffect, useRef, useState} from 'react';
+import {usePhoto} from '../../contexts/PhotoContext';
 import iconPrev from '../../assets/icons/common/icon-prev.svg';
 import iconCamera from '../../assets/icons/common/icon-camera.svg';
 import iconExit from '../../assets/icons/common/icon-exit.svg';
@@ -32,7 +32,7 @@ export default function WritePage() {
   const prevPreviewUrlsRef = useRef([]);
 
   const [loading, setLoading] = useState(false);
-  const { selectedPhotos, setSelectedPhotos, resetPhotos } = usePhoto();
+  const {selectedPhotos, setSelectedPhotos, resetPhotos} = usePhoto();
   const [previewUrls, setPreviewUrls] = useState([]);
 
   const withWhoTagMap = {
@@ -65,13 +65,13 @@ export default function WritePage() {
   };
 
   const categoryOptions = [
-    { key: 'food', label: '음식점', value: 'RESTORANT' },
-    { key: 'cafe', label: '카페', value: 'CAFE' },
-    { key: 'living', label: '숙소', value: 'ACCOMMODATION' },
-    { key: 'event', label: '행사', value: 'EVENT' },
-    { key: 'experience', label: '체험', value: 'EXPERIENCE' },
-    { key: 'challenge', label: '챌린지', value: 'CHALLENGE' },
-    { key: 'leisure', label: '여가', value: 'LEISURE' },
+    {key: 'food', label: '음식점', value: 'RESTORANT'},
+    {key: 'cafe', label: '카페', value: 'CAFE'},
+    {key: 'living', label: '숙소', value: 'ACCOMMODATION'},
+    {key: 'event', label: '행사', value: 'EVENT'},
+    {key: 'experience', label: '체험', value: 'EXPERIENCE'},
+    {key: 'challenge', label: '챌린지', value: 'CHALLENGE'},
+    {key: 'leisure', label: '여가', value: 'LEISURE'},
   ];
 
   // 사진 미리보기
@@ -347,11 +347,11 @@ export default function WritePage() {
 
   return (
     <div className="write-page">
-      <Statusbar />
+      <Statusbar/>
       <header className="write-header">
         <div className="write-header-left">
           <button className="icon-button" onClick={() => navigate('/review')}>
-            <img src={iconPrev} alt="이전" className="icon-prev" />
+            <img src={iconPrev} alt="이전" className="icon-prev"/>
           </button>
           <h2 className="title">글쓰기</h2>
         </div>
@@ -373,7 +373,7 @@ export default function WritePage() {
           >
             <div className="label-group">
               <span className="label">날짜</span>
-              <img src={iconPrev} alt="아래 화살표" className="icon-arrow-down" />
+              <img src={iconPrev} alt="아래 화살표" className="icon-arrow-down"/>
             </div>
 
             <span className="date-select">{formatFullDate(travelDate)}</span>
@@ -395,7 +395,7 @@ export default function WritePage() {
             >
               <span className="adress-text">{adress.place_name || '위치'}</span>
             </button>
-            <img src={iconPrev} alt="아래 화살표" className="icon-arrow-down-fixed" />
+            <img src={iconPrev} alt="아래 화살표" className="icon-arrow-down-fixed"/>
           </div>
         </div>
 
@@ -410,7 +410,7 @@ export default function WritePage() {
           >
             <div className="label-group">
               <span className="label">카테고리</span>
-              <img src={iconPrev} alt="아래 화살표" className="icon-arrow-down" />
+              <img src={iconPrev} alt="아래 화살표" className="icon-arrow-down"/>
             </div>
             <span className="category-select">
               {categoryOptions.find(opt => opt.key === category)?.label || ''}
@@ -530,7 +530,7 @@ export default function WritePage() {
             }
           })}
         >
-          <img src={iconCamera} alt="카메라" />
+          <img src={iconCamera} alt="카메라"/>
         </button>
       </div>
 
@@ -541,7 +541,7 @@ export default function WritePage() {
 
               <div className="modal-header">
                 <button className="modal-close-x" onClick={closeModal}>
-                  <img src={iconExit} alt="닫기" />
+                  <img src={iconExit} alt="닫기"/>
                 </button>
               </div>
 
@@ -575,7 +575,7 @@ export default function WritePage() {
 
               {modalOpen === 'category' && (
                 <div className="modal-category-list custom-grid">
-                  {categoryOptions.map(({ key, label }) => (
+                  {categoryOptions.map(({key, label}) => (
                     <button
                       key={key}
                       className={`modal-category-item ${selectedCategoryKey === key ? 'selected' : ''}`}

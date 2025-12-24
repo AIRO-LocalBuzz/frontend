@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { Search, MapPin, X } from 'lucide-react';
+import React, {useEffect, useRef, useState} from 'react';
+import {useLocation, useNavigate} from 'react-router-dom';
+import {MapPin, Search, X} from 'lucide-react';
 import './SearchPage.css';
 import Statusbar from '../../components/Statusbar/Statusbar';
 
-const SearchPage = ({ isKakaoMapLoaded }) => {
+const SearchPage = ({isKakaoMapLoaded}) => {
   const navigate = useNavigate();
   const location = useLocation();
   const mapContainer = useRef(null);
@@ -42,7 +42,7 @@ const SearchPage = ({ isKakaoMapLoaded }) => {
 
             // 현재 위치 마커 (SVG 아이콘)
             const imageSize = new window.kakao.maps.Size(40, 40);
-            const imageOption = { offset: new window.kakao.maps.Point(20, 40) };
+            const imageOption = {offset: new window.kakao.maps.Point(20, 40)};
             const markerImage = new window.kakao.maps.MarkerImage(markerSvgIcon, imageSize, imageOption);
 
             const marker = new window.kakao.maps.Marker({
@@ -106,7 +106,7 @@ const SearchPage = ({ isKakaoMapLoaded }) => {
 
     // 검색 결과 마커 (SVG 아이콘)
     const imageSize = new window.kakao.maps.Size(40, 40);
-    const imageOption = { offset: new window.kakao.maps.Point(20, 40) };
+    const imageOption = {offset: new window.kakao.maps.Point(20, 40)};
     const markerImage = new window.kakao.maps.MarkerImage(markerSvgIcon, imageSize, imageOption);
 
     for (let i = 0; i < places.length; i++) {
@@ -140,7 +140,7 @@ const SearchPage = ({ isKakaoMapLoaded }) => {
     // location.state에 있는 이전 데이터를 그대로 가지고 WritePage로 돌아갑니다.
     const prevState = location.state || {};
     const navigateTo = '/write';
-    navigate(navigateTo, { state: prevState });
+    navigate(navigateTo, {state: prevState});
   };
 
   // 장소 목록에서 클릭 시, 장소 선택만 하고 페이지 이동은 하지 않음
@@ -189,10 +189,10 @@ const SearchPage = ({ isKakaoMapLoaded }) => {
 
   return (
     <div className="search-page-container">
-      <Statusbar />
+      <Statusbar/>
       <header className="search-header">
         <button onClick={handleCancel} className="cancel-button">
-          <X size={24} />
+          <X size={24}/>
         </button>
 
         <h1 className="search-title">장소 검색</h1>
@@ -205,14 +205,16 @@ const SearchPage = ({ isKakaoMapLoaded }) => {
         </button>
       </header>
       <div className="search-bar">
-        <Search className="search-icon" size={20} />
+        <Search className="search-icon" size={20}/>
         <input
           type="text"
           placeholder="장소를 검색하세요."
           className="search-input"
           value={searchKeyword}
           onChange={(e) => setSearchKeyword(e.target.value)}
-          onKeyDown={(e) => { if (e.key === 'Enter') handleSearch(); }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') handleSearch();
+          }}
         />
       </div>
       <div id="map" ref={mapContainer} className="map-container"></div>
@@ -227,7 +229,7 @@ const SearchPage = ({ isKakaoMapLoaded }) => {
                 className={`search-result-item ${selectedPlace?.id === place.id ? 'selected' : ''}`}
                 onClick={() => handlePlaceSelect(place)}
               >
-                <MapPin className="list-item-icon" size={20} />
+                <MapPin className="list-item-icon" size={20}/>
                 <div className="list-item-info">
                   <span className="place-name">{place.place_name}</span>
                   <span className="address-name">{place.address_name}</span>

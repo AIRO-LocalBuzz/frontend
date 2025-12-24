@@ -3,7 +3,7 @@ import ReactCalendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './DateModal.css';
 
-export default function DateModal({ travelDate, onDateChange }) {
+export default function DateModal({travelDate, onDateChange}) {
   const displayedDate = travelDate || new Date();
   return (
     <>

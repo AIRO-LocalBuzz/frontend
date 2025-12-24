@@ -1,7 +1,7 @@
 import React from 'react';
 import './TagSelector.css';
 
-export default function TagSelector({ label, tags, selectedTags, onTagClick, isMultiSelect }) {
+export default function TagSelector({label, tags, selectedTags, onTagClick, isMultiSelect}) {
   const isSelected = (tag) => {
     return isMultiSelect ? selectedTags.includes(tag) : selectedTags === tag;
   };

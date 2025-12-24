@@ -1,136 +1,136 @@
 .main .banner {
-    width: 390px;
-    margin-top: 20px;
+  width: 390px;
+  margin-top: 20px;
 }
 
 .main .banner .banner_container {
-    width: 358px;
-    height: 358px;
-    background-color: #FFFFFF;
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    position: relative;
+  width: 358px;
+  height: 358px;
+  background-color: #FFFFFF;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  position: relative;
 }
 
 .main .banner .banner_container .banner_choice {
-    width: 156px;
-    height: 36px;
-    border-radius: 8px;
-    padding: 3px;
-    background-color: #444444;
-    position: absolute;
-    top: 12px;
-    z-index: 9;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  width: 156px;
+  height: 36px;
+  border-radius: 8px;
+  padding: 3px;
+  background-color: #444444;
+  position: absolute;
+  top: 12px;
+  z-index: 9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .main .banner .banner_container .banner_choice .choice_container {
-    height: 30px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .banner_choice .choice_container button {
-    width: 72px;
-    height: 30px;
-    border-radius: 6px;
-    padding: 4px 13px;
-    border: none;
-    background-color: #444444;
-    color: #9CA3AF;
-    cursor: pointer;
+  width: 72px;
+  height: 30px;
+  border-radius: 6px;
+  padding: 4px 13px;
+  border: none;
+  background-color: #444444;
+  color: #9CA3AF;
+  cursor: pointer;
 }
 
 .banner_choice .choice_container button.active {
-    background-color: #FFFFFF;
-    color: #111827;
+  background-color: #FFFFFF;
+  color: #111827;
 }
 
 .banner_choice .choice_container button p {
-    width: 34px;
-    height: 14px;
-    margin: 0 auto;
-    font-family: 'Pretendard';
-    font-weight: 600;
-    font-size: 13px;
-    line-height: 14px;
-    letter-spacing: 0;
+  width: 34px;
+  height: 14px;
+  margin: 0 auto;
+  font-family: 'Pretendard';
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 14px;
+  letter-spacing: 0;
 }
 
 .main .banner .banner_container .map {
-    width: 358px;
-    height: 358px;
+  width: 358px;
+  height: 358px;
 }
 
 .banner .map .map-area {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    overflow: hidden;
-    border: 2px solid #ccc;
-    border-radius: 12px;
-    touch-action: none;
-    overscroll-behavior: contain;
-    cursor: grab;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid #ccc;
+  border-radius: 12px;
+  touch-action: none;
+  overscroll-behavior: contain;
+  cursor: grab;
 }
 
 .banner .map .map-area.dragging {
-    cursor: grabbing;
+  cursor: grabbing;
 }
 
 .banner .kakao-map-canvas {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .banner .map.hidden {
-    display: none;
+  display: none;
 }
 
 .banner .map.visible {
-    display: block;
+  display: block;
 }
 
 .banner .map .map-area .map-btn {
-    z-index: 5;
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
+  z-index: 5;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
 }
 
 .banner .map .map-area .zoom-content {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    transform-origin: center center;
-    will-change: transform;
-    transition: transform 0.12s ease-out;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-origin: center center;
+  will-change: transform;
+  transition: transform 0.12s ease-out;
 }
 
 .banner .map .map-area .zoom-content .map-image {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    pointer-events: none;
-    user-select: none;
-    -webkit-user-drag: none;
-    transition: opacity 0.3s ease;
-    opacity: 0;
-    z-index: 1;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  transition: opacity 0.3s ease;
+  opacity: 0;
+  z-index: 1;
 }
 
 .banner .map .map-area .zoom-content .map-image.visible {
-    opacity: 1;
+  opacity: 1;
 }
 
 .banner .map .map-area .zoom-content .map-detail {
-    z-index: 2;
+  z-index: 2;
 }

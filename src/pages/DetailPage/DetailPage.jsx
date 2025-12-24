@@ -1,13 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { ChevronLeft } from 'lucide-react';
+import React, {useEffect, useRef, useState} from 'react';
+import {useNavigate, useParams} from 'react-router-dom';
+import {ChevronLeft} from 'lucide-react';
 import './DetailPage.css';
 import Statusbar from '../../components/Statusbar/Statusbar';
 
 // DetailPage 컴포넌트는 isKakaoMapLoaded를 prop으로 받습니다.
-export default function DetailPage({ isKakaoMapLoaded }) {
+export default function DetailPage({isKakaoMapLoaded}) {
   const navigate = useNavigate();
-  const { id } = useParams(); // URL 파라미터에서 id 가져오기
+  const {id} = useParams(); // URL 파라미터에서 id 가져오기
   const [postData, setPostData] = useState(null);
   const mapContainer = useRef(null);
   const mapRef = useRef(null);
@@ -68,7 +68,7 @@ export default function DetailPage({ isKakaoMapLoaded }) {
           mapRef.current = newMap;
 
           const imageSize = new window.kakao.maps.Size(40, 40);
-          const imageOption = { offset: new window.kakao.maps.Point(20, 40) };
+          const imageOption = {offset: new window.kakao.maps.Point(20, 40)};
           const markerImage = new window.kakao.maps.MarkerImage(markerSvgIcon, imageSize, imageOption);
 
           new window.kakao.maps.Marker({
@@ -134,11 +134,11 @@ export default function DetailPage({ isKakaoMapLoaded }) {
 
   return (
     <div className="detail-page-container">
-      <Statusbar />
+      <Statusbar/>
       {/* 상단 헤더 */}
       <header className="detail-header">
         <button onClick={() => navigate('/my-review')} className="back-button">
-          <ChevronLeft size={24} />
+          <ChevronLeft size={24}/>
         </button>
         <h1 className="detail-title">후기 상세보기</h1>
       </header>

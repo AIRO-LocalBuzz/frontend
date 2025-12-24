@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import {useEffect, useRef} from 'react';
 
 // 북마크용 SVG 
 const rawBookmarkSvg = `
@@ -8,17 +8,17 @@ const rawBookmarkSvg = `
 </svg>`;
 const bookmarkSvgUrl = 'data:image/svg+xml;utf8,' + encodeURIComponent(rawBookmarkSvg);
 
-export default function Bookmark({ mapRef, bookmarks = [], closeIconSrc, isLoaded }) {
+export default function Bookmark({mapRef, bookmarks = [], closeIconSrc, isLoaded}) {
   const markersRef = useRef([]);
 
   useEffect(() => {
     const map = mapRef?.current;
     if (!isLoaded || !map) return;
 
-    const { kakao } = window;
+    const {kakao} = window;
 
     // 기존 북마크 정리
-    markersRef.current.forEach(({ marker, overlay }) => {
+    markersRef.current.forEach(({marker, overlay}) => {
       overlay?.setMap(null);
       marker?.setMap(null);
     });
@@ -29,14 +29,14 @@ export default function Bookmark({ mapRef, bookmarks = [], closeIconSrc, isLoade
     const geocoder = new kakao.maps.services.Geocoder();
     const iconSize = new kakao.maps.Size(24, 32);
     const iconOffset = new kakao.maps.Point(12, 32);
-    const image = new kakao.maps.MarkerImage(bookmarkSvgUrl, iconSize, { offset: iconOffset });
+    const image = new kakao.maps.MarkerImage(bookmarkSvgUrl, iconSize, {offset: iconOffset});
 
     // 모든 팝업 닫기
     const closeAll = () => {
-      markersRef.current.forEach(({ overlay }) => overlay?.setMap(null));
+      markersRef.current.forEach(({overlay}) => overlay?.setMap(null));
     };
 
-    const makeTag = (text, { bg, color, border } = {}) => {
+    const makeTag = (text, {bg, color, border} = {}) => {
       // 태그
       const tag = document.createElement('span');
       tag.textContent = text;
@@ -118,8 +118,8 @@ export default function Bookmark({ mapRef, bookmarks = [], closeIconSrc, isLoade
       const isUrgent = bm.isUrgent ?? true;
       const isNew = bm.isNew ?? true;
 
-      if (isUrgent) tags.appendChild(makeTag('마감임박', { bg: '#FFC400', color: '#FFFFFF' }));
-      if (isNew) tags.appendChild(makeTag('NEW', { bg: '#D9D9D9', color: '#000000' }));
+      if (isUrgent) tags.appendChild(makeTag('마감임박', {bg: '#FFC400', color: '#FFFFFF'}));
+      if (isNew) tags.appendChild(makeTag('NEW', {bg: '#D9D9D9', color: '#000000'}));
 
       // 텍스트 영역
       const subtitle = document.createElement('div');
@@ -145,7 +145,7 @@ export default function Bookmark({ mapRef, bookmarks = [], closeIconSrc, isLoade
       caption.style.fontWeight = '500';
       body.appendChild(caption);
 
-      return { wrap, closeBtn: close };
+      return {wrap, closeBtn: close};
     };
 
     // 북마크/팝업 생성
@@ -161,7 +161,7 @@ export default function Bookmark({ mapRef, bookmarks = [], closeIconSrc, isLoade
       });
 
       // 팝업 (닫힘 버튼 포함)
-      const { wrap, closeBtn } = makeInfoContent(bm);
+      const {wrap, closeBtn} = makeInfoContent(bm);
       const overlay = new kakao.maps.CustomOverlay({
         position: pos,
         content: wrap,
@@ -180,7 +180,7 @@ export default function Bookmark({ mapRef, bookmarks = [], closeIconSrc, isLoade
       // 지도 클릭 시 전체 닫기
       kakao.maps.event.addListener(map, 'click', () => closeAll());
       // 보관
-      markersRef.current.push({ marker, overlay, id: bm.title || bm.address });
+      markersRef.current.push({marker, overlay, id: bm.title || bm.address});
     };
 
     // 좌표/주소 케이스 분기
@@ -190,7 +190,7 @@ export default function Bookmark({ mapRef, bookmarks = [], closeIconSrc, isLoade
       } else if (bm.address) {
         geocoder.addressSearch(bm.address, (results, status) => {
           if (status === kakao.maps.services.Status.OK && results[0]) {
-            const { x, y } = results[0]; // x=lng, y=lat
+            const {x, y} = results[0]; // x=lng, y=lat
             placeBookmark(bm, parseFloat(y), parseFloat(x));
           } else {
             console.warn('주소 변환 실패:', bm.address, status);
@@ -201,7 +201,7 @@ export default function Bookmark({ mapRef, bookmarks = [], closeIconSrc, isLoade
 
     // 언마운트/의존성 변경 시 정리
     return () => {
-      markersRef.current.forEach(({ marker, overlay }) => {
+      markersRef.current.forEach(({marker, overlay}) => {
         overlay?.setMap(null);
         marker?.setMap(null);
       });

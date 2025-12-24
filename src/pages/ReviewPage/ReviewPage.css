@@ -3,8 +3,8 @@
   padding: 0; /* padding을 0으로 설정하여 헤더가 상단에 딱 붙도록 함 */
   background-color: #f8f8f8;
   overflow-y: auto;
-  -ms-overflow-style: none;     /* IE, Edge */
-  scrollbar-width: none;        /* Firefox */
+  -ms-overflow-style: none; /* IE, Edge */
+  scrollbar-width: none; /* Firefox */
   height: 100vh; /* 뷰포트 전체 높이를 사용하거나 이 속성을 제거하여 콘텐츠에 맞게 높이가 자동으로 조절되도록 합니다. */
 }
 
@@ -33,7 +33,7 @@
   padding: 8px 16px;
   border: 1px solid #ccc;
   border-radius: 20px;
-  background-color: #ffc400; 
+  background-color: #ffc400;
   font-size: 14px;
   cursor: pointer;
   font-weight: 500;
