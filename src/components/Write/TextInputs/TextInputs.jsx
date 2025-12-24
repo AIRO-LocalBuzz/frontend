@@ -1,7 +1,7 @@
 import React from 'react';
 import './TextInputs.css';
 
-export default function TextInputs({title, onTitleChange, content, onContentChange}) {
+export default function TextInputs({ title, onTitleChange, content, onContentChange }) {
   return (
     <>
       <input

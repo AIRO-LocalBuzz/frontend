@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import Statusbar from '../../components/Statusbar/Statusbar';
 import HomeNav from '../../components/HomeNav/HomeNav';
 import Banner from '../../components/Banner/Banner';
@@ -7,10 +7,10 @@ import CategorySelect from '../../components/CategorySelect/CategorySelect';
 import ReviewItem from '../../components/ReviewItem/ReviewItem';
 import Lists from '../../components/Lists/Lists';
 import Modal from '../../components/Modal/Modal';
-import {apiUrl} from '../../lib/apiUrl';
+import { apiUrl } from '../../lib/apiUrl';
 import './HomePage.css';
 
-const HomePage = ({isKakaoMapLoaded}) => {
+const HomePage = ({ isKakaoMapLoaded }) => {
   const [activeRegion, setActiveRegion] = useState('서울');
   const [isModalOpen, setModalOpen] = useState(false);
   const [megaCode, setMegaCode] = useState(null);
@@ -113,7 +113,7 @@ const HomePage = ({isKakaoMapLoaded}) => {
 
     try {
       const res = await fetch(apiUrl(url), {
-        headers: {accept: '*/*'}
+        headers: { accept: '*/*' }
       });
 
       if (!res.ok) throw new Error('API 호출 실패');
@@ -124,7 +124,7 @@ const HomePage = ({isKakaoMapLoaded}) => {
 
       if (converted.length < 5) {
         const fillerCount = 5 - converted.length;
-        const placeholders = Array.from({length: fillerCount}, () => ({
+        const placeholders = Array.from({ length: fillerCount }, () => ({
           desc: '',
           title: '콘텐츠 준비 중입니다.',
           town: '',

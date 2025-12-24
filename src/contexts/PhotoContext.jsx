@@ -1,8 +1,8 @@
-import {createContext, useContext, useState} from 'react'
+import { createContext, useContext, useState } from 'react'
 
 const PhotoContext = createContext()
 
-export function PhotoProvider({children}) {
+export function PhotoProvider({ children }) {
   const [selectedPhotos, setSelectedPhotos] = useState([])
 
   const resetPhotos = () => {
@@ -10,7 +10,7 @@ export function PhotoProvider({children}) {
   }
 
   return (
-    <PhotoContext.Provider value={{selectedPhotos, setSelectedPhotos, resetPhotos}}>
+    <PhotoContext.Provider value={{ selectedPhotos, setSelectedPhotos, resetPhotos }}>
       {children}
     </PhotoContext.Provider>
   )

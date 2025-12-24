@@ -1,13 +1,13 @@
 // hooks/useSocialLogin.js
-import {useCallback, useEffect, useRef} from 'react';
-import {useNavigate} from 'react-router-dom';
-import {useAuth} from '../contexts/AuthContext';
+import { useCallback, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
 export const useSocialLogin = () => {
   const navigate = useNavigate();
   const timeoutRef = useRef(null);
 
-  const {login} = useAuth();
+  const { login } = useAuth();
 
   const handleMessage = useCallback((event) => {
     // Origin 검증 - 보안을 위해 신뢰할 수 있는 도메인에서만 메시지 허용

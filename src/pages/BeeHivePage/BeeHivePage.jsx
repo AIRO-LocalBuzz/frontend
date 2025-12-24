@@ -1,5 +1,5 @@
 import React from 'react';
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import dropdownIcon from '../../assets/icons/common/icon-dropdown-orange.svg'
 import heartIcon from '../../assets/icons/common/icon-heart.svg'
 import commentIcon from '../../assets/icons/common/icon-comment.svg'

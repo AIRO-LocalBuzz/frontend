@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import './Modal.css';
-import {apiUrl} from '../../lib/apiUrl';
+import { apiUrl } from '../../lib/apiUrl';
 
-export default function Modal({region, onClose, onSelectRegion}) {
+export default function Modal({ region, onClose, onSelectRegion }) {
   const [megaList, setMegaList] = useState([]);
   const [cityList, setCityList] = useState([]);
   const [selectedGroup, setSelectedGroup] = useState(region || '서울');
@@ -30,8 +30,8 @@ export default function Modal({region, onClose, onSelectRegion}) {
     };
 
     Promise.all([
-      fetch(apiUrl('/v1/area/mega/code'), {headers}),
-      fetch(apiUrl('/v1/area/city/code'), {headers}),
+      fetch(apiUrl('/v1/area/mega/code'), { headers }),
+      fetch(apiUrl('/v1/area/city/code'), { headers }),
     ])
       .then(async ([res1, res2]) => {
         if (!res1.ok || !res2.ok) throw new Error('응답 오류 발생');
@@ -47,7 +47,7 @@ export default function Modal({region, onClose, onSelectRegion}) {
   const selectedMegaNames = groupedMegaMap[selectedGroup] || [];
   const selectedMegaCodes = megaList
     .filter(m => selectedMegaNames.includes(m.megaName))
-    .map(m => ({id: m.id, name: m.megaName}));
+    .map(m => ({ id: m.id, name: m.megaName }));
 
   // 필터링된 도시 목록 (서울특별시 종로구)
   const filteredCityFullNames = cityList

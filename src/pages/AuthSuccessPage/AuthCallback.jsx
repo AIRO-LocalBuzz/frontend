@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react';
-import {useLocation, useNavigate} from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const AuthCallback = () => {
   const location = useLocation();
@@ -97,9 +97,9 @@ const AuthCallback = () => {
       fontSize: '16px',
       fontFamily: 'Arial, sans-serif'
     }}>
-      <div style={{textAlign: 'center'}}>
+      <div style={{ textAlign: 'center' }}>
         <div>로그인 처리 중...</div>
-        <div style={{fontSize: '12px', marginTop: '10px', color: '#666'}}>
+        <div style={{ fontSize: '12px', marginTop: '10px', color: '#666' }}>
           잠시만 기다려주세요
         </div>
       </div>

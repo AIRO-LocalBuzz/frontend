@@ -1,6 +1,6 @@
 import React from 'react';
 import './SplashPage.css';
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Statusbar from '../../components/Statusbar/Statusbar';
 import logoIcon from '../../assets/icons/common/icon-logo.svg';
 import splashImg from '../../assets/images/splash/img-splash.gif';

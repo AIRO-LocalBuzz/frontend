@@ -2,7 +2,7 @@ import React from 'react';
 import prevIcon from '../../../assets/icons/common/icon-prev.svg';
 import './WriteHeader.css';
 
-export default function WriteHeader({onBack, onSubmit, isActive, loading}) {
+export default function WriteHeader({ onBack, onSubmit, isActive, loading }) {
   return (
     <header className="write-header">
       <div className="write-header-left">

@@ -2,7 +2,7 @@ import React from 'react';
 import prevIcon from '../../../assets/icons/common/icon-prev.svg';
 import './DateAddressRow.css';
 
-export default function DateAddressRow({travelDate, formatFullDate, onDateClick, onAddressClick, address}) {
+export default function DateAddressRow({ travelDate, formatFullDate, onDateClick, onAddressClick, address }) {
   return (
     <div className="row date-address-row">
       {/* 날짜 버튼 */}

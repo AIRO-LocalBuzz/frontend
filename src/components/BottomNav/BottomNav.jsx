@@ -1,4 +1,4 @@
-import {NavLink, useLocation} from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 import homeIcon from '../../assets/icons/nav/icon-home.svg'
 import homeIconActive from '../../assets/icons/nav/icon-home-active.svg'
 import postIcon from '../../assets/icons/nav/icon-post.svg'
@@ -13,19 +13,19 @@ export default function BottomNav() {
 
   return (
     <nav className='bottom-nav'>
-      <NavLink to="/home" className={({isActive}) => isActive ? 'nav-item active' : 'nav-item'}>
+      <NavLink to="/home" className={({ isActive }) => isActive ? 'nav-item active' : 'nav-item'}>
         <img src={pathname === '/home' ? homeIconActive : homeIcon} alt="홈" className="nav-icon"/>
         <span>홈</span>
       </NavLink>
-      <NavLink to="/beehive" className={({isActive}) => isActive ? 'nav-item active' : 'nav-item'}>
+      <NavLink to="/beehive" className={({ isActive }) => isActive ? 'nav-item active' : 'nav-item'}>
         <img src={pathname === '/beehive' ? postIconActive : postIcon} alt="게시글" className="nav-icon"/>
         <span>게시글</span>
       </NavLink>
-      <NavLink to="/my-review" className={({isActive}) => isActive ? 'nav-item active' : 'nav-item'}>
+      <NavLink to="/my-review" className={({ isActive }) => isActive ? 'nav-item active' : 'nav-item'}>
         <img src={pathname === '/my-review' ? myPageIconActive : myPageIcon} alt="꿀모으기" className="nav-icon"/>
         <span>꿀모으기</span>
       </NavLink>
-      <NavLink to="/mypage" className={({isActive}) => isActive ? 'nav-item active' : 'nav-item'}>
+      <NavLink to="/mypage" className={({ isActive }) => isActive ? 'nav-item active' : 'nav-item'}>
         <img src={pathname === '/mypage' ? myPageIconActive : myPageIcon} alt="마이페이지" className="nav-icon"/>
         <span>마이페이지</span>
       </NavLink>

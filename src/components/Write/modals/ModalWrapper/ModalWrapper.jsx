@@ -2,7 +2,7 @@ import React from 'react';
 import exitIcon from '../../../../assets/icons/common/icon-exit.svg'
 import './ModalWrapper.css';
 
-export default function ModalWrapper({children, onClose, onConfirm, confirmText = '설정'}) {
+export default function ModalWrapper({ children, onClose, onConfirm, confirmText = '설정' }) {
   return (
     <div className="modal-backdrop" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>

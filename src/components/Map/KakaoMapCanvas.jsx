@@ -1,8 +1,8 @@
-import React, {useEffect, useRef} from 'react';
+import React, { useEffect, useRef } from 'react';
 import useKakaoLoader from '../../hooks/useKakaoLoader';
 import Bookmark from '../Bookmark/Bookmark';
 
-export default function KakaoMapCanvas({isVisible, recenterSignal, bookmarks = [], closeIconSrc}) {
+export default function KakaoMapCanvas({ isVisible, recenterSignal, bookmarks = [], closeIconSrc }) {
   const containerRef = useRef(null);
   const mapRef = useRef(null);
   const myMarkerRef = useRef(null);
@@ -119,11 +119,11 @@ export default function KakaoMapCanvas({isVisible, recenterSignal, bookmarks = [
     if (!isLoaded || !containerRef.current || mapRef.current) return;
 
     window.kakao.maps.load(() => {
-      const {kakao} = window;
+      const { kakao } = window;
 
-      const initMapAt = ({lat, lng}) => {
+      const initMapAt = ({ lat, lng }) => {
         const center = new kakao.maps.LatLng(lat, lng);
-        const map = new kakao.maps.Map(containerRef.current, {center, level: 3});
+        const map = new kakao.maps.Map(containerRef.current, { center, level: 3 });
         mapRef.current = map;
 
         // 커스텀 오버레이로 "빨간 동그라미" 내 위치 표시
@@ -139,15 +139,15 @@ export default function KakaoMapCanvas({isVisible, recenterSignal, bookmarks = [
       };
 
       const onSuccess = (pos) => {
-        const {latitude: lat, longitude: lng, accuracy} = pos.coords;
-        initMapAt({lat, lng});
+        const { latitude: lat, longitude: lng, accuracy } = pos.coords;
+        initMapAt({ lat, lng });
 
         // 초기 fix도 정밀도/타임스탬프 저장
-        lastCoordsRef.current = {lat, lng, accuracy, timestamp: pos.timestamp};
+        lastCoordsRef.current = { lat, lng, accuracy, timestamp: pos.timestamp };
 
         watchIdRef.current = navigator.geolocation.watchPosition(
           (p) => {
-            const {latitude, longitude, accuracy} = p.coords;
+            const { latitude, longitude, accuracy } = p.coords;
             const nextFix = {
               lat: latitude,
               lng: longitude,
@@ -173,13 +173,13 @@ export default function KakaoMapCanvas({isVisible, recenterSignal, bookmarks = [
             // 지도 이동은 기존처럼 리센터 버튼에서만 panTo
           },
           (err) => console.warn('watchPosition error:', err),
-          {enableHighAccuracy: true, maximumAge: 0, timeout: 15000}
+          { enableHighAccuracy: true, maximumAge: 0, timeout: 15000 }
         );
       };
 
       const onError = () => {
         // 제주 예시 좌표
-        initMapAt({lat: 33.450701, lng: 126.570667});
+        initMapAt({ lat: 33.450701, lng: 126.570667 });
       };
 
       if (!navigator.geolocation) {
@@ -209,8 +209,8 @@ export default function KakaoMapCanvas({isVisible, recenterSignal, bookmarks = [
   // 리센터
   useEffect(() => {
     if (!mapRef.current || !myMarkerRef.current || !lastCoordsRef.current) return;
-    const {kakao} = window;
-    const {lat, lng} = lastCoordsRef.current;
+    const { kakao } = window;
+    const { lat, lng } = lastCoordsRef.current;
     const ll = new kakao.maps.LatLng(lat, lng);
     // if (typeof mapRef.current.relayout === 'function') mapRef.current.relayout();
     myMarkerRef.current.setPosition(ll);
@@ -228,8 +228,8 @@ export default function KakaoMapCanvas({isVisible, recenterSignal, bookmarks = [
       } catch {
       }
       if (lastCoordsRef.current) {
-        const {kakao} = window;
-        const {lat, lng} = lastCoordsRef.current;
+        const { kakao } = window;
+        const { lat, lng } = lastCoordsRef.current;
         mapRef.current.setCenter(new kakao.maps.LatLng(lat, lng));
       }
     });

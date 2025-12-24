@@ -1,5 +1,5 @@
-import {useState} from 'react';
-import {useNavigate} from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import './ReviewPage.css'; // ReviewPage 전용 CSS 파일
 
@@ -36,7 +36,7 @@ export default function ReviewPage() {
 
   const handlePostClick = (post) => {
     // 클릭된 게시물의 상세 페이지로 이동
-    navigate(`/detail/${post.id}`, {state: post});
+    navigate(`/detail/${post.id}`, { state: post });
   };
 
   const handleEdit = (post) => {

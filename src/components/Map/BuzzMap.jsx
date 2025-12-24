@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 export default function BuzzMap({
                                   imageSrc,
@@ -8,9 +8,9 @@ export default function BuzzMap({
                                 }) {
   const containerRef = useRef(null);
   const [zoomLevel, setZoomLevel] = useState(initialZoom);
-  const [pan, setPan] = useState({x: 0, y: 0});
+  const [pan, setPan] = useState({ x: 0, y: 0 });
   const isDraggingRef = useRef(false);
-  const dragStartRef = useRef({x: 0, y: 0, panX: 0, panY: 0});
+  const dragStartRef = useRef({ x: 0, y: 0, panX: 0, panY: 0 });
 
   // 10 → 1.0x, 30 → 4.0x (계수 0.15를 키우면 확대 더 커짐)
   const getScale = () => 1 + (zoomLevel - minZoom) * 0.15;
@@ -18,15 +18,15 @@ export default function BuzzMap({
   // 현재 스케일에서 허용 가능한 패닝 한계
   const getBounds = (scale) => {
     const el = containerRef.current;
-    if (!el) return {maxX: 0, maxY: 0};
+    if (!el) return { maxX: 0, maxY: 0 };
     const cw = el.clientWidth, ch = el.clientHeight;
     const maxX = Math.max(0, (cw * scale - cw) / 2);
     const maxY = Math.max(0, (ch * scale - ch) / 2);
-    return {maxX, maxY};
+    return { maxX, maxY };
   };
 
   const clampPan = (x, y, scale) => {
-    const {maxX, maxY} = getBounds(scale);
+    const { maxX, maxY } = getBounds(scale);
     return {
       x: Math.min(maxX, Math.max(-maxX, x)),
       y: Math.min(maxY, Math.max(-maxY, y)),
@@ -72,10 +72,10 @@ export default function BuzzMap({
       );
     };
 
-    container.addEventListener('touchstart', onTouchStart, {passive: true});
-    container.addEventListener('touchmove', onTouchMove, {passive: true});
-    container.addEventListener('touchend', onTouchEnd, {passive: true});
-    container.addEventListener('wheel', onWheel, {passive: false});
+    container.addEventListener('touchstart', onTouchStart, { passive: true });
+    container.addEventListener('touchmove', onTouchMove, { passive: true });
+    container.addEventListener('touchend', onTouchEnd, { passive: true });
+    container.addEventListener('wheel', onWheel, { passive: false });
 
     return () => {
       container.removeEventListener('touchstart', onTouchStart);
@@ -93,7 +93,7 @@ export default function BuzzMap({
     const onPointerDown = (e) => {
       if (!e.isPrimary) return;
       isDraggingRef.current = true;
-      dragStartRef.current = {x: e.clientX, y: e.clientY, panX: pan.x, panY: pan.y};
+      dragStartRef.current = { x: e.clientX, y: e.clientY, panX: pan.x, panY: pan.y };
       try {
         el.setPointerCapture(e.pointerId);
       } catch {
@@ -155,7 +155,7 @@ export default function BuzzMap({
             className='map-image map-detail visible'
             alt='map'
             draggable={false}
-            style={{objectFit: 'contain'}}
+            style={{ objectFit: 'contain' }}
           />
         </div>
       </div>

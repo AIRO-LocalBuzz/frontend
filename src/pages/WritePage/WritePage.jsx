@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {useWriteForm} from '../../hooks/useWriteForm';
+import React, { useState } from 'react';
+import { useWriteForm } from '../../hooks/useWriteForm';
 
 import Statusbar from '../../components/Statusbar/Statusbar';
 import WriteHeader from '../../components/Write/WriteHeader/WriteHeader';

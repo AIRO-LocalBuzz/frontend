@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import './Banner.css';
 import mapImg from '../../assets/images/common/img-map.png';
 import exitIcon from '../../assets/icons/common/icon-exit.svg';

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import './Statusbar.css';
 import networkIcon from '../../assets/icons/statusbar/icon-network.svg';
 import wifiIcon from '../../assets/icons/statusbar/icon-wifi.svg';

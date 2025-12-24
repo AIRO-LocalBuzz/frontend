@@ -1,7 +1,7 @@
 import React from 'react';
 import './LoginPage.css';
-import {useNavigate} from 'react-router-dom';
-import {useSocialLogin} from '../../hooks/useSocialLogin';
+import { useNavigate } from 'react-router-dom';
+import { useSocialLogin } from '../../hooks/useSocialLogin';
 import Statusbar from '../../components/Statusbar/Statusbar';
 import beeImg from '../../assets/images/common/img-bee.png';
 import logoIconBlack from '../../assets/icons/common/icon-logo-black.svg';
@@ -12,7 +12,7 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   // TO-DO : 리팩터링 과정에서 삭제 필요
-  const {loginWithKakao, loginWithGoogle, isLoggedIn} = useSocialLogin();
+  const { loginWithKakao, loginWithGoogle, isLoggedIn } = useSocialLogin();
 
   // // 이미 로그인되어 있다면 홈으로 리다이렉트 (선택사항)
   // React.useEffect(() => {

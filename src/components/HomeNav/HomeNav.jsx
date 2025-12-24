@@ -2,7 +2,7 @@ import React from 'react';
 import './HomeNav.css';
 import logoIcon from '../../assets/icons/common/icon-logo.svg';
 import searchIcon from '../../assets/icons/nav/icon-search.svg';
-import {Bell} from 'lucide-react';
+import { Bell } from 'lucide-react';
 
 export default function HomeNav() {
   return (

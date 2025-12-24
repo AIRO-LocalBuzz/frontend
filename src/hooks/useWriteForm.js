@@ -1,9 +1,9 @@
-import {useEffect, useRef, useState} from 'react';
-import {useLocation, useNavigate, useSearchParams} from 'react-router-dom';
-import {usePhoto} from '../contexts/PhotoContext';
+import { useEffect, useRef, useState } from 'react';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { usePhoto } from '../contexts/PhotoContext';
 
 // 컴포넌트 밖에서 선언하여 불필요한 재선언 방지
-export const withWhoTagMap = {'혼자': 'ALLONE', '친구': 'FRIEND', '가족': 'FAMILY', '연인': 'PARTNER'};
+export const withWhoTagMap = { '혼자': 'ALLONE', '친구': 'FRIEND', '가족': 'FAMILY', '연인': 'PARTNER' };
 export const forWhatTagMap = {
   '업무': 'WORK',
   '세미나': 'SEMINAR',
@@ -24,25 +24,25 @@ export const emotionMap = {
   '친근함': 'FRIENDLY',
   '따듯함': 'WARM'
 };
-export const categoryOptions = [{key: 'food', label: '음식점', value: 'RESTORANT'}, {
+export const categoryOptions = [{ key: 'food', label: '음식점', value: 'RESTORANT' }, {
   key: 'cafe',
   label: '카페',
   value: 'CAFE'
-}, {key: 'living', label: '숙소', value: 'ACCOMMODATION'}, {
+}, { key: 'living', label: '숙소', value: 'ACCOMMODATION' }, {
   key: 'event',
   label: '행사',
   value: 'EVENT'
-}, {key: 'experience', label: '체험', value: 'EXPERIENCE'}, {
+}, { key: 'experience', label: '체험', value: 'EXPERIENCE' }, {
   key: 'challenge',
   label: '챌린지',
   value: 'CHALLENGE'
-}, {key: 'leisure', label: '여가', value: 'LEISURE'}];
+}, { key: 'leisure', label: '여가', value: 'LEISURE' }];
 
 export const useWriteForm = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [searchParams] = useSearchParams();
-  const {selectedPhotos, setSelectedPhotos, resetPhotos} = usePhoto();
+  const { selectedPhotos, setSelectedPhotos, resetPhotos } = usePhoto();
 
   // 원본 코드의 모든 상태 관리
   const [title, setTitle] = useState('');

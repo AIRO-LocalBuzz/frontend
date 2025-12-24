@@ -1,13 +1,13 @@
-import React, {useEffect, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
-import {useAuth} from '../../contexts/AuthContext';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
 
 const NicknamePage = () => {
   const [nickname, setNickname] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const {login} = useAuth();
+  const { login } = useAuth();
 
   // 토큰 확인 - 로그인 상태가 아니면 로그인 페이지로 리다이렉트
   useEffect(() => {
@@ -138,17 +138,17 @@ const NicknamePage = () => {
         width: '100%',
         maxWidth: '400px'
       }}>
-        <div style={{textAlign: 'center', marginBottom: '30px'}}>
-          <h2 style={{margin: '0 0 10px 0', color: '#333'}}>
+        <div style={{ textAlign: 'center', marginBottom: '30px' }}>
+          <h2 style={{ margin: '0 0 10px 0', color: '#333' }}>
             닉네임 설정
           </h2>
-          <p style={{color: '#666', margin: 0}}>
+          <p style={{ color: '#666', margin: 0 }}>
             사용할 닉네임을 입력해주세요
           </p>
         </div>
 
         <form onSubmit={handleNicknameSubmit}>
-          <div style={{marginBottom: '20px'}}>
+          <div style={{ marginBottom: '20px' }}>
             <input
               type="text"
               value={nickname}
@@ -181,7 +181,7 @@ const NicknamePage = () => {
             </div>
           )}
 
-          <div style={{display: 'flex', gap: '10px'}}>
+          <div style={{ display: 'flex', gap: '10px' }}>
             <button
               type="submit"
               disabled={isLoading}

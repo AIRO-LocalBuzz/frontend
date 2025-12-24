@@ -1,10 +1,10 @@
 import React from 'react';
 import './Lists.css';
 
-import {Swiper, SwiperSlide} from 'swiper/react';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 
-export default function Lists({listItems, category}) {
+export default function Lists({ listItems, category }) {
   return (
     <div className='lists'>
       <div className='list_title'>

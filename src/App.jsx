@@ -1,6 +1,6 @@
 import React from 'react';
-import {Route, Routes, useLocation} from 'react-router-dom';
-import {AuthProvider} from './contexts/AuthContext';
+import { Route, Routes, useLocation } from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthContext';
 import SplashPage from './pages/SplashPage/SplashPage';
 import LoginPage from './pages/LoginPage/LoginPage';
 import HomePage from './pages/HomePage/HomePage';

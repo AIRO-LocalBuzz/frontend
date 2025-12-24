@@ -1,5 +1,5 @@
 // context/AuthContext.jsx
-import React, {createContext, useContext, useEffect, useState} from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 
 const AuthContext = createContext();
 
@@ -11,7 +11,7 @@ export const useAuth = () => {
   return context;
 };
 
-export const AuthProvider = ({children}) => {
+export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [tokens, setTokens] = useState({
     accessToken: null,
@@ -29,7 +29,7 @@ export const AuthProvider = ({children}) => {
     const provider = localStorage.getItem('provider');
 
     if (accessToken && refreshToken && userId && email && name && provider) {
-      setTokens({accessToken, refreshToken});
+      setTokens({ accessToken, refreshToken });
       setUser({
         id: parseInt(userId),
         email,
@@ -77,7 +77,7 @@ export const AuthProvider = ({children}) => {
     localStorage.removeItem('provider');
 
     // 상태 초기화
-    setTokens({accessToken: null, refreshToken: null});
+    setTokens({ accessToken: null, refreshToken: null });
     setUser(null);
 
     console.log('사용자 로그아웃 완료');

@@ -1,6 +1,6 @@
 import React from 'react';
-import {useNavigate} from 'react-router-dom';
-import {Bell, ChevronRight} from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Bell, ChevronRight } from 'lucide-react';
 import './MyPage.css';
 import Statusbar from '../../components/Statusbar/Statusbar';
 import charImg from '../../assets/images/common/img-bee.png';

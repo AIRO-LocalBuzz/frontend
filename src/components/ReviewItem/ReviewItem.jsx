@@ -1,7 +1,7 @@
 import React from 'react';
 import './ReviewItem.css';
 
-import {Swiper, SwiperSlide} from 'swiper/react';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 
 import topReview1Img from '../../assets/images/sample/review/img-topReview1.jpg';

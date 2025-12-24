@@ -1,5 +1,5 @@
-import {useEffect, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import './ReviewPage.css'; // ReviewPage 전용 CSS 파일
 import Statusbar from '../../components/Statusbar/Statusbar';
@@ -46,7 +46,7 @@ export default function ReviewPage() {
   }, []);
 
   const handlePostClick = (post) => {
-    navigate(`/detail/${post.id}`, {state: post});
+    navigate(`/detail/${post.id}`, { state: post });
   };
 
   const handleEdit = (post, e) => {

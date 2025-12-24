@@ -1,9 +1,9 @@
 import React from 'react';
-import {categoryOptions} from '../../../hooks/useWriteForm';
+import { categoryOptions } from '../../../hooks/useWriteForm';
 import prevIcon from '../../../assets/icons/common/icon-prev.svg';
 import './CategorySelectRow.css';
 
-export default function CategorySelectRow({category, onCategoryClick}) {
+export default function CategorySelectRow({ category, onCategoryClick }) {
   const selectedLabel = categoryOptions.find(opt => opt.key === category)?.label || '';
   return (
     <div className="row category-row">
