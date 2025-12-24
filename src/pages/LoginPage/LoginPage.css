@@ -1,245 +1,245 @@
 .login {
-    width: 390px;
-    height: 812px;
-    background-color: #FAFAFA;
+  width: 390px;
+  height: 812px;
+  background-color: #FAFAFA;
 }
 
 .login .status_bar {
-    background-color: #FAFAFA;
+  background-color: #FAFAFA;
 }
 
 .login .login_container {
-    width: 334px;
-    height: 622px;
-    margin: 0 auto;
-    position: relative;
-    top: 53px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  width: 334px;
+  height: 622px;
+  margin: 0 auto;
+  position: relative;
+  top: 53px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .login_container .intro {
-    width: 190px;
-    height: 326px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+  width: 190px;
+  height: 326px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .login_container .intro .bee_img {
-    width: 110px;
-    height: 110px;
+  width: 110px;
+  height: 110px;
 }
 
 .login_container .txt {
-    width: 190px;
-    height: 170px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+  width: 190px;
+  height: 170px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .login_container .txt .hello_txt {
-    width: 190px;
-    height: 42px;
+  width: 190px;
+  height: 42px;
 }
 
 .login_container .txt .hello_txt p {
-    font-family: 'Pretendard';
-    font-weight: 700;
-    font-size: 28px;
-    line-height: 150%;
-    letter-spacing: -0.14px;
-    color: #000000;
+  font-family: 'Pretendard';
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 150%;
+  letter-spacing: -0.14px;
+  color: #000000;
 }
 
 .login_container .txt .localbuzz_txt {
-    width: 190px;
-    height: 79px;
+  width: 190px;
+  height: 79px;
 }
 
 .login_container .txt .localbuzz_txt .localbuzz_logo {
-    width: 190px;
+  width: 190px;
 }
 
 .login_container .txt .localbuzz_txt p {
-    width: 190px;
-    height: 42px;
+  width: 190px;
+  height: 42px;
 
-    font-family: 'Pretendard';
-    font-weight: 700;
-    font-size: 28px;
-    line-height: 150%;
-    letter-spacing: -0.14px;
-    color: #000000;
+  font-family: 'Pretendard';
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 150%;
+  letter-spacing: -0.14px;
+  color: #000000;
 }
 
 .login_container .txt .sub_txt {
-    width: 190px;
-    height: 36px;
+  width: 190px;
+  height: 36px;
 }
 
 .login_container .txt .sub_txt p {
-    font-family: 'Pretendard';
-    font-weight: 500;
-    font-size: 12px;
-    line-height: 150%;
-    letter-spacing: 0;
-    color: #45464A;
+  font-family: 'Pretendard';
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 150%;
+  letter-spacing: 0;
+  color: #45464A;
 }
 
 .login_container .signup {
-    width: 334px;
-    height: 196px;
-    padding-left: 12px;
-    padding-right: 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+  width: 334px;
+  height: 196px;
+  padding-left: 12px;
+  padding-right: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .login_container .signup .email {
-    width: 310px;
-    height: 96px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    text-align: center;
+  width: 310px;
+  height: 96px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: center;
 }
 
 .email .kakao {
-    width: 310px;
-    height: 42px;
-    background-color: #FEE500;
-    padding-left: 40px;
-    padding-right: 40px;
-    border-radius: 40px;
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
+  width: 310px;
+  height: 42px;
+  background-color: #FEE500;
+  padding-left: 40px;
+  padding-right: 40px;
+  border-radius: 40px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
 
 .email .kakao .kakao_container {
-    width: 147px;
-    height: 24px;
-    display: flex;
-    align-items: center;
-    gap: 20px;
+  width: 147px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
 .email .kakao .kakao_container .kakao_logo {
-    width: 16px;
-    height: 16px;
+  width: 16px;
+  height: 16px;
 }
 
 .email .kakao .kakao_container p {
-    width: 111px;
-    height: 24px;
+  width: 111px;
+  height: 24px;
 
-    font-family: 'Pretendard';
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 150%;
-    letter-spacing: -0.5px;
-    color: #000000D9;
+  font-family: 'Pretendard';
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: -0.5px;
+  color: #000000D9;
 }
 
 .email .google {
-    width: 310px;
-    height: 42px;
-    background-color: #FFFFFF;
-    padding-left: 82px;
-    padding-right: 82px;
-    border-radius: 40px;
-    border: 1px solid #D9D9D9;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
+  width: 310px;
+  height: 42px;
+  background-color: #FFFFFF;
+  padding-left: 82px;
+  padding-right: 82px;
+  border-radius: 40px;
+  border: 1px solid #D9D9D9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
 
 .email .google .google_container {
-    width: 146px;
-    height: 24px;
-    display: flex;
-    align-items: center;
-    gap: 20px;
+  width: 146px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
 .email .google .google_container .google_logo {
-    width: 16px;
-    height: 16px;
+  width: 16px;
+  height: 16px;
 }
 
 .email .google .google_container p {
-    width: 98px;
-    height: 24px;
+  width: 98px;
+  height: 24px;
 
-    font-family: 'Pretendard';
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 150%;
-    letter-spacing: -0.5px;
-    color: #131212;
+  font-family: 'Pretendard';
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: -0.5px;
+  color: #131212;
 }
 
 .signup .or {
-    width: 322px;
-    height: 18px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 4px;
+  width: 322px;
+  height: 18px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
 }
 
 .signup .or .divider {
-    width: 140.5px;
-    height: 1px;
-    background: #D9D9D9;
-    /* background: #F4F4F4; */
+  width: 140.5px;
+  height: 1px;
+  background: #D9D9D9;
+  /* background: #F4F4F4; */
 }
 
 .signup .or p {
-    width: 21px;
-    height: 18px;
+  width: 21px;
+  height: 18px;
 
-    font-family: 'Pretendard';
-    font-weight: 500;
-    font-size: 12px;
-    line-height: 150%;
-    letter-spacing: 0;
-    vertical-align: bottom;
-    color: #CCCDD2;
+  font-family: 'Pretendard';
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 150%;
+  letter-spacing: 0;
+  vertical-align: bottom;
+  color: #CCCDD2;
 }
 
 .signup .non_signup {
-    width: 310px;
-    height: 42px;
-    background-color: #85878D;
-    padding-top: 8px;
-    padding-bottom: 8px;
-    border-radius: 40px;
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
+  width: 310px;
+  height: 42px;
+  background-color: #85878D;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  border-radius: 40px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
 
 .signup .non_signup p {
-    width: 134px;
-    height: 20px;
-    padding-left: 20px;
-    padding-right: 20px;
+  width: 134px;
+  height: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
 
-    font-family: 'Pretendard';
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 140%;
-    letter-spacing: -0.5px;
-    vertical-align: middle;
-    color: #FFFFFF;
+  font-family: 'Pretendard';
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 140%;
+  letter-spacing: -0.5px;
+  vertical-align: middle;
+  color: #FFFFFF;
 }

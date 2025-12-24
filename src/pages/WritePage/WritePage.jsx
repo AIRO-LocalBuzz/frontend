@@ -40,7 +40,7 @@ export default function WritePage() {
 
   return (
     <div className="write-page">
-      <Statusbar />
+      <Statusbar/>
       <WriteHeader
         onBack={() => form.navigate('/review')}
         onSubmit={form.handleSubmit}

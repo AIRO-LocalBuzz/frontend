@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -20,7 +20,7 @@ const NicknamePage = () => {
 
   const handleNicknameSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!nickname.trim()) {
       setError('닉네임을 입력해주세요.');
       return;
@@ -36,15 +36,15 @@ const NicknamePage = () => {
 
     try {
       const token = localStorage.getItem('accessToken');
-      
+
       if (!token) {
         setError('토큰이 없습니다. 다시 로그인해주세요.');
         navigate('/login');
         return;
       }
-      
+
       console.log('닉네임 설정 API 호출 시작');
-      
+
       const response = await fetch('https://airo-buzz.shop/api/v1/auth/sign-up', {
         method: 'POST',
         headers: {
@@ -59,7 +59,7 @@ const NicknamePage = () => {
       if (response.ok) {
         const tokenData = await response.json();
         console.log('회원가입 성공:', tokenData);
-        
+
         // AuthContext를 통해 로그인 처리
         login(tokenData);
         navigate('/home');
@@ -79,18 +79,18 @@ const NicknamePage = () => {
   const handleSkip = async () => {
     setIsLoading(true);
     setError('');
-    
+
     try {
       const token = localStorage.getItem('accessToken');
-      
+
       if (!token) {
         setError('토큰이 없습니다. 다시 로그인해주세요.');
         navigate('/login');
         return;
       }
-      
+
       console.log('토큰 교환 API 호출 시작');
-      
+
       const response = await fetch('https://airo-buzz.shop/api/v1/auth/exchange-token', {
         method: 'POST',
         headers: {
@@ -104,7 +104,7 @@ const NicknamePage = () => {
       if (response.ok) {
         const tokenData = await response.json();
         console.log('토큰 교환 성공:', tokenData);
-        
+
         // AuthContext를 통해 로그인 처리
         login(tokenData);
         navigate('/home');

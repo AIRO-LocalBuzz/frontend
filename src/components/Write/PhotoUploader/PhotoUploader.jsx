@@ -12,7 +12,7 @@ export default function PhotoUploader({ previewUrls, onPhotoClick }) {
       ) : (
         <div className="photo-preview-scroll">
           {previewUrls.map((url, i) => (
-            <img key={i} src={url} alt={`uploaded-${i}`} className="photo-scroll-thumb" />
+            <img key={i} src={url} alt={`uploaded-${i}`} className="photo-scroll-thumb"/>
           ))}
         </div>
       )}

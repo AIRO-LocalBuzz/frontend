@@ -134,11 +134,11 @@ export default function DetailPage({ isKakaoMapLoaded }) {
 
   return (
     <div className="detail-page-container">
-      <Statusbar />
+      <Statusbar/>
       {/* 상단 헤더 */}
       <header className="detail-header">
         <button onClick={() => navigate('/my-review')} className="back-button">
-          <ChevronLeft size={24} />
+          <ChevronLeft size={24}/>
         </button>
         <h1 className="detail-title">후기 상세보기</h1>
       </header>

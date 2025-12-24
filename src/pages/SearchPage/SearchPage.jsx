@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { Search, MapPin, X } from 'lucide-react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { MapPin, Search, X } from 'lucide-react';
 import './SearchPage.css';
 import Statusbar from '../../components/Statusbar/Statusbar';
 
@@ -189,10 +189,10 @@ const SearchPage = ({ isKakaoMapLoaded }) => {
 
   return (
     <div className="search-page-container">
-      <Statusbar />
+      <Statusbar/>
       <header className="search-header">
         <button onClick={handleCancel} className="cancel-button">
-          <X size={24} />
+          <X size={24}/>
         </button>
 
         <h1 className="search-title">장소 검색</h1>
@@ -205,14 +205,16 @@ const SearchPage = ({ isKakaoMapLoaded }) => {
         </button>
       </header>
       <div className="search-bar">
-        <Search className="search-icon" size={20} />
+        <Search className="search-icon" size={20}/>
         <input
           type="text"
           placeholder="장소를 검색하세요."
           className="search-input"
           value={searchKeyword}
           onChange={(e) => setSearchKeyword(e.target.value)}
-          onKeyDown={(e) => { if (e.key === 'Enter') handleSearch(); }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') handleSearch();
+          }}
         />
       </div>
       <div id="map" ref={mapContainer} className="map-container"></div>
@@ -227,7 +229,7 @@ const SearchPage = ({ isKakaoMapLoaded }) => {
                 className={`search-result-item ${selectedPlace?.id === place.id ? 'selected' : ''}`}
                 onClick={() => handlePlaceSelect(place)}
               >
-                <MapPin className="list-item-icon" size={20} />
+                <MapPin className="list-item-icon" size={20}/>
                 <div className="list-item-info">
                   <span className="place-name">{place.place_name}</span>
                   <span className="address-name">{place.address_name}</span>

@@ -1,30 +1,30 @@
 .main {
-    width: 390px;
-    height: 812px;
-    background-color: #FFFFFF;
-    position: relative;
-    overflow-x: hidden;
+  width: 390px;
+  height: 812px;
+  background-color: #FFFFFF;
+  position: relative;
+  overflow-x: hidden;
 }
 
 .main::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 .main .region_container {
-    margin: 20px 16px;
+  margin: 20px 16px;
 }
 
 .main .category_container {
-    width: 435px;
-    height: 652px;
-    padding-left: 16px;
+  width: 435px;
+  height: 652px;
+  padding-left: 16px;
 
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .main .container .content {
-    height: 613px;
+  height: 613px;
 
 }

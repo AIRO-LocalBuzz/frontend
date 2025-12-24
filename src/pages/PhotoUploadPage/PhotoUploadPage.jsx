@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { usePhoto } from '../../contexts/PhotoContext'
 import './PhotoUploadPage.css'
@@ -92,7 +92,7 @@ export default function PhotoUploadPage() {
 
   return (
     <div className="upload-page">
-      <Statusbar />
+      <Statusbar/>
       {/* 헤더 */}
       <div className="upload-header">
         <button className="header-btn" onClick={handleCancel}>✕</button>

@@ -9,7 +9,7 @@ export default function ModalWrapper({ children, onClose, onConfirm, confirmText
         <div className="modal-inner">
           <div className="modal-header">
             <button className="modal-close-x" onClick={onClose}>
-              <img src={exitIcon} alt="닫기" />
+              <img src={exitIcon} alt="닫기"/>
             </button>
           </div>
           {children}
