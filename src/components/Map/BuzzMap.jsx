@@ -1,11 +1,11 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 export default function BuzzMap({
-  imageSrc,
-  minZoom = 10,
-  maxZoom = 20,
-  initialZoom = 10,
-}) {
+                                  imageSrc,
+                                  minZoom = 10,
+                                  maxZoom = 20,
+                                  initialZoom = 10,
+                                }) {
   const containerRef = useRef(null);
   const [zoomLevel, setZoomLevel] = useState(initialZoom);
   const [pan, setPan] = useState({ x: 0, y: 0 });
@@ -61,7 +61,9 @@ export default function BuzzMap({
       }
     };
 
-    const onTouchEnd = () => { initialDistance = null; };
+    const onTouchEnd = () => {
+      initialDistance = null;
+    };
 
     const onWheel = (e) => {
       e.preventDefault();
@@ -92,7 +94,10 @@ export default function BuzzMap({
       if (!e.isPrimary) return;
       isDraggingRef.current = true;
       dragStartRef.current = { x: e.clientX, y: e.clientY, panX: pan.x, panY: pan.y };
-      try { el.setPointerCapture(e.pointerId); } catch { }
+      try {
+        el.setPointerCapture(e.pointerId);
+      } catch {
+      }
       el.classList.add('dragging');
     };
 
@@ -106,7 +111,10 @@ export default function BuzzMap({
 
     const onPointerUp = (e) => {
       isDraggingRef.current = false;
-      try { el.releasePointerCapture(e.pointerId); } catch { }
+      try {
+        el.releasePointerCapture(e.pointerId);
+      } catch {
+      }
       el.classList.remove('dragging');
     };
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ChevronRight, Bell } from 'lucide-react';
+import { Bell, ChevronRight } from 'lucide-react';
 import './MyPage.css';
 import Statusbar from '../../components/Statusbar/Statusbar';
 import charImg from '../../assets/images/common/img-bee.png';
@@ -14,20 +14,20 @@ const MyPage = () => {
 
   return (
     <div className="mypage-container">
-      <Statusbar />
+      <Statusbar/>
       <div className='mypage'>
         {/* 상단 헤더 */}
         <header className="mypage-header">
           <h1 className="header-title">나의 꿀통</h1>
           <button className="header-bell-button">
-            <Bell size={24} color="#333" />
+            <Bell size={24} color="#333"/>
           </button>
         </header>
 
         {/* 업데이트/공지사항 배너 */}
         <div className="notification-banner">
           <p className="notification-text">업데이트나 공지사항이 들어갑니다.</p>
-          <ChevronRight size={18} color="#999" />
+          <ChevronRight size={18} color="#999"/>
         </div>
 
         {/* 프로필 섹션 */}
@@ -82,7 +82,8 @@ const MyPage = () => {
                 </div>
                 <p className="post-title">제목</p>
                 <p className="post-meta">
-                  <span className="post-location">위치동</span> · <span className="post-time">시간 전</span> · <span className="post-views">조회수</span>
+                  <span className="post-location">위치동</span> · <span className="post-time">시간 전</span> · <span
+                  className="post-views">조회수</span>
                 </p>
               </div>
               <div className="post-thumbnail-container">
@@ -97,7 +98,8 @@ const MyPage = () => {
                 </div>
                 <p className="post-title">제목</p>
                 <p className="post-meta">
-                  <span className="post-location">위치동</span> · <span className="post-time">시간 전</span> · <span className="post-views">조회수</span>
+                  <span className="post-location">위치동</span> · <span className="post-time">시간 전</span> · <span
+                  className="post-views">조회수</span>
                 </p>
               </div>
               <div className="post-thumbnail-container">

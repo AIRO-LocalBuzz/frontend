@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import useKakaoLoader from '../../hooks/useKakaoLoader';
 import Bookmark from '../Bookmark/Bookmark';
 
@@ -223,7 +223,10 @@ export default function KakaoMapCanvas({ isVisible, recenterSignal, bookmarks = 
   useEffect(() => {
     if (!isVisible || !mapRef.current) return;
     const id = requestAnimationFrame(() => {
-      try { mapRef.current.relayout?.(); } catch { }
+      try {
+        mapRef.current.relayout?.();
+      } catch {
+      }
       if (lastCoordsRef.current) {
         const { kakao } = window;
         const { lat, lng } = lastCoordsRef.current;
@@ -236,7 +239,7 @@ export default function KakaoMapCanvas({ isVisible, recenterSignal, bookmarks = 
 
   return (
     <>
-      <div ref={containerRef} className="kakao-map-canvas" />
+      <div ref={containerRef} className="kakao-map-canvas"/>
       <Bookmark
         mapRef={mapRef}
         bookmarks={bookmarks}

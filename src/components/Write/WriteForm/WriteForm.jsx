@@ -30,7 +30,6 @@ export default function WriteForm(props) {
     title, content, date, category, address, withWhoTag, forWhatTag, emotionTags, selectedPhotos
   };
 
-  
 
   return (
     <div className="write-form">
@@ -38,11 +37,11 @@ export default function WriteForm(props) {
         travelDate={travelDate}
         formatFullDate={formatFullDate}
         onDateClick={() => setModalOpen('date')}
-        onAddressClick={() => navigate('/search', { 
-          state: { 
-            fromWrite: true, 
-            currentWriteState 
-          } 
+        onAddressClick={() => navigate('/search', {
+          state: {
+            fromWrite: true,
+            currentWriteState
+          }
         })}
         address={address}
       />
@@ -73,11 +72,11 @@ export default function WriteForm(props) {
       />
       <PhotoUploader
         previewUrls={previewUrls}
-        onPhotoClick={() => navigate('/upload-photo', { 
+        onPhotoClick={() => navigate('/upload-photo', {
           state: {
             fromWrite: true,
-            currentWriteState 
-          } 
+            currentWriteState
+          }
         })}
       />
       <TextInputs

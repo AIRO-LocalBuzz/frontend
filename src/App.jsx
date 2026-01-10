@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import SplashPage from './pages/SplashPage/SplashPage';
 import LoginPage from './pages/LoginPage/LoginPage';
@@ -39,28 +39,28 @@ function App() {
         <div className='app'>
           <div className={`app-content ${isBottomNavHidden ? 'no-bottom-nav' : ''}`}>
             <Routes>
-              <Route path="/" element={<SplashPage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/auth/success" element={<AuthCallback />} />
-              <Route path="/auth/nickname" element={<AuthCallback />} />
-              <Route path="/nickname" element={<NicknamePage />} />
-              <Route path="/auth/failure" element={<LoginPage />} />
-              <Route path="/home" element={<HomePage isKakaoMapLoaded={isKakaoMapLoaded} />} />
-              <Route path="/review" element={<ReviewPage />} />
-              <Route path="/my-review" element={<MyReviewPage />} />
-              <Route path="/detail/:id" element={<DetailPage isKakaoMapLoaded={isKakaoMapLoaded} />} />
-              <Route path="/beehive" element={<BeeHivePage />} />
-              <Route path="/write" element={<WritePage />} />
-              <Route path="/upload-photo" element={<PhotoUploadPage />} />
-              <Route path="/search" element={<SearchPage isKakaoMapLoaded={isKakaoMapLoaded} />} />
-              <Route path="/mypage" element={<MyPage />} />
+              <Route path="/" element={<SplashPage/>}/>
+              <Route path="/login" element={<LoginPage/>}/>
+              <Route path="/auth/success" element={<AuthCallback/>}/>
+              <Route path="/auth/nickname" element={<AuthCallback/>}/>
+              <Route path="/nickname" element={<NicknamePage/>}/>
+              <Route path="/auth/failure" element={<LoginPage/>}/>
+              <Route path="/home" element={<HomePage isKakaoMapLoaded={isKakaoMapLoaded}/>}/>
+              <Route path="/review" element={<ReviewPage/>}/>
+              <Route path="/my-review" element={<MyReviewPage/>}/>
+              <Route path="/detail/:id" element={<DetailPage isKakaoMapLoaded={isKakaoMapLoaded}/>}/>
+              <Route path="/beehive" element={<BeeHivePage/>}/>
+              <Route path="/write" element={<WritePage/>}/>
+              <Route path="/upload-photo" element={<PhotoUploadPage/>}/>
+              <Route path="/search" element={<SearchPage isKakaoMapLoaded={isKakaoMapLoaded}/>}/>
+              <Route path="/mypage" element={<MyPage/>}/>
             </Routes>
           </div>
         </div>
 
 
         {/* isBottomNavHidden이 true일 때 BottomNav 숨기기 */}
-        {!isBottomNavHidden && <BottomNav />}
+        {!isBottomNavHidden && <BottomNav/>}
       </AuthProvider>
     </>
   );

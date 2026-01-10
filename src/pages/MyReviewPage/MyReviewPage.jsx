@@ -33,7 +33,7 @@ export default function MyReviewPage() {
 
   return (
     <div className="review-page">
-      <Statusbar />
+      <Statusbar/>
       <header className="review-header">
         <h2>내가 쓴 글</h2>
         <button onClick={() => navigate('/write?new=true')}>새 글 쓰기</button>
@@ -46,7 +46,7 @@ export default function MyReviewPage() {
               <div key={post.id} className="post-item" onClick={() => handlePostClick(post)}>
                 <div className="post-thumbnail">
                   {post.selectedPhotos && post.selectedPhotos.length > 0 && (
-                    <img src={post.selectedPhotos[0]} alt="thumbnail" />
+                    <img src={post.selectedPhotos[0]} alt="thumbnail"/>
                   )}
                 </div>
                 <div className="post-details">
@@ -60,8 +60,16 @@ export default function MyReviewPage() {
 
                 {/* 수정/삭제 버튼 추가 */}
                 <div className="post-actions">
-                  <button onClick={(e) => { e.stopPropagation(); handleEdit(post); }}>수정</button>
-                  <button onClick={(e) => { e.stopPropagation(); handleDelete(post.id); }}>삭제</button>
+                  <button onClick={(e) => {
+                    e.stopPropagation();
+                    handleEdit(post);
+                  }}>수정
+                  </button>
+                  <button onClick={(e) => {
+                    e.stopPropagation();
+                    handleDelete(post.id);
+                  }}>삭제
+                  </button>
                 </div>
               </div>
             ))

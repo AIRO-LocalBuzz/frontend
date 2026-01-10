@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import './ReviewPage.css'; // ReviewPage 전용 CSS 파일
@@ -83,7 +83,7 @@ export default function ReviewPage() {
         <h2>리뷰 모아보기</h2>
         <button onClick={() => navigate('/write?new=true')}>새 글 쓰기</button>
       </header>
-      
+
       <div className="post-list-container">
         <div className="post-list">
           {posts.length > 0 ? (
@@ -92,7 +92,7 @@ export default function ReviewPage() {
                 <div className="post-thumbnail">
                   {/* API 응답 필드명에 맞게 post.images[0]으로 변경 */}
                   {post.images && post.images.length > 0 && (
-                    <img src={post.images[0]} alt="thumbnail" />
+                    <img src={post.images[0]} alt="thumbnail"/>
                   )}
                 </div>
                 <div className="post-details">
@@ -106,8 +106,16 @@ export default function ReviewPage() {
                 </div>
 
                 <div className="post-actions">
-                  <button onClick={(e) => { e.stopPropagation(); handleEdit(post); }}>수정</button>
-                  <button onClick={(e) => { e.stopPropagation(); handleDelete(post.id); }}>삭제</button>
+                  <button onClick={(e) => {
+                    e.stopPropagation();
+                    handleEdit(post);
+                  }}>수정
+                  </button>
+                  <button onClick={(e) => {
+                    e.stopPropagation();
+                    handleDelete(post.id);
+                  }}>삭제
+                  </button>
                 </div>
               </div>
             ))

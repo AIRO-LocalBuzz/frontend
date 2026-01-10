@@ -95,7 +95,7 @@ export default function ReviewPage() {
 
   return (
     <div className="review-page">
-      <Statusbar />
+      <Statusbar/>
       <header className="review-header">
         <h2>리뷰 모아보기</h2>
         <button onClick={() => navigate('/write?new=true')} className="btn-write">
@@ -110,7 +110,7 @@ export default function ReviewPage() {
               <div key={post.id} className="post-item" onClick={() => handlePostClick(post)}>
                 <div className="post-thumbnail">
                   {post.images && post.images.length > 0 && (
-                    <img src={post.images[0]} alt="thumbnail" />
+                    <img src={post.images[0]} alt="thumbnail"/>
                   )}
                 </div>
                 <div className="post-details">

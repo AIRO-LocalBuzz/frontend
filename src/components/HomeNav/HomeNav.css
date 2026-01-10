@@ -1,46 +1,46 @@
 .home_nav {
-    width: 390px;
-    height: 48px;
-    background-color: #FFFFFF;
-    padding-left: 16px;
-    padding-right: 16px;
-    box-sizing: border-box;
-    position: sticky;
-    top: 50px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 10;
+  width: 390px;
+  height: 48px;
+  background-color: #FFFFFF;
+  padding-left: 16px;
+  padding-right: 16px;
+  box-sizing: border-box;
+  position: sticky;
+  top: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
 }
 
 .home_nav .localbuzz_logo {
-    width: 150px;
-    height: 19px;
+  width: 150px;
+  height: 19px;
 }
 
 .home_nav .nav_container {
-    height: 32px;
-    display: flex;
-    align-items: center;
+  height: 32px;
+  display: flex;
+  align-items: center;
 }
 
 .home_nav .nav_container .search {
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
 
 .home_nav .nav_container .bell {
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
 }
